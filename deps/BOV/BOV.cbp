@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="BOV"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\deps\;CMake Files\deps\BOV\;CMake Files\deps\BOV\deps\;CMake Files\deps\BOV\deps\glfw\;CMake Files\deps\BOV\deps\glfw\CMake\;CMake Files\deps\BOV\deps\glfw\src\;CMake Files\deps\BOV\deps\glad\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="character_table">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/character_table" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 character_table"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="character_table/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/character_table" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 character_table/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="animation">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/animation" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 animation"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="animation/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/animation" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 animation/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="text_style">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/text_style" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 text_style"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="text_style/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/text_style" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 text_style/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="shaderIncludes">
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 shaderIncludes"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="bov">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/lib/libbov.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/src"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/shaderIncludes"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 bov"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="bov/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/lib/libbov.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/src"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/shaderIncludes"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 bov/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="hello_world">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/hello_world" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 hello_world"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="hello_world/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/hello_world" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 hello_world/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="koch_snowflake">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/koch_snowflake" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 koch_snowflake"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="koch_snowflake/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/koch_snowflake" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 koch_snowflake/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="lines">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/lines" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 lines"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="lines/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/lines" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 lines/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="markers">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/markers" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 markers"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="markers/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/markers" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 markers/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="triangles">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/triangles" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 triangles"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="triangles/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/triangles" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 triangles/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glfw">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/libglfw3.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_GLFW_USE_CONFIG_H"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glfw/src/Makefile&quot;  VERBOSE=1 glfw"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glfw/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glfw/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/libglfw3.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D_GLFW_USE_CONFIG_H"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include"/>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glfw/src/Makefile&quot;  VERBOSE=1 glfw/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glfw/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glfw/src/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 glad"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/src/glad.c">
+			<Option target="glad"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include/GLFW/glfw3.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/include/GLFW/glfw3native.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/context.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/egl_context.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/egl_context.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/glfw_config.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/glx_context.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/glx_context.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/init.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/input.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/internal.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/linux_joystick.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/linux_joystick.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/mappings.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/monitor.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/osmesa_context.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/osmesa_context.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/posix_thread.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/posix_thread.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/posix_time.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/posix_time.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/vulkan.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/window.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/x11_init.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/x11_monitor.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/x11_platform.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/x11_window.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/xkb_unicode.c">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/xkb_unicode.h">
+			<Option target="glfw"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/animation.c">
+			<Option target="animation"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/character_table.c">
+			<Option target="character_table"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/hello_world.c">
+			<Option target="hello_world"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/koch_snowflake.c">
+			<Option target="koch_snowflake"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/lines.c">
+			<Option target="lines"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/markers.c">
+			<Option target="markers"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/text_style.c">
+			<Option target="text_style"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/examples/triangles.c">
+			<Option target="triangles"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/src/BOV.c">
+			<Option target="bov"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\deps\BOV\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/CMake/glfw3.pc.in">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\CMake\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/CMake/glfw3Config.cmake.in">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\CMake\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\src\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/glfw_config.h.in">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\src\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glad\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

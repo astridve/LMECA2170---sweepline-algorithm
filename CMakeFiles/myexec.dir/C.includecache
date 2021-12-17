@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.c
+stdio.h
+-
+stdlib.h
+-
+stdbool.h
+-
+time.h
+-
+geometry.h
+/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
+
+/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
+stdio.h
+-
+stdlib.h
+-
+stdbool.h
+-
+time.h
+-
+
