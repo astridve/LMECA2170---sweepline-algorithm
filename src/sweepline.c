@@ -8,27 +8,25 @@
 #include "point_list.h"
 #include "sweepline.h"
 
-/*
-void delForC(Treeseg* Tau, List* Ci, Point* p){
-	if (Ci->head != NULL){
-		delSeg(&Tau, Ci->head->value, p);
-		return delForC(Tau, Ci->prev, p);
+
+void delForC(Treeseg** Tau, Listseg* Ci, Point* p){
+	if (Ci != NULL){
+        delSeg(Tau, Ci->value, p);
+		delForC(Tau, Ci->prev, p);
 	}
-	return;
-}*/
+}
 
 void insertForC(Treeseg** Tau, Listseg* Ci, Point* p){
 	if (Ci !=  NULL){
-		delSeg(Tau, Ci->value, p);
 		insertSeg(Tau, p, Ci->value, *Tau);
-		return insertForC(Tau, Ci->prev, p);
+		insertForC(Tau, Ci->prev, p);
 	}
 }
 
 void insertForU(Treeseg** Tau, Listseg* Ui, Point* p){
 	if (Ui != NULL){
 		insertSeg(Tau, p, Ui->value, *Tau);
-		return insertForU(Tau, Ui->prev, p);
+		insertForU(Tau, Ui->prev, p);
 	}
 }
 
@@ -36,7 +34,7 @@ void createQ(Listseg* s, Treenode** Q){
 	if (s != NULL){
 		insertPoint(Q, s->value->p0, *Q, s->value, true); // <- update si p0 already dans le tree
 		insertPoint(Q, s->value->p1, *Q, s->value, false);
-		return createQ(s->prev, Q);
+		createQ(s->prev, Q);
 	}
 }
 /*
@@ -50,9 +48,9 @@ void printBOOL(bool b){
 void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q){
 	// if sL and sR intersect below the sweep line, or on it and to the right of the current event point p, 
 	// and the intersection is not yet present as an event in Q
-	printf("Find new event\n");
-    printSeg(sL);
-    printSeg(sR);
+	//printf("Find new event\n");
+    //printSeg(sL);
+    //printSeg(sR);
     double mL, mR;
 	double pL, pR;
 	
@@ -71,14 +69,8 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q){
 		if (mL != mR){// si deux segments sont l'un sur l'autre on ne reporte pas d'intersections!
 			x_inter = (pL - pR) / (mR - mL);
 			y_inter = pL + mL * x_inter;
-            printf("(%f,%f)\n",x_inter,y_inter);
 			if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
                 Point *inter = createPoint(x_inter, y_inter);
-//                printf("LEFT: ");
-//                printBOOL(contains(inter,sL));
-//                printf("RIGHT: ");
-//                printBOOL(contains(inter,sR));
-
                 if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
                     printf("Intersection found: (%f, %f)\n", x_inter, y_inter);
                     insertPoint(Q, inter, *Q, NULL, false);
@@ -91,7 +83,7 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q){
 		if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
             Point *inter = createPoint(x_inter, y_inter);
             if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                printf("Intersection found\n");
+                printf("Intersection found: (%f, %f)\n", x_inter, y_inter);
                 insertPoint(Q, inter, *Q, NULL, false);
             }
 		}
@@ -101,7 +93,7 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q){
 		if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
             Point *inter = createPoint(x_inter, y_inter);
             if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                printf("Intersection found\n");
+                printf("Intersection found: (%f, %f)\n", x_inter, y_inter);
                 insertPoint(Q, inter, *Q, NULL, false);
             }
 		}
@@ -123,8 +115,8 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q){
 
 	findLandC(Tau, NULL, p, false, L, C, RLNeigh);
 
-    printList(L);
-    printList(C);
+    //printList(L);
+    //printList(C);
 
     int lengthT = 0;
     if (p->U != NULL){lengthT += p->U->length;}
@@ -133,14 +125,14 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q){
     //printf("%d\n",lengthT);
 
     if (lengthT >= 2){// p is an intersection point
-        printf("Intersection found\n");
+        //printf("Intersection found\n");
 		insertListHeadP(*Inter, p, concatenate(p->U, L, C));
 	}
 
 	//Delete segment with p as lower point from the tree
     if (L != NULL){
         for(int i=0; i<(L->length); i++){
-            printf("deleting segment %d from L\n", i);
+            //printf("deleting segment %d from L\n", i);
             delSeg(&Tau, L->head->value, p);
             delHead(L);
             //freeListSeg(L->head);
@@ -149,6 +141,7 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q){
 
     //Delete and reinsert segment containing p from the tree (so they switch positions)
 	if (C != NULL){
+        delForC(&Tau, C->head, p);
         insertForC(&Tau, C->head, p);
     }
     //printf("List C handeled\n");
@@ -160,7 +153,7 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q){
     }
     //printf("List U handeled\n");
 
-    printTreeseg(Tau);
+    //printTreeseg(Tau);
 
     // Check for new intersections
 	if (p->U->length + C->length == 0){// p is only a lower point
@@ -208,7 +201,7 @@ ListP* FindIntersections(List* s){ //<- list of segments
 	// 1- checkSegment to sort segemnts -- ease process for Upper/Lower points (v)
 	// 2 - (p, list s) -> return s(starting = p)  <---- donner aux segment.value la valeur de Upper Point  <<< tous les points qui vont être dans l'arbre Q
 	// 3 - creer l'arbre Q avec tous les points
-    printList(s);
+    //printList(s);
     Treenode *Q = NULL;
 	createQ(s->head, &Q);
     //printTree(Q);

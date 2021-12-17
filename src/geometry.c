@@ -8,13 +8,13 @@
 bool feq(double x, double y){
     return (y<x+tol && y>x-tol);
 }
-/*
+
 bool fgreater(double x, double y){
     return (x > y-tol);
 }
 bool flower(double x, double y){
     return (x < y-tol);
-}*/
+}
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Points 2D
@@ -113,13 +113,13 @@ void printSeg2(Segment *s) {
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-void printBOOL(bool b){ //TODO: delete this function
+/*void printBOOL(bool b){ //TODO: delete this function
     if (b){
         printf("TRUE\n");
     }else{
         printf("FALSE\n");
     }
-}
+}*/
 bool contains(Point* p, Segment* s){ // return true if the segment s contains the point p ON ITS INTERIOR
 	double m; // slope of the segment
 	double oao; // (imaginary) crossing of the segment with the y-axis

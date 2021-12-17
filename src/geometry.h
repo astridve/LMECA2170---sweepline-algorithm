@@ -2,7 +2,7 @@
 #define GEOMETRY_H_
 
 #ifndef tol
-#define tol 0.00001
+#define tol 0.00000001
 #endif
 
 #include <stdio.h>
@@ -17,8 +17,8 @@ typedef struct Listseg Listseg;
 
 
 bool feq(double, double);
-//bool fgreater(double, double);
-//bool flower(double, double);
+bool fgreater(double, double);
+bool flower(double, double);
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Points

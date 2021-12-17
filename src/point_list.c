@@ -213,7 +213,7 @@ void freeListpoint(Listpoint* LS){
         freeListpoint(LS->next);
     }
     freePoint(LS->value);
-    freeListSeg(LS->luc);
+    freeList(LS->luc);
     free(LS);
 }
 

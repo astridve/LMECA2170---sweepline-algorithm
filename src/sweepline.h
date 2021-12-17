@@ -13,7 +13,7 @@
 #include "point_list.h"
 
 
-//void delForC(Treeseg*, List*, Point*);
+void delForC(Treeseg**, Listseg*, Point*);
 void insertForC(Treeseg**, Listseg*, Point*);
 void insertForU(Treeseg**, Listseg*, Point*);
 void createQ(Listseg*, Treenode**);

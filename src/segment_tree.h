@@ -21,7 +21,7 @@ Treeseg *createSeg(Segment*);
 bool insertSeg(Treeseg**, Point*, Segment*, Treeseg*);
 bool delSeg(Treeseg**, Segment*, Point*);
 
-//Treeseg* findSeg(Treeseg*, Segment*, Point*);
+Treeseg* findSegAFTERUPDATE(Treeseg*, Segment*, Point*);
 Treeseg* findSegBEFOREUPDATE(Treeseg*, Segment*, Point*);
 
 Treeseg* findRSeg(Treeseg*);

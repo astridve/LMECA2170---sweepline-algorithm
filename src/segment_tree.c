@@ -52,7 +52,7 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 		// if the segment of root is vertical we know that m_root=0
 		
 		// probleme ici !
-		if (p->x < x_root || (p->x == x_root && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root)) || (m_root <= 0.0 && (m_s < m_root || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
+		if (flower(p->x, x_root) || (feq(p->x, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root)) || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
 			return insertSeg(&(root->left), p, s, root);
 		}// error ici 
 		else {
@@ -60,7 +60,7 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 		}
 	}
 	else{ // the segment in root is horizontal 
-		if ((p->x < root->value->p0->x) || (p->x == root->value->p0->x && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
+		if (flower(p->x, root->value->p0->x) || (feq(p->x, root->value->p0->x) && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
 			return insertSeg(&(root->left), p, s, root);
 		}
 		else{
@@ -73,11 +73,12 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 
 bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg from the tree where the point p gives information about the position of the sweep line
 	if(*root != NULL){
-        Treeseg* tree = findSegBEFOREUPDATE(*root, seg, p); // find the segment in the tree
-		/*if (tree == NULL){
-            printf("Warning: segment to delete not in tree   in segment_tree line 77");
-            return false;
+        Treeseg* tree;  // find the segment in the tree
+        tree = findSegBEFOREUPDATE(*root, seg, p);
+        /*if (tree == NULL){
+            tree = findSegAFTERUPDATE(*root, seg, p);
         }*/
+
         if(tree->left == NULL && tree->right == NULL){ // The seg node is a leaf: just remove the segment node from the tree
 			if(tree->parent != NULL){ // there are other nodes in the tree
 				// find if the segm is on the left or the right of the parent node
@@ -96,7 +97,7 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 					return false;
 				}
 			}
-			else{ // The segment is the only node is the tree so deleting seg suppress the tree
+			else{ // The segment is the only node in the tree so deleting seg suppress the tree
 				*root = NULL;
                 //freeTreeseg(*root);
 				//free(tree);
@@ -106,22 +107,24 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 		else if(tree->left != NULL && tree->right != NULL){ // the seg node has two children in the tree: we delete seg by replacing it by the leaf the most on the right of the left tree of the node of seg
 			//Treeseg* child = malloc(sizeof(Treeseg));
             Treeseg* child = findRSeg(tree->left); // find the replacement, delete that node in the tree and replace in the seg node the value by the replacement value
-			delSeg(root, child->value, p);
+            delSeg(root, child->value, p);
 			//free(tree->value);
 			tree->value = child->value;
 			return true; 
 		}
-		else{ // the seg node has only one children
+		else{ // the seg node has only one child
 			if(tree->left == NULL){ // child on the right
 				if(tree->parent != NULL){ // the segment is not in the top upper node: we need to rely the parent of the node of segm with the child tree of the node of segm
 					if(tree->parent->left != NULL){
 						if(equalSegment(tree->parent->left->value, tree->value)){ // the segm. node lies on the left of its parent
 						tree->parent->left = tree->right;
+                        tree->right->parent = tree->parent;
 						return true;
 						}
 					}
 					else if(tree->parent->right != NULL){ // if right exists and the segm is not on the left of its parent then it is on the right
 						tree->parent->right = tree->right;
+                        tree->right->parent = tree->parent;
 						return true; 
 					}
 					else{
@@ -140,11 +143,13 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 					if(tree->parent->left != NULL){
 						if(equalSegment(tree->parent->left->value, tree->value)){ // the segm. node lies on the left of its parent
 						tree->parent->left = tree->left;
+                        tree->left->parent = tree->parent;
 						return true;
 						}
 					}
 					else if(tree->parent->right != NULL){ // if right exists and the segm is not on the left of its parent then it is on the right
 						tree->parent->right = tree->left;
+                        tree->left->parent = tree->parent;
 						return true; 
 					}
 					else{
@@ -167,7 +172,7 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 
 
 Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and return the tree with s as upper node (if it is in the tree, NULL otherwise), p is again there to inform about the position of the sweep line; Careful root is update with the point p!
-	if (root == NULL) { // s in not in the tree root
+    if (root == NULL) { // s in not in the tree root
 		return NULL;
 	}
 	if (equalPoint(s->p0, root->value->p0) && equalPoint(s->p1, root->value->p1)) { // bingo we found the node containing s
@@ -182,7 +187,7 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 		x_s = s->p0->x;
 	}
 	
-	if(root->value->p0->y != root->value->p1->y){ // root n'est pas horizontal 
+	if(root->value->p0->y != root->value->p1->y){ // root n'est pas horizontal
 		//float p_root, p_s = 0.0; // (imaginary) crossing of the segments of root and segm. s with the y axis
 		double m_root, m_s = 0.0; // slopes of the segm. root and the segm. s
 		double x_root = (p->y * (root->value->p0->x - root->value->p1->x) - root->value->p1->y * root->value->p0->x + root->value->p0->y * root->value->p1->x);
@@ -200,15 +205,17 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 		// if the segment of root is vertical we know that m_root=0
 			
 		
-		if (x_s < x_root || (x_s == x_root && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root)) || (m_root <= 0.0 && (m_s < m_root || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
-			return findSegAFTERUPDATE((root->left), s, p);
+		if (flower(x_s, x_root) || (feq(x_s, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root)) || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
+			printf("go to left: %f<%f; %f, %f\n", x_s, x_root, m_s, m_root);
+            return findSegAFTERUPDATE((root->left), s, p);
 		}
 		else {
+            printf("go to right:%f,%f\n",m_s,m_root);
 			return findSegAFTERUPDATE((root->right), s, p);
 		}
 	}
 	else{ // root is horizontal 
-		if ((x_s < root->value->p0->x) || (x_s == root->value->p0->x && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
+		if (flower(x_s, root->value->p0->x) || (feq(x_s, root->value->p0->x) && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
 			return findSegAFTERUPDATE((root->left), s, p);
 		}
 		else{
@@ -253,15 +260,16 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
 		// if the segment of root is vertical we know that m_root=0
 			
 		
-		if (x_s < x_root || (x_s == x_root && (m_s != 0.0 && (m_root < 0.0 && (m_s > 0.0 || m_s < m_root)) || (m_root >= 0.0 && ((m_s > 0.0 && m_s < m_root) || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p0->y < root->value->p0->y))) {
-			return findSegBEFOREUPDATE((root->left), s, p);
+		if (flower(x_s, x_root) || (feq(x_s, x_root) && (m_s != 0.0 && (m_root < 0.0 && (m_s > 0.0 || m_s < m_root)) || (m_root >= 0.0 && ((m_s > 0.0 && m_s < m_root) || s->p0->y == s->p1->y)) || (m_root == m_s && s->p0->y != s->p1->y && s->p0->y < root->value->p0->y)))) {
+            return findSegBEFOREUPDATE((root->left), s, p);
 		}
 		else {
+            //printf("found on right\n");
 			return findSegBEFOREUPDATE((root->right), s, p);
 		}
 	}
 	else{ // root is horizontal 
-		if (x_s < root->value->p0->x){
+		if (flower(x_s, root->value->p0->x)){
 			return findSegBEFOREUPDATE((root->left), s, p);
 		}
 		else{
@@ -360,7 +368,9 @@ Treeseg* findLeftNb(Treeseg* root, Segment* s, Point* p, bool BEFORE){ // return
 
 
 Treeseg* findRightNb(Treeseg* root, Segment* s, Point* p, bool BEFORE){ // return the closest right neighbour of root
-	if(root != NULL){
+    //printSeg(s);
+    //printTreeseg(root);
+    if(root != NULL){
 		//Treeseg* tree = malloc(sizeof(Treeseg));
         Treeseg* tree;
         // find s in root
@@ -413,10 +423,8 @@ bool findLandC(Treeseg* root, Treeseg* prev, Point* p, bool foundp, List* L, Lis
 				return foundp;
 			}else{
                 if (p->x < x_root){//p is on the left of segment in root
-                    printf("on the left:%f<%f\n",p->x,x_root);
 					return findLandC(root->left, root, p, false, L, C, LR);
 				}else{
-                    printf("on the right:%f>%f\n",p->x,x_root);
 					return findLandC(root->right, root, p, false, L, C, LR);
 				}
 			}
@@ -452,7 +460,7 @@ bool findLandC(Treeseg* root, Treeseg* prev, Point* p, bool foundp, List* L, Lis
 
 
 Segment* findLeftMost(Treeseg* root, Treeseg* prev, Point* p, bool foundp){
-	if (root != NULL){
+    if (root != NULL){
 		bool isUpper = equalPoint(root->value->p0, p);
 		bool Contain = contains(p, root->value);
 		double x_root;// x_root is the intersection point of segm. root and the sweep line
@@ -467,8 +475,10 @@ Segment* findLeftMost(Treeseg* root, Treeseg* prev, Point* p, bool foundp){
 				return prev->value;
 			}else{
 				if (p->x < x_root){//p is on the left of segment in root
+                    //printf("on the left:%f<%f\n",p->x,x_root);
 					return findLeftMost(root->left, root, p, false);
 				}else{
+                    //printf("on the left:%f<%f\n",p->x,x_root);
 					return findLeftMost(root->right, root, p, false);
 				}
 			}
