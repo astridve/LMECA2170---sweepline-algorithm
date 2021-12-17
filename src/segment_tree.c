@@ -130,7 +130,8 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 					}
 				}
 				else{ // if the segm is in the top upper node then we just take its right tree as the tree with segm deleted
-					(*root) = tree->right;
+                    tree->right->parent = NULL;
+                    (*root) = tree->right;
 					return true;
 				}
 			}
@@ -152,7 +153,8 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 					}
 				}
 				else{ // if the segm is in the top upper node then we just take its left tree as the tree with segm deleted
-					(*root) = tree->left;
+                    tree->left->parent = NULL;
+                    (*root) = tree->left;
 					//printTreeseg(*root);
 					return true;
 				}
@@ -372,7 +374,7 @@ Treeseg* findRightNb(Treeseg* root, Segment* s, Point* p, bool BEFORE){ // retur
 			return findLSeg(tree->right);
 		}
 		else{// if he node containing s has no right child then its right neighbour is the first parent node of s node that has s node on its left tree
-			return findRParent(tree);
+            return findRParent(tree);
 		}
 	}
 	return NULL;
@@ -436,7 +438,7 @@ bool findLandC(Treeseg* root, Treeseg* prev, Point* p, bool foundp, List* L, Lis
 			if (!foundp){// root contains the first segm that contains p so look for its right and left neigh
 				findLandC(leftNeigh, root, p, true, L, C, LR);
 				findLandC(rightNeigh, root, p, true, L, C, LR);
-			}else if(equalSegment(prev->value, rightNeigh->value)){// we already looked up on the right: look only for the left neigh
+			}else if(rightNeigh != NULL && (equalSegment(prev->value, rightNeigh->value))){// we already looked up on the right: look only for the left neigh
 				findLandC(leftNeigh, root, p, true, L, C, LR);
 			}else{// we already looked up on the left: look only for the right neigh
 				findLandC(rightNeigh, root, p, true, L, C, LR);

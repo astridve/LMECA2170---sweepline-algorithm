@@ -113,7 +113,7 @@ void printSeg2(Segment *s) {
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-void printBOOL(bool b){ //TODO: delete thus function
+void printBOOL(bool b){ //TODO: delete this function
     if (b){
         printf("TRUE\n");
     }else{
@@ -127,13 +127,11 @@ bool contains(Point* p, Segment* s){ // return true if the segment s contains th
 		if(s->p0->x != s->p1->x){ // s not vertical
 			m = (s->p0->y - s->p1->y)/(s->p0->x - s->p1->x);
 			oao = s->p0->y - m * s->p0->x;
-            printBOOL(p->y == m*p->x + oao);
-            printf("%f,%f ",p->y, m*p->x + oao );
 			// check if p is on the line y=mx+p and if it is between the two extremities of the segment
-			return p->y == m*p->x + oao && p->y > s->p0->y && p->y < s->p1->y;
+			return feq(p->y, m*p->x + oao) && p->y > s->p0->y && p->y < s->p1->y;
 		}
 		else{ // s is vertical: check if p is on the line with x-coordinates and between the segment extremities with y coordinates
-			return p->x == s->p0->x && p->y > s->p0->y && p->y < s->p1->y;
+			return feq(p->x, s->p0->x) && p->y > s->p0->y && p->y < s->p1->y;
 		}
 
 	}
@@ -194,6 +192,7 @@ bool insertListHead(List* list, Segment* s){
 	if(list != NULL){
 		if(list->head != NULL){
 			if(list->length == 1){
+                list->queue = list->head;
 				list->head = createListseg(s);
 				list->queue->next = list->head;
 				list->head->prev = list->queue; 
@@ -210,7 +209,7 @@ bool insertListHead(List* list, Segment* s){
 		else{
 			// printf("\nWarning: HEAD of List is NULL\n");
 			list->head = createListseg(s);
-			list->queue = list->head;
+			//list->queue = list->head;
 			//list->head->prev = list->queue;
 			//list->queue->next = list->head;
 			list->length = 1;
@@ -228,8 +227,8 @@ bool insertListQueue(List* list, Segment* s){
 	if(list != NULL){
 		if(list->queue != NULL){
 			if(list->length == 1){
+                list->head = list->queue;
 				list->queue = createListseg(s);
-				list->head = createListseg(list->head->value);
 				list->queue->next = list->head;
 				list->head->prev = list->queue; 
 				list->length += 1;
@@ -245,7 +244,7 @@ bool insertListQueue(List* list, Segment* s){
 		else{
 			// printf("\nWarning: QUEUE of List is NULL\n");
 			list->queue = createListseg(s);
-			list->head = list->queue;
+			//list->head = list->queue;
 			//list->head->prev = list->queue;
 			//list->queue->next = list->head;
 			list->length = 1;
@@ -403,11 +402,15 @@ void printList(List* list){
 	}
 	else if(list->length == 1){
 		printf("length=%d, <QUEUE> :[]:[", list->length);
-		printSeg2(list->queue->value);
+        if (list->queue!=NULL){
+            printSeg2(list->queue->value);
+        }else{
+            printSeg2(list->head->value);
+        }
 		printf("]:[]: <head>\n");
 	}
 	else {
-		printf("<QUEUE> :[]:[");
+		printf("length=%d, <QUEUE> :[]:[", list->length);
 		printListRec(list->queue);
 	}
 }
@@ -422,7 +425,7 @@ void printListRec(Listseg* node){
 		printf("]: <HEAD>\n\n");
 	}
 }
-
+/*
 void printListLight(List* list){
 	if(list == NULL){
 		printf("\nObject List is NULL\n");
@@ -451,7 +454,7 @@ void printListLightRec(Listseg* node){
 	else{
 		printf("<H>\n");
 	}
-}
+}*/
 
 
 

@@ -48,14 +48,14 @@ int main(int argc, char* argv[])
     bov_window_set_color(window, (GLfloat[4]) { 0.9, 0.9, 0.9, 1 });
     */
 
-    const GLsizei nPoints = 10;
-    GLfloat coord[10][2] = {
-            {0.0, -0.4},
-            {0.5,  0.0},
-            {0.3,  0.0},
-            {0.0, -0.9},
-            {0.8, -0.6},
-            {1.0,  0.0},
+    const GLsizei nPoints = 4;
+    GLfloat coord[4][2] = {
+            //{0.0, -0.4},
+            //{0.5,  0.0},
+            //{0.3,  0.0},
+            //{0.0, -0.9},
+            //{0.8, -0.6},
+            //{1.0,  0.0},
             {0.9,  0.3},
             {0.0,  0.8},
             {0.7,  0.6},

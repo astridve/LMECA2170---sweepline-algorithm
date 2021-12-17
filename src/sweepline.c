@@ -74,13 +74,13 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q){
             printf("(%f,%f)\n",x_inter,y_inter);
 			if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
                 Point *inter = createPoint(x_inter, y_inter);
-                printf("LEFT: ");
-                printBOOL(contains(inter,sL));
-                printf("RIGHT: ");
-                printBOOL(contains(inter,sR));
+//                printf("LEFT: ");
+//                printBOOL(contains(inter,sL));
+//                printf("RIGHT: ");
+//                printBOOL(contains(inter,sR));
 
                 if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                    printf("Intersection found\n");
+                    printf("Intersection found: (%f, %f)\n", x_inter, y_inter);
                     insertPoint(Q, inter, *Q, NULL, false);
                 }
 			}
