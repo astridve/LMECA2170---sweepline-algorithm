@@ -73,7 +73,6 @@ bool insertListHeadP(ListP* list, Point* p, List* luc){
             return true;
 		}
 		else{
-			// printf("\nWarning: HEAD of List is NULL\n");
 			list->head = createListpoint(p);
 			list->head->luc = luc;
 			list->queue = list->head;
@@ -86,6 +85,7 @@ bool insertListHeadP(ListP* list, Point* p, List* luc){
 	return false;
 }
 
+/*
 // pas de luc gestion !!!! 
 bool insertListQueueP(ListP* list, Point* p){
 	if(p == NULL){
@@ -120,7 +120,7 @@ bool insertListQueueP(ListP* list, Point* p){
 		}
 	}
 	return false;
-}
+}*/
 
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -146,6 +146,7 @@ bool delHeadP(ListP* list){
 	}
 }
 
+/*
 bool delQueueP(ListP* list){
 	if(list->length == 0){
 		// printf("\nWarning: list is empty\n");
@@ -200,7 +201,7 @@ bool delListRecP(ListP* list, Listpoint* node, Point* p){
 	}
 	// printf("\nSegment is not in list\n");
 	return false;
-}
+}*/
 
 void freeListpoint(Listpoint* LS){
     if (LS == NULL){

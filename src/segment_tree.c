@@ -43,18 +43,15 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 
 		if(root->value->p0->x != root->value->p1->x){ // segm. of root is not vertical: compute the slope and oao of segm. of root 
 			m_root = (root->value->p0->y - root->value->p1->y)/(root->value->p0->x - root->value->p1->x);
-			//p_root = root->value->p0->y - m_root*(root->value->p0->x);
 		}
 		if(s->p0->x != s->p1->x){ // s is not vertical: compute the slope and the oao of s
 			m_s = (s->p0->y - s->p1->y)/(s->p0->x - s->p1->x);
-			//p_s = s->p0->y - m_s*(s->p0->x);
 		}
 		// if the segment of root is vertical we know that m_root=0
-		
-		// probleme ici !
+
 		if (flower(p->x, x_root) || (feq(p->x, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root)) || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
 			return insertSeg(&(root->left), p, s, root);
-		}// error ici 
+		}
 		else {
 			return insertSeg(&(root->right), p, s, root);
 		}
@@ -75,9 +72,6 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 	if(*root != NULL){
         Treeseg* tree;  // find the segment in the tree
         tree = findSegBEFOREUPDATE(*root, seg, p);
-        /*if (tree == NULL){
-            tree = findSegAFTERUPDATE(*root, seg, p);
-        }*/
 
         if(tree->left == NULL && tree->right == NULL){ // The seg node is a leaf: just remove the segment node from the tree
 			if(tree->parent != NULL){ // there are other nodes in the tree
@@ -99,20 +93,13 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 			}
 			else{ // The segment is the only node in the tree so deleting seg suppress the tree
 				*root = NULL;
-                //freeTreeseg(*root);
-				//free(tree);
 				return true;
 			}
-		}
-		else if(tree->left != NULL && tree->right != NULL){ // the seg node has two children in the tree: we delete seg by replacing it by the leaf the most on the right of the left tree of the node of seg
-			//Treeseg* child = malloc(sizeof(Treeseg));
-            Treeseg* child = findRSeg(tree->left); // find the replacement, delete that node in the tree and replace in the seg node the value by the replacement value
-            delSeg(root, child->value, p);
-			//free(tree->value);
-			tree->value = child->value;
-			return true; 
-		}
-		else{ // the seg node has only one child
+		}else if(tree->left != NULL && tree->right != NULL){ // the seg node has two children in the tree: we delete seg by replacing it by the leaf the most on the right of the left tree of the node of seg
+			Treeseg* child = findRSeg(tree->left); // find the replacement, delete that node in the tree and replace in the seg node the value by the replacement value
+            *(tree->value) = *(child->value);
+            return delSeg(&(tree->left), child->value, p);
+		}else{ // the seg node has only one child
 			if(tree->left == NULL){ // child on the right
 				if(tree->parent != NULL){ // the segment is not in the top upper node: we need to rely the parent of the node of segm with the child tree of the node of segm
 					if(tree->parent->left != NULL){
@@ -160,7 +147,6 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 				else{ // if the segm is in the top upper node then we just take its left tree as the tree with segm deleted
                     tree->left->parent = NULL;
                     (*root) = tree->left;
-					//printTreeseg(*root);
 					return true;
 				}
 			}
@@ -188,7 +174,6 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 	}
 	
 	if(root->value->p0->y != root->value->p1->y){ // root n'est pas horizontal
-		//float p_root, p_s = 0.0; // (imaginary) crossing of the segments of root and segm. s with the y axis
 		double m_root, m_s = 0.0; // slopes of the segm. root and the segm. s
 		double x_root = (p->y * (root->value->p0->x - root->value->p1->x) - root->value->p1->y * root->value->p0->x + root->value->p0->y * root->value->p1->x);
 		x_root /= (root->value->p0->y - root->value->p1->y); // x_root is the intersection point of segm. root and the sweep line
@@ -196,18 +181,15 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 		
 		if(root->value->p0->x != root->value->p1->x){ // segm. of root is not vertical: compute the slope and oao of segm. of root 
 			m_root = (root->value->p0->y - root->value->p1->y)/(root->value->p0->x - root->value->p1->x);
-			//p_root = root->value->p0->y - m_root*(root->value->p0->x);
-		}
+        }
 		if(s->p0->x != s->p1->x){ // s is not vertical: compute the slope and the oao of s
 			m_s = (s->p0->y - s->p1->y)/(s->p0->x - s->p1->x);
-			//p_s = s->p0->y - m_s*(s->p0->x);
 		}
 		// if the segment of root is vertical we know that m_root=0
 			
 		
 		if (flower(x_s, x_root) || (feq(x_s, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root)) || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
-			//printf("go to left: %f<%f; %f, %f\n", x_s, x_root, m_s, m_root);
-            Treeseg *tree = findSegAFTERUPDATE((root->left), s, p);
+			Treeseg *tree = findSegAFTERUPDATE((root->left), s, p);
             if (tree != NULL){
                 return tree;
             }else {
@@ -215,7 +197,6 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
             }
 		}
 		else {
-            //printf("go to right:%f,%f\n",m_s,m_root);
             Treeseg *tree = findSegAFTERUPDATE((root->right), s, p);
             if (tree != NULL){
                 return tree;
@@ -251,7 +232,8 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
 	if (root == NULL) { // s in not in the tree root
 		return NULL;
 	}
-	if (equalPoint(s->p0, root->value->p0) && equalPoint(s->p1, root->value->p1)) { // bingo we found the node containing s
+
+	if (equalSegment(root->value, s)) { // bingo we found the node containing s
 		return root;
 	}
 	
@@ -263,38 +245,31 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
 		x_s = s->p0->x;
 	}
 	if(root->value->p0->y != root->value->p1->y){ // root n'est pas horizontal 
-		//float p_root, p_s = 0.0; // (imaginary) crossing of the segments of root and segm. s with the y axis
 		double m_root, m_s = 0.0; // slopes of the segm. root and the segm. s
 		double x_root = (p->y * (root->value->p0->x - root->value->p1->x) - root->value->p1->y * root->value->p0->x + root->value->p0->y * root->value->p1->x);
 		x_root /= (root->value->p0->y - root->value->p1->y); // x_root is the intersection point of segm. root and the sweep line
 
 		if(root->value->p0->x != root->value->p1->x){ // segm. of root is not vertical: compute the slope and oao of segm. of root 
 			m_root = (root->value->p0->y - root->value->p1->y)/(root->value->p0->x - root->value->p1->x);
-			//p_root = root->value->p0->y - m_root*(root->value->p0->x);
-		}
+        }
 		if(s->p0->x != s->p1->x){ // s is not vertical: compute the slope and the oao of s
 			m_s = (s->p0->y - s->p1->y)/(s->p0->x - s->p1->x);
-			//p_s = s->p0->y - m_s*(s->p0->x);
-		}
+        }
 		// if the segment of root is vertical we know that m_root=0
-			
-		
+
 		if (flower(x_s, x_root) || (feq(x_s, x_root) && (m_s != 0.0 && (m_root < 0.0 && (m_s > 0.0 || m_s < m_root)) || (m_root >= 0.0 && ((m_s > 0.0 && m_s < m_root) || s->p0->y == s->p1->y)) || (m_root == m_s && s->p0->y != s->p1->y && s->p0->y < root->value->p0->y)))) {
             Treeseg *tree = findSegBEFOREUPDATE((root->left), s, p);
             if (tree != NULL){
                 return tree;
             }else {
-                printf("going on right 1...\n");
                 return findSegBEFOREUPDATE((root->right), s, p);
             }
 		}
 		else {
-            //printf("found on right\n");
             Treeseg *tree = findSegBEFOREUPDATE((root->right), s, p);
             if (tree != NULL){
                 return tree;
             }else {
-                printf("going on left 1...\n");
                 return findSegBEFOREUPDATE((root->left), s, p);
             }
 		}
@@ -305,7 +280,6 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
             if (tree != NULL){
                 return tree;
             }else {
-                printf("going on right 2...\n");
                 return findSegBEFOREUPDATE((root->right), s, p);
             }
 		}
@@ -314,7 +288,6 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
             if (tree != NULL){
                 return tree;
             }else {
-                printf("going on left 2...\n");
                 return findSegBEFOREUPDATE((root->left), s, p);
             }
 		}
@@ -389,19 +362,17 @@ Treeseg* findRParent(Treeseg* root){ // return the first parent node of root tha
 
 Treeseg* findLeftNb(Treeseg* root, Segment* s, Point* p, bool BEFORE){ // return the closest left neighbour of root
 	if(root != NULL){
-		//Treeseg* tree = malloc(sizeof(Treeseg));
-        Treeseg* tree;
-		// find s in root
+        Treeseg* tree; // find s in root
 		if (BEFORE){
 			tree = findSegBEFOREUPDATE(root, s, p);
 		}else{
 			tree = findSegAFTERUPDATE(root, s, p);
 		}
 		
-		if(tree->left != NULL){ // if the node containing s has a left child then its left neigbour is on the most right point of its left child tree
+		if(tree->left != NULL){ // if the node containing s has a left child then its left neighbour is on the most right point of its left child tree
 			return findRSeg(tree->left);
 		}
-		else{ // if he node containing s has no left child then its left neighbour is the first parent node of s node that has s node on its right tree
+		else{ // if the node containing s has no left child then its left neighbour is the first parent node of s node that has s node on its right tree
 			return findLParent(tree);
 		}
 	}
@@ -411,12 +382,8 @@ Treeseg* findLeftNb(Treeseg* root, Segment* s, Point* p, bool BEFORE){ // return
 
 
 Treeseg* findRightNb(Treeseg* root, Segment* s, Point* p, bool BEFORE){ // return the closest right neighbour of root
-    //printSeg(s);
-    //printTreeseg(root);
     if(root != NULL){
-		//Treeseg* tree = malloc(sizeof(Treeseg));
-        Treeseg* tree;
-        // find s in root
+        Treeseg* tree; // find s in root
 		if (BEFORE){
 			tree = findSegBEFOREUPDATE(root, s, p);
 		}else{
@@ -426,7 +393,7 @@ Treeseg* findRightNb(Treeseg* root, Segment* s, Point* p, bool BEFORE){ // retur
 		if(tree->right != NULL){ // if the node containing s has a right child then its right neigbour is on the most left point of its right child tree
 			return findLSeg(tree->right);
 		}
-		else{// if he node containing s has no right child then its right neighbour is the first parent node of s node that has s node on its left tree
+		else{ // if he node containing s has no right child then its right neighbour is the first parent node of s node that has s node on its left tree
             return findRParent(tree);
 		}
 	}
@@ -439,7 +406,7 @@ bool findLandC(Treeseg* root, Treeseg* prev, Point* p, bool foundp, List* L, Lis
 	if (root != NULL){
 		bool isLower = equalPoint(root->value->p1, p);
 		bool Contain = contains(p, root->value);
-		double x_root;// x_root is the intersection point of segm. root and the sweep line
+		double x_root; // x_root is the intersection point of segm. root and the sweep line
 		if (root->value->p0->y != root->value->p1->y){
 			x_root = (p->y * (root->value->p0->x - root->value->p1->x) - root->value->p1->y * root->value->p0->x + root->value->p0->y * root->value->p1->x);
 			x_root /= (root->value->p0->y - root->value->p1->y); 
@@ -447,8 +414,8 @@ bool findLandC(Treeseg* root, Treeseg* prev, Point* p, bool foundp, List* L, Lis
 			x_root = root->value->p0->x;
 		}
 
-        if (!(isLower||Contain)){//the point is not in the segment of the root node
-			if (foundp){// we found the last right or left segment that contains p in root
+        if (!(isLower||Contain)){ // the point is not in the segment of the root node
+			if (foundp){ // we found the last right or left segment that contains p in root
 				Treeseg* RN = findRightNb(root, root->value, p, true) ;
                 if (RN != NULL){
                     if (equalSegment(prev->value, RN->value)) {
@@ -465,7 +432,7 @@ bool findLandC(Treeseg* root, Treeseg* prev, Point* p, bool foundp, List* L, Lis
 				}
 				return foundp;
 			}else{
-                if (p->x < x_root){//p is on the left of segment in root
+                if (p->x < x_root){ // p is on the left of segment in root
 					return findLandC(root->left, root, p, false, L, C, LR);
 				}else{
 					return findLandC(root->right, root, p, false, L, C, LR);
@@ -474,9 +441,7 @@ bool findLandC(Treeseg* root, Treeseg* prev, Point* p, bool foundp, List* L, Lis
 
 		}else{//p is on segment in root
 			//Find left and right neighbours of root
-			//Treeseg* rightNeigh = malloc(sizeof(Treeseg));
             Treeseg* rightNeigh = findRightNb(root, root->value, p, true);
-			//Treeseg* leftNeigh = malloc(sizeof(Treeseg));
             Treeseg* leftNeigh = findLeftNb(root, root->value, p, true);
 			
 			// update L and C
@@ -519,27 +484,12 @@ Segment* findLeftMost(Treeseg* root, Treeseg* prev, Point* p, bool foundp){
 				return prev->value;
 			}else{
 				if (p->x < x_root){//p is on the left of segment in root
-                    //printf("on the left:%f<%f\n",p->x,x_root);
 					return findLeftMost(root->left, root, p, false);
 				}else{
-                    //printf("on the left:%f<%f\n",p->x,x_root);
 					return findLeftMost(root->right, root, p, false);
 				}
 			}
 		}else{//p is on segment in root
-            /*
-			//Find left and right neighbours of root
-			//Treeseg* rightNeigh = malloc(sizeof(Treeseg));
-            Treeseg* rightNeigh = findRightNb(root, root->value, p, false);
-			//Treeseg* leftNeigh = malloc(sizeof(Treeseg));
-            if (rightNeigh != NULL){
-                Treeseg* leftNeigh = findLeftNb(root, root->value, p, false);
-
-                if (!foundp || equalSegment(prev->value, rightNeigh->value)){// root contains the first segm that contains p so look for its right and left neigh
-                    //free(rightNeigh);
-                    return findLeftMost(leftNeigh, root, p, true);
-                }
-            }*/
             Treeseg* leftNeigh = findLeftNb(root, root->value, p, false);
             return findLeftMost(leftNeigh, root, p, true);
 		}
@@ -572,19 +522,6 @@ Segment* findRightMost(Treeseg* root, Treeseg* prev, Point* p, bool foundp){
 			}
 
 		}else{//p is on segment in root
-            /*
-			//Find left and right neighbours of root
-			//Treeseg* rightNeigh = malloc(sizeof(Treeseg));
-
-			//Treeseg* leftNeigh = malloc(sizeof(Treeseg));
-            Treeseg* leftNeigh = findLeftNb(root, root->value, p, false);
-            if (leftNeigh != NULL){
-                Treeseg* rightNeigh = findRightNb(root, root->value, p, false);
-                if (!foundp || equalSegment(prev->value, leftNeigh->value)){// root contains the first segm that contains p so look for its right and left neigh
-                    //free(leftNeigh);
-                    return findRightMost(rightNeigh, root, p, true);
-                }
-            }*/
             Treeseg* rightNeigh = findRightNb(root, root->value, p, false);
             return findRightMost(rightNeigh, root, p, true);
 		}

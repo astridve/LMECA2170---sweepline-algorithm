@@ -59,13 +59,9 @@ void printPoint(Point *p) {
 Segment *createSegment(Point *p0, Point *p1, int value) { // Segments are such that P0 is the upper point of the segment and P1 is the lower point
 	Segment *s = malloc(sizeof(Segment));
 	if (s != NULL) {
-		if (p0->y < p1->y) {
+		if (p0->y < p1->y || (p0->y == p1->y && p0->x < p1->x)) {
 			s->p0 = p0;
 			s->p1= p1;
-		}
-		else if (p0->y == p1->y && p0->x < p1->x) {
-			s->p0 = p0;
-			s->p1 = p1;
 		}
 		else{
 			s->p0 = p1;
@@ -77,7 +73,7 @@ Segment *createSegment(Point *p0, Point *p1, int value) { // Segments are such t
 }
 
 bool equalSegment(Segment* s0, Segment* s1){ // return true if the two segments are equal (do not look at the value, only the coordinates of the two points of the segments)
-	return(equalPoint(s0->p1, s1->p1) && equalPoint(s0->p0, s1->p0));
+	return(s0->value == s1->value);
 }
 
 
@@ -362,7 +358,7 @@ List* concatenate2(List* l1, List* l2){
             if (l2->length == 1 && l2->queue != NULL){
                 tmp->queue = l2->queue;
             }else if(l2->length==1 && l2->head != NULL){
-                tmp->queue = l2->queue;
+                tmp->queue = l2->head;
             }else{
                 insertList(tmp, l2->head);
             }

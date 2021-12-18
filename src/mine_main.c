@@ -7,11 +7,10 @@
 #include "geometry.h"
 #include "sweepline.h"
 
-
-List* fromTab2List(GLfloat coord[][2], GLsizei nPoints){
+List* toSegList(GLfloat coord[][2], GLsizei nPoints){
 	//List* segmentList = malloc(sizeof(List));
     List* segmentList = createVoidList();
-	
+
 	for (GLsizei i=0; i<nPoints; i+=2) {
 		insertListHead(segmentList, createSegment(createPoint(coord[i][0], -coord[i][1]), createPoint(coord[i+1][0], -coord[i+1][1]), i/2));
 	}
@@ -48,7 +47,7 @@ int main(int argc, char* argv[])
     bov_window_set_color(window, (GLfloat[4]) { 0.9, 0.9, 0.9, 1 });
 
 
-    const GLsizei nPoints = 10;
+    const GLsizei nPoints = 10000;
     /*
     GLfloat coord[14][2] = {
             {0.0, -0.4},
@@ -65,11 +64,18 @@ int main(int argc, char* argv[])
             {0.1, -0.9},
             {9, -10},
             {7, 3}
+    };
+    GLfloat coord[4][2] = {
+            {-1, 1},
+            {1,  -1},
+            {-1,  -1},
+            {1, 1},
     };*/
 	GLfloat (*coord)[2] = malloc(sizeof(coord[0])*nPoints);
 
     GLfloat range = 5;
-    random_uniform_points(coord, nPoints, (GLfloat[2]) {-range, -range}, (GLfloat[2]) { range,  range});
+    //random_uniform_points(coord, nPoints, (GLfloat[2]) {-range, -range}, (GLfloat[2]) { range,  range});
+    random_points(coord, nPoints);
 
     bov_points_t* segment = bov_points_new(coord, nPoints, GL_STATIC_DRAW);
 
@@ -89,8 +95,9 @@ int main(int argc, char* argv[])
     bov_window_delete(window);
 
     //#############################################################################################################
-    List* segmentList = fromTab2List(&coord, nPoints);
-    ListP* intersections = FindIntersections(segmentList);
+    dataStruct* data = initDataStruct();
+    List* segmentList = toSegList(coord, nPoints);
+    ListP* intersections = FindIntersections(segmentList, data);
     printListP(intersections);
     //freeList(segmentList);
 

@@ -71,76 +71,33 @@ Point* delPoint(Treenode **root){ // Delete the point the most on the left of th
 		return delPoint(&((*root)->left));
 	}
 	else{// we have reach the point
-        //printf("BINGO\n");
 		if((*root)->parent != NULL && (*root)->right != NULL){ // link the parent of the node with its right child
-			//printf("right child exists\n");
             Point* p = (*root)->value;
 			(*root)->right->parent = (*root)->parent;
 			(*root)->parent->left = (*root)->right;
-            //printf("still ok\n");
-            //freeTreenode(root);
-            //printf("if ok wtf\n");
 			return p;
 		}
 		if((*root)->parent != NULL && (*root)->right == NULL){ // the parent of the node is now a leaf
-			//printf("parent becomes leaf\n");
             Point* p = (*root)->value;
-            //freeTreenode(root);
-            //printf("still ok\n");
 			(*root)->parent->left = NULL;
-            //printf("if ok wtf\n");
 			return p;
 		}
 		else if((*root)->parent== NULL && (*root)->right != NULL){ // the right child becomes the upper parent of the tree
-			//printf("Right child is the boss\n");
             Point *p = (*root)->value;
 			(*root) = (*root)->right;
 			(*root)->parent = NULL;
-            //printf("still ok\n");
-            //freeTreenode(root);
-            //printf("if ok wtf\n");
 			return p;
 		}
 		else { // the point is the only node remaining in the tree
             printf("Last point in the tree\n");
             Point *p = (*root)->value;
             (*root) = NULL;
-            //printf("still ok\n");
-            //freeTreenode(root);
-            //printf("if ok wtf\n");
             return p;
 		}
 		
 	}
 }
 
-
-/*
-bool checkTree(Treenode* root){
-	if(root != NULL){
-		if(root-> left != NULL){
-			insertPoint(&root->left, root->value, root, false, true);
-			checkTree(root->left);
-			if (root->right != NULL){
-				if(root->right->left != NULL || root->right->right != NULL){
-					checkTree(root->right);
-				}
-			}
-			return true;
-		}
-		else{
-			root->left = createNode(root->value);
-			root->left->parent = root;
-			if (root->right != NULL){
-				if(root->right->left != NULL || root->right->right != NULL){
-					checkTree(root->right);
-				}
-			}
-			return true;
-		}
-	}
-	return false; 
-}*/
 
 void freeTreenode(Treenode* root){
     if (root == NULL){
