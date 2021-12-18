@@ -20,7 +20,7 @@ Treeseg *createSeg(Segment *s) {
 
 bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // insert the segment s in the tree; p is the node being analyzed on the sweep line (needed to know where the segments cross the horizontal sweep line)
 	Treeseg *root = *rootptr;
-    if(root == NULL){//the tree is empty
+    if(root == NULL){ // the tree is empty
         (*rootptr) = createSeg(s);
 		if (parent != NULL){ // if nodes are already in the tree we need to link the parent
 			(*rootptr)->parent = parent;
@@ -30,12 +30,11 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 		}
 		return true;
 	}
-	if (equalPoint(s->p0, root->value->p0) && equalPoint(s->p1, root->value->p1)) { // the segment is already in the tree so we do nothing
+	if (equalSegment(root->value, s)) { // the segment is already in the tree, so we do nothing
 		return false;
 	}
 
 	if(root->value->p0->y != root->value->p1->y){ // the segment in root is not horizontal 
-		//float p_root, p_s = 0.0; // (imaginary) crossing of the segments of root and segm. s with the y axis
 		double m_root, m_s = 0.0; // slopes of the segm. root and the segm. s
 		double x_root = (p->y * (root->value->p0->x - root->value->p1->x) - root->value->p1->y * root->value->p0->x + root->value->p0->y * root->value->p1->x);
 		x_root/=(root->value->p0->y - root->value->p1->y); // x_root is the intersection point of segm. root and the sweep line
@@ -49,7 +48,9 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 		}
 		// if the segment of root is vertical we know that m_root=0
 
-		if (flower(p->x, x_root) || (feq(p->x, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root)) || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
+		if (flower(p->x, x_root) || (feq(p->x, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root))
+                                                       || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || feq(s->p0->y, s->p1->y))))
+                                                       || (m_root == m_s && !feq(s->p0->y, s->p1->y) && flower(s->p1->y, root->value->p1->y)))) {
 			return insertSeg(&(root->left), p, s, root);
 		}
 		else {
@@ -188,7 +189,9 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 		// if the segment of root is vertical we know that m_root=0
 			
 		
-		if (flower(x_s, x_root) || (feq(x_s, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root)) || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))) || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
+		if (flower(x_s, x_root) || (feq(x_s, x_root) && (!feq(m_s, 0.0) && (fgreater(m_root, 0.0) && (m_s <= 0.0 || fgreater(m_s, m_root)))
+                                                     || (m_root <= 0.0 && (fgreater(m_s, m_root) && flower(m_s, 0)) || feq(s->p0->y, s->p1->y)))
+                                                     || (feq(m_root, m_s) && !feq(s->p0->y, s->p1->y) && flower(s->p1->y, root->value->p1->y)))) {
 			Treeseg *tree = findSegAFTERUPDATE((root->left), s, p);
             if (tree != NULL){
                 return tree;
@@ -206,7 +209,7 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 		}
 	}
 	else{ // root is horizontal 
-		if (flower(x_s, root->value->p0->x) || (feq(x_s, root->value->p0->x) && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
+		if (flower(x_s, root->value->p0->x) || (feq(x_s, root->value->p0->x) && flower(s->p1->x, root->value->p1->x) && feq(s->p0->y, s->p1->y))){
             Treeseg *tree = findSegAFTERUPDATE((root->left), s, p);
             if (tree != NULL){
                 return tree;
@@ -257,7 +260,9 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
         }
 		// if the segment of root is vertical we know that m_root=0
 
-		if (flower(x_s, x_root) || (feq(x_s, x_root) && (m_s != 0.0 && (m_root < 0.0 && (m_s > 0.0 || m_s < m_root)) || (m_root >= 0.0 && ((m_s > 0.0 && m_s < m_root) || s->p0->y == s->p1->y)) || (m_root == m_s && s->p0->y != s->p1->y && s->p0->y < root->value->p0->y)))) {
+		if (flower(x_s, x_root) || (feq(x_s, x_root) && (m_s != 0.0 && (flower(m_root, 0.0) && (fgreater(m_s, 0.0) || flower(m_s, m_root)))
+                                                     || (m_root >= 0.0 && ((m_s > 0.0 && m_s < m_root) || feq(s->p0->y, s->p1->y)))
+                                                     || (feq(m_root, m_s) && !feq(s->p0->y, s->p1->y) && flower(s->p0->y, root->value->p0->y))))) {
             Treeseg *tree = findSegBEFOREUPDATE((root->left), s, p);
             if (tree != NULL){
                 return tree;

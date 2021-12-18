@@ -31,7 +31,7 @@ Point *createPoint(double x, double y) {
 
 bool equalPoint(Point *p1, Point *p2){ // return true if the two points are equal (do not look at the value, only the coordinates)
 	if(p1 != NULL && p2 != NULL){
-		return (p1->x == p2->x && p1->y == p2->y);
+		return (feq(p1->x, p2->x) && feq(p1->y, p2->y));
 	}
 	return false;
 }
@@ -73,7 +73,10 @@ Segment *createSegment(Point *p0, Point *p1, int value) { // Segments are such t
 }
 
 bool equalSegment(Segment* s0, Segment* s1){ // return true if the two segments are equal (do not look at the value, only the coordinates of the two points of the segments)
-	return(s0->value == s1->value);
+	if (s0 != NULL && s1 != NULL){
+        return (s0->value == s1->value || (equalPoint(s0->p0, s1->p0) && equalPoint(s0->p1, s1->p1)));
+    }
+    return false;
 }
 
 

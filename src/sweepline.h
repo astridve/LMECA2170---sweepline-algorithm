@@ -35,9 +35,11 @@ ListP* FindIntersections2(List*, dataStruct*, Point*);
 
 
 List* fromTab2List(GLfloat[][2], GLsizei);
-void fromListP2Tab(ListP*, GLfloat[][2]);
-//GLfloat* fromTreeseg2Tab(Treeseg*);
-//GLfloat* fromTreenode2Tab(Treenode*);
+bool fromListP2Tab(ListP*, GLfloat[][2]);
+bool fromTreeseg2Tab(Treeseg*, GLfloat[][2]);
+bool fromTreenode2Tab(Treenode*, GLfloat[][2]);
 bool fromTreeseg2ListP(ListP*, Treeseg*);
 bool fromTreenode2ListP(ListP*, Treenode*);
+int TreenodeSize(Treenode*);
+int TreesegSize(Treeseg*);
 #endif

@@ -2,7 +2,7 @@
 #define GEOMETRY_H_
 
 #ifndef tol
-#define tol 0.00000001
+#define tol 0.00001
 #endif
 
 #include <stdio.h>

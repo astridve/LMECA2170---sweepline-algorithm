@@ -40,12 +40,12 @@ int main(int argc, char* argv[])
 	// we print the seed so you can get the distribution of points back
 	printf("seed=%d\n", seed);
 
-    bov_window_t* window = bov_window_new(0, 0, argv[0]);
+    /*bov_window_t* window = bov_window_new(0, 0, argv[0]);
     bov_window_enable_help(window);
 
     // a grey background
     bov_window_set_color(window, (GLfloat[4]) { 0.9, 0.9, 0.9, 1 });
-
+    */
 
     const GLsizei nPoints = 10000;
     /*
@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
     //random_uniform_points(coord, nPoints, (GLfloat[2]) {-range, -range}, (GLfloat[2]) { range,  range});
     random_points(coord, nPoints);
 
+    /*
     bov_points_t* segment = bov_points_new(coord, nPoints, GL_STATIC_DRAW);
 
     // we want to keep the window open with everything displayed...
@@ -92,7 +93,7 @@ int main(int argc, char* argv[])
     printf("Ended correctly - %.2f second\n", window->wtime);
 
     bov_points_delete(segment);
-    bov_window_delete(window);
+    bov_window_delete(window);*/
 
     //#############################################################################################################
     dataStruct* data = initDataStruct();

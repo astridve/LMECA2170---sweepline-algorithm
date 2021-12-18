@@ -226,16 +226,23 @@ List* fromTab2List(GLfloat coord[][2], GLsizei nPoints){
     return segmentList;
 }
 
-void fromListP2Tab(ListP* list, GLfloat coord[][2]){
+bool fromListP2Tab(ListP* list, GLfloat coord[][2]){
+    //GLfloat(*coord)[2] = malloc(sizeof(coord[0]) * list->length);
     int i = 0;
     for (Listpoint* curr = list->head; curr != NULL; curr = curr->prev) {
-        i += 1;
         coord[i][0] = (GLfloat)curr->value->x;
         coord[i][1] = -(GLfloat)curr->value->y;
+        i += 1;
     }
+    /*for (int i = 0; i < list->length; i += 1) {
+        coord[i][0] = (GLfloat)list->head->value->x;
+        coord[i][1] = (GLfloat)list->head->value->y;
+        delHeadP(list);
+    }*/
+    return true;
 }
 
-/*
+
 bool fromTreenode2ListP(ListP* list, Treenode* tree){
     if(tree == NULL){
         return false;
@@ -273,14 +280,29 @@ bool fromTreeseg2ListP(ListP* list, Treeseg* tree){
     }
 }
 
-GLfloat* fromTreenode2Tab(Treenode* tree){
+bool fromTreenode2Tab(Treenode* tree, GLfloat tab[][2]){
     ListP* list = createVoidListP();
     fromTreenode2ListP(list, tree);
-    return fromListP2Tab(list);
+    fromListP2Tab(list, tab);
+    return true;
 }
 
-GLfloat* fromTreeseg2Tab(Treeseg* tree){
+bool fromTreeseg2Tab(Treeseg* tree, GLfloat tab[][2]){
     ListP* list = createVoidListP();
     fromTreeseg2ListP(list, tree);
-    return fromListP2Tab(list);
-}*/
+    fromListP2Tab(list, tab);
+    return true;
+}
+
+int TreesegSize(Treeseg* tree) {
+    ListP* list = createVoidListP();
+    fromTreeseg2ListP(list, tree);
+    return list->length;
+}
+
+
+int TreenodeSize(Treenode* tree) {
+    ListP* list = createVoidListP();
+    fromTreenode2ListP(list, tree);
+    return list->length;
+}
