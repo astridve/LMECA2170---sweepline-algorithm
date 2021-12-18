@@ -115,8 +115,8 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q){
 
 	findLandC(Tau, NULL, p, false, L, C, RLNeigh);
 
-    //printList(L);
-    //printList(C);
+    printList(L);
+    printList(C);
 
     int lengthT = 0;
     if (p->U != NULL){lengthT += p->U->length;}
@@ -165,7 +165,6 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q){
 		Segment* RightMost = malloc(sizeof(Segment));
 		Segment* LeftNeigh = malloc(sizeof(Segment));
 		Segment* RightNeigh = malloc(sizeof(Segment));*/
-
         Segment* LeftMost = findLeftMost(Tau, NULL, p, false);
         Segment* RightMost = findRightMost(Tau, NULL, p, false);
         Segment* LeftNeigh = NULL;

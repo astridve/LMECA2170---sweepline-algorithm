@@ -84,6 +84,7 @@ List *createList(Segment*);
 
 bool insertListHead(List*, Segment*);
 bool insertListQueue(List*, Segment*);
+bool inserList(List*, Listseg*);
 
 bool delHead(List*);
 //bool delQueue(List*);

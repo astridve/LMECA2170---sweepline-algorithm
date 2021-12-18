@@ -255,6 +255,15 @@ bool insertListQueue(List* list, Segment* s){
 }
 
 
+bool insertList(List* l1, Listseg* l2){//length l2 must be >1
+    if (l2 != NULL){
+        insertListHead(l1, l2->value);
+        return insertList(l1, l2->prev);
+    }
+    return false;
+}
+
+
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% DELETE A SEGMENT IN LIST
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -345,22 +354,19 @@ List* concatenate(List* l1, List* l2, List* l3){
 }
 
 List* concatenate2(List* l1, List* l2){
-	if(l1 != NULL && l1->length >= 1){
-		if(l2 != NULL && l2->length >= 1){
-			List* tmp = createVoidList();
+    List* tmp = createVoidList();
+	if(l1 != NULL){
+        *tmp = *l1;
+		if(l2 != NULL){
 
-            if ((l1->length == 1 && l1->head != NULL) || l1->length>1){
-                tmp->head = l1->head;
-            }else{
-                tmp->head = l1->queue;
-            }
-
-            if ((l2->length == 1 && l1->queue != NULL) || l2->length>1){
+            if (l2->length == 1 && l2->queue != NULL){
+                tmp->queue = l2->queue;
+            }else if(l2->length==1 && l2->head != NULL){
                 tmp->queue = l2->queue;
             }else{
-                tmp->queue = l2->head;
+                insertList(tmp, l2->head);
             }
-
+            /*
             if (l1->queue != NULL && l2->head != NULL){
                 l1->queue->next = l2->head;
                 l2->head->prev = l1->queue;
@@ -378,17 +384,14 @@ List* concatenate2(List* l1, List* l2){
             tmp->length = l1->length+l2->length;
 			//freeList(l1);
 			//freeList(l2);
-			return tmp;
-		}
-		else{ // l2 == NULL
-			//freeList(l2);
-			return l1;
+			return tmp;*/
 		}
 	}
 	else{ // l1 == NULL
 		//freeList(l1);
-		return l2;
+        *tmp = *l2;
 	}
+    return tmp;
 }
 
 

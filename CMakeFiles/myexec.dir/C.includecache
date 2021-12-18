@@ -6,18 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.c
-stdio.h
--
-stdlib.h
--
-stdbool.h
--
-time.h
--
-geometry.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
-
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
 stdio.h
 -
@@ -50,20 +38,6 @@ geometry.h
 sweepline.h
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/sweepline.h
 
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/point_list.c
-stdio.h
--
-stdlib.h
--
-stdbool.h
--
-time.h
--
-geometry.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
-point_list.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/point_list.h
-
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/point_list.h
 stdio.h
 -
@@ -75,20 +49,6 @@ time.h
 -
 geometry.h
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
-
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/point_tree.c
-stdio.h
--
-stdlib.h
--
-stdbool.h
--
-time.h
--
-geometry.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
-point_tree.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/point_tree.h
 
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/point_tree.h
 stdio.h
@@ -102,20 +62,6 @@ time.h
 geometry.h
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
 
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/segment_tree.c
-stdio.h
--
-stdlib.h
--
-stdbool.h
--
-time.h
--
-geometry.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
-segment_tree.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/segment_tree.h
-
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/segment_tree.h
 stdio.h
 -
@@ -127,26 +73,6 @@ time.h
 -
 geometry.h
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
-
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/sweepline.c
-stdio.h
--
-stdlib.h
--
-stdbool.h
--
-time.h
--
-geometry.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/geometry.h
-point_tree.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/point_tree.h
-segment_tree.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/segment_tree.h
-point_list.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/point_list.h
-sweepline.h
-/home/avekemans/Documents/Numerical Geometry/NGP-master/src/sweepline.h
 
 /home/avekemans/Documents/Numerical Geometry/NGP-master/src/sweepline.h
 stdio.h

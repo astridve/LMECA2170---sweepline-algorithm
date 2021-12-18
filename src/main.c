@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
     bov_window_set_color(window, (GLfloat[4]) { 0.9, 0.9, 0.9, 1 });
 
 
-    const GLsizei nPoints = 50;
+    const GLsizei nPoints = 10;
     /*
     GLfloat coord[14][2] = {
             {0.0, -0.4},
@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     };*/
 	GLfloat (*coord)[2] = malloc(sizeof(coord[0])*nPoints);
 
-    GLfloat range = 10;
+    GLfloat range = 5;
     random_uniform_points(coord, nPoints, (GLfloat[2]) {-range, -range}, (GLfloat[2]) { range,  range});
 
     bov_points_t* segment = bov_points_new(coord, nPoints, GL_STATIC_DRAW);

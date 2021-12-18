@@ -238,12 +238,12 @@ void printListP(ListP* list){
 		printf("\nList is empty\n");
 	}
 	else if(list->length == 1){
-		printf("\n<QUEUE> :[]:[");
+		printf("\nlength = %d, <QUEUE> :[]:[", list->length);
 		printPoint(list->queue->value);
 		printf("]:[]: <head>\n");
 	}
 	else {
-		printf("\n<QUEUE> :[]:[");
+		printf("\nlength = %d, <QUEUE> :[]:[", list->length);
 		printListRecP(list->queue);
 	}
 }
