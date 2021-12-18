@@ -345,13 +345,37 @@ List* concatenate(List* l1, List* l2, List* l3){
 }
 
 List* concatenate2(List* l1, List* l2){
-	if(l1 != NULL && l1->head != NULL && l1->queue != NULL){
-		if(l2 != NULL && l2->head != NULL && l2->queue != NULL){
+	if(l1 != NULL && l1->length >= 1){
+		if(l2 != NULL && l2->length >= 1){
 			List* tmp = createVoidList();
-			tmp->head = l1->head; 
-			tmp->queue = l2->queue; 
-			l1->queue->next = l2->head;
-			l2->head->prev = l1->queue;
+
+            if ((l1->length == 1 && l1->head != NULL) || l1->length>1){
+                tmp->head = l1->head;
+            }else{
+                tmp->head = l1->queue;
+            }
+
+            if ((l2->length == 1 && l1->queue != NULL) || l2->length>1){
+                tmp->queue = l2->queue;
+            }else{
+                tmp->queue = l2->head;
+            }
+
+            if (l1->queue != NULL && l2->head != NULL){
+                l1->queue->next = l2->head;
+                l2->head->prev = l1->queue;
+            }else if(l1->queue == NULL && l2->head != NULL){
+                l1->head->next = l2->head;
+                l2->head->prev = l1->head;
+            }else if(l1->queue != NULL && l2->head == NULL){
+                l1->queue->next = l2->queue;
+                l2->queue->prev = l1->queue;
+            }else{
+                l1->head->next = l2->queue;
+                l2->queue->prev = l1->head;
+            }
+
+            tmp->length = l1->length+l2->length;
 			//freeList(l1);
 			//freeList(l2);
 			return tmp;
