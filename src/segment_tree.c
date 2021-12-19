@@ -35,7 +35,7 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 	}
 
 	if(root->value->p0->y != root->value->p1->y){ // the segment in root is not horizontal 
-		double m_root, m_s = 0.0; // slopes of the segm. root and the segm. s
+		double m_root = 0.0, m_s = 0.0; // slopes of the segm. root and the segm. s
 		double x_root = (p->y * (root->value->p0->x - root->value->p1->x) - root->value->p1->y * root->value->p0->x + root->value->p0->y * root->value->p1->x);
 		x_root/=(root->value->p0->y - root->value->p1->y); // x_root is the intersection point of segm. root and the sweep line
 		// Note that p is the intersection of s with the sweep line
@@ -49,20 +49,20 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 		// if the segment of root is vertical we know that m_root=0
 
         /*printf("INSERT -- x:%f, %f -- slope: %f, %f\n", p->x, x_root, m_s, m_root);
-        if (p->x == x_root){
-            printf('equal intersection with sl\n');
+        if (p->x < x_root){
+            printf("equal intersection with sl\n");
         }*/ //TODO: DELETE
 
-        if (p->x < x_root || (feq(p->x, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s < 0.0 || m_s > m_root))
-                                            || (m_root <= 0.0 && (m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))
-                                            || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
+        if ((p->x < x_root && !feq(p->x, x_root)) || (feq(p->x, x_root) && ((m_root > 0.0 && (m_s <= 0.0 || m_s > m_root))
+                                            || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))
+                                            || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y)))) {
 			return insertSeg(&(root->left), p, s, root);
 		}else {
 			return insertSeg(&(root->right), p, s, root);
 		}
 	}
 	else{ // the segment in root is horizontal 
-		if (p->x < root->value->p0->x || (p->x == root->value->p0->x && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
+		if ((p->x < root->value->p0->x && !feq(p->x, root->value->p0->x)) || (p->x == root->value->p0->x && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
 			return insertSeg(&(root->left), p, s, root);
 		}
 		else{
@@ -177,7 +177,7 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 	}
 	
 	if(root->value->p0->y != root->value->p1->y){ // root n'est pas horizontal
-		double m_root, m_s = 0.0; // slopes of the segm. root and the segm. s
+		double m_root = 0.0, m_s = 0.0; // slopes of the segm. root and the segm. s
 		double x_root = (p->y * (root->value->p0->x - root->value->p1->x) - root->value->p1->y * root->value->p0->x + root->value->p0->y * root->value->p1->x);
 		x_root /= (root->value->p0->y - root->value->p1->y); // x_root is the intersection point of segm. root and the sweep line
 		
@@ -191,9 +191,9 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 		// if the segment of root is vertical we know that m_root=0
 
 
-        if (x_s < x_root || (feq(x_s, x_root) && (m_s != 0.0 && (m_root > 0.0 && (m_s <= 0.0 || m_s > m_root))
-                                          || (m_root <= 0.0 && (m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))
-                                          || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y))) {
+        if ((x_s < x_root && !feq(x_s, x_root)) || (feq(x_s, x_root) && ((m_root > 0.0 && (m_s < 0.0 || m_s > m_root))
+                                          || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))
+                                          || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y)))) {
 			Treeseg *tree = findSegAFTERUPDATE((root->left), s, p);
             if (tree != NULL){
                 return tree;
@@ -210,7 +210,7 @@ Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and r
 		}
 	}
 	else{ // root is horizontal 
-		if (x_s < root->value->p0->x || (x_s == root->value->p0->x && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
+		if ((x_s < root->value->p0->x && !feq(p->x, root->value->p0->x)) || (x_s == root->value->p0->x && s->p1->x < root->value->p1->x && s->p0->y == s->p1->y)){
             Treeseg *tree = findSegAFTERUPDATE((root->left), s, p);
             if (tree != NULL){
                 return tree;
@@ -249,7 +249,7 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
 		x_s = s->p0->x;
 	}
 	if(root->value->p0->y != root->value->p1->y){ // root n'est pas horizontal 
-		double m_root, m_s = 0.0; // slopes of the segm. root and the segm. s
+		double m_root = 0.0, m_s = 0.0; // slopes of the segm. root and the segm. s
 		double x_root = (p->y * (root->value->p0->x - root->value->p1->x) - root->value->p1->y * root->value->p0->x + root->value->p0->y * root->value->p1->x);
 		x_root /= (root->value->p0->y - root->value->p1->y); // x_root is the intersection point of segm. root and the sweep line
 
@@ -261,8 +261,8 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
         }
 		// if the segment of root is vertical we know that m_root=0
 
-		if (x_s < x_root || (feq(x_s, x_root) && (m_s != 0.0 && (m_root < 0.0 && (m_s > 0.0 || m_s < m_root))
-                                               || (m_root >= 0.0 && ((m_s > 0.0 && m_s < m_root) || s->p0->y == s->p1->y))
+		if ((x_s < x_root && !feq(x_s, x_root)) || (feq(x_s, x_root) && ((m_root < 0.0 && (m_s >= 0.0 || m_s < m_root))
+                                               || (m_root >= 0.0 && m_s > 0.0 && m_s < m_root)
                                                || (m_root == m_s && s->p0->y != s->p1->y && s->p0->y < root->value->p0->y)))) {
             Treeseg *tree = findSegBEFOREUPDATE((root->left), s, p);
             if (tree != NULL){
@@ -281,7 +281,7 @@ Treeseg* findSegBEFOREUPDATE(Treeseg* root, Segment* s, Point* p) { // find and 
 		}
 	}
 	else{ // root is horizontal 
-		if (x_s < root->value->p0->x){
+		if (x_s < root->value->p0->x && !feq(x_s, root->value->p0->x)){
             Treeseg *tree = findSegBEFOREUPDATE((root->left), s, p);
             if (tree != NULL){
                 return tree;
@@ -484,8 +484,8 @@ Segment* findLeftMost(Treeseg* root, Treeseg* prev, Point* p, bool foundp){
 		}
 
 		if (!(isUpper||Contain)){//the point is not in the segment of the root node
-			if (foundp){// we found the last right or left segment that contains p in root
-				return prev->value;
+            if (foundp){// we found the last right or left segment that contains p in root
+                return prev->value;
 			}else{
 				if (p->x < x_root){//p is on the left of segment in root
 					return findLeftMost(root->left, root, p, false);

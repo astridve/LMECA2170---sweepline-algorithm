@@ -75,8 +75,8 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
             if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
                 Point *inter = createPoint(x_inter, y_inter);
                 if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                    printf("INTERSECTION\n");
-                    printPoint(inter);
+                    //printf("INTERSECTION\n");
+                    //printPoint(inter);
                     insertPoint(Q, inter, *Q, NULL, false);
                 }
             }
@@ -87,8 +87,8 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
         if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
             Point *inter = createPoint(x_inter, y_inter);
             if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                printf("INTERSECTION\n");
-                printPoint(inter);
+                //printf("INTERSECTION\n");
+                //printPoint(inter);
                 insertPoint(Q, inter, *Q, NULL, false);
 
             }
@@ -99,8 +99,8 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
         if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
             Point *inter = createPoint(x_inter, y_inter);
             if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                printf("INTERSECTION\n");
-                printPoint(inter);
+                //printf("INTERSECTION\n");
+                //printPoint(inter);
                 insertPoint(Q, inter, *Q, NULL, false);
             }
         }
@@ -117,8 +117,8 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
 
     findLandC(Tau, NULL, p, false, L, C, RLNeigh);
 
-    printList(L);
-    printList(C);
+    //printList(L);
+    //printList(C);
 
     int lengthT = p->U->length + L->length + C->length;
     if (lengthT >= 2){// p is an intersection point
@@ -140,12 +140,12 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
         insertForU(&Tau, p->U->head, p);
     }
 
-    printTreeseg(Tau);
+    //printTreeseg(Tau);
 
     // Check for new intersections
     if (p->U->length + C->length == 0){// p is only a lower point
-        printf("ONLY LOWER\n");
-        printList(RLNeigh);
+        /*printf("ONLY LOWER\n");
+        printList(RLNeigh);*/
         data->LM = NULL;
         data->RM = NULL;
         if (RLNeigh->length == 2){// sl and sr exists
@@ -172,15 +172,15 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
         }
 
         if (LeftNeigh != NULL){
-            printf("LEFT CHECK\n");
+            /*printf("LEFT CHECK\n");
             printSeg(LeftMost);
-            printSeg(LeftNeigh);
+            printSeg(LeftNeigh);*/
             findNewEvent(LeftNeigh, LeftMost, p, Q, data);
         }
         if (RightNeigh != NULL){
-            printf("RIGHT CHECK\n");
+            /*printf("RIGHT CHECK\n");
             printSeg(RightMost);
-            printSeg(RightNeigh);
+            printSeg(RightNeigh);*/
             findNewEvent(RightNeigh, RightMost, p, Q, data);
         }
     }
@@ -203,8 +203,8 @@ ListP* FindIntersections(List* s, dataStruct *data){
 
     while(Q != NULL){
         p = delPoint(&Q);
-        printf("\n\n");
-        printPoint(p);
+        /*printf("\n\n");
+        printPoint(p);*/
         Tau = HandleEventPoint(p, &Tau, &Intersections, &Q, data);
     }
 
@@ -231,8 +231,8 @@ ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
     while(Q != NULL){
         p = delPoint(&Q);
         data->p = p;
-        printf("\n\n\n\n");
-        printPoint(p);
+        /*printf("\n\n\n\n");
+        printPoint(p);*/
         Tau = HandleEventPoint(p, &Tau, &(data->Intersections), &Q, data);
 
         if(avant_dernier){

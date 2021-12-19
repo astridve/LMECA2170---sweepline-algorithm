@@ -9,16 +9,16 @@
 int main(int argc, char* argv[])
 {
     bool image = false;
-    bool animation = true;
+    bool animation = false;
     bool on_click = true;
 
     // data container
     dataStruct* data = initDataStruct();
 
     // defining segments
-    const GLsizei nPoints = 24; // --- has to be even !
+    const GLsizei nPoints = 100000; // --- has to be even !
 
-    int seed = 1639869279; // (int)time(NULL);
+    int seed = (int)time(NULL);
 
     printf("[MAIN] seed : %d\n",seed);
     srand(seed);
