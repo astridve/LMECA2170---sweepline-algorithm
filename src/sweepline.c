@@ -18,6 +18,9 @@ dataStruct* initDataStruct(){
         result->p = NULL;
         result->LM = NULL;
         result->RM = NULL;
+        result->LN = NULL;
+        result->RN = NULL;
+        result->RLN = NULL;
     }
     return result;
 }
@@ -45,7 +48,7 @@ void insertForU(Treeseg** Tau, Listseg* Ui, Point* p){
 
 void createQ(Listseg* s, Treenode** Q){
     if (s != NULL){
-        insertPoint(Q, s->value->p0, *Q, s->value, true); // <- update si p0 already dans le tree
+        insertPoint(Q, s->value->p0, *Q, s->value, true);
         insertPoint(Q, s->value->p1, *Q, s->value, false);
         createQ(s->prev, Q);
     }
@@ -68,15 +71,13 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
         pR = sR->p0->y - mR * sR->p0->x;
     }
 
-    if ((sL->p0->x != sL->p1->x) && (sR->p0->x != sR->p1->x)){ // deux segment non verticaux
-        if (mL != mR){// si deux segments sont l'un sur l'autre on ne reporte pas d'intersections!
+    if ((sL->p0->x != sL->p1->x) && (sR->p0->x != sR->p1->x)){ // two non-vertical segments
+        if (mL != mR){// doesn't report intersection when overlapping segments
             x_inter = (pL - pR) / (mR - mL);
             y_inter = pL + mL * x_inter;
-            if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
-                Point *inter = createPoint(x_inter, y_inter);
-                if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                    //printf("INTERSECTION\n");
-                    //printPoint(inter);
+            if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // intersection happens bellow the sweep line
+                Point *inter = createPoint(x_inter, y_inter, NULL);
+                if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){;
                     insertPoint(Q, inter, *Q, NULL, false);
                 }
             }
@@ -84,11 +85,9 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
     }else if (sL->p0->x != sL->p1->x){// right is vertical
         x_inter = sR->p0->x;
         y_inter = pL + mL * x_inter;
-        if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
-            Point *inter = createPoint(x_inter, y_inter);
+        if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // intersection happens bellow the sweep line
+            Point *inter = createPoint(x_inter, y_inter, NULL);
             if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                //printf("INTERSECTION\n");
-                //printPoint(inter);
                 insertPoint(Q, inter, *Q, NULL, false);
 
             }
@@ -96,11 +95,9 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
     }else if (sR->p0->x != sR->p1->x){// left is vertical
         x_inter = sL->p0->x;
         y_inter = pR + mR * x_inter;
-        if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // check si l'intersection arrive apres p dans la sweep line
-            Point *inter = createPoint(x_inter, y_inter);
+        if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // intersection happens bellow the sweep line
+            Point *inter = createPoint(x_inter, y_inter, NULL);
             if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
-                //printf("INTERSECTION\n");
-                //printPoint(inter);
                 insertPoint(Q, inter, *Q, NULL, false);
             }
         }
@@ -116,9 +113,7 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
     List* RLNeigh = createVoidList();
 
     findLandC(Tau, NULL, p, false, L, C, RLNeigh);
-
-    //printList(L);
-    //printList(C);
+    data->RLN = RLNeigh;
 
     int lengthT = p->U->length + L->length + C->length;
     if (lengthT >= 2){// p is an intersection point
@@ -140,111 +135,80 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
         insertForU(&Tau, p->U->head, p);
     }
 
-    //printTreeseg(Tau);
-
     // Check for new intersections
     if (p->U->length + C->length == 0){// p is only a lower point
-        /*printf("ONLY LOWER\n");
-        printList(RLNeigh);*/
         data->LM = NULL;
         data->RM = NULL;
+        data->LN = NULL;
+        data->RN = NULL;
         if (RLNeigh->length == 2){// sl and sr exists
             findNewEvent(RLNeigh->head->value, RLNeigh->queue->value, p, Q, data);
         }
     }else{
-        Segment* LeftMost = findLeftMost(Tau, NULL, p, false);
-        Segment* RightMost = findRightMost(Tau, NULL, p, false);
-        Segment* LeftNeigh = NULL;
-        Segment* RightNeigh= NULL;
+        data->RLN = NULL;
+        data->LM  = findLeftMost(Tau, NULL, p, false);
+        data->RM = findRightMost(Tau, NULL, p, false);
 
-        if (LeftMost != NULL){
-            data->LM = createSegment(createPoint(LeftMost->p0->x, LeftMost->p0->y), createPoint(LeftMost->p1->x, LeftMost->p1->y), -120810347);
-            LeftNeigh = findLeftNb(Tau, LeftMost, p, false)->value;
+        if (data->LM != NULL) {
+            data->LN = findLeftNb(Tau, data->LM, p,false)->value;
         }else{
-            data->LM = NULL;
+            data->LN = NULL;
         }
-
-        if (RightMost != NULL){
-            data->RM = createSegment(createPoint(RightMost->p0->x, RightMost->p0->y), createPoint(RightMost->p1->x, RightMost->p1->y), -12471037);
-            RightNeigh = findRightNb(Tau, RightMost, p, false)->value;
+        if (data->RM != NULL){
+            data->RN = findRightNb(Tau, data->RM, p, false)->value;
         }else{
-            data->RM = NULL;
-        }
+            data->RN = NULL;
+        };
 
-        if (LeftNeigh != NULL){
-            /*printf("LEFT CHECK\n");
-            printSeg(LeftMost);
-            printSeg(LeftNeigh);*/
-            findNewEvent(LeftNeigh, LeftMost, p, Q, data);
+        if (data->LN != NULL){
+            findNewEvent(data->LN, data->LM, p, Q, data);
         }
-        if (RightNeigh != NULL){
-            /*printf("RIGHT CHECK\n");
-            printSeg(RightMost);
-            printSeg(RightNeigh);*/
-            findNewEvent(RightNeigh, RightMost, p, Q, data);
+        if (data->RN != NULL){
+            findNewEvent(data->RN, data->RM, p, Q, data);
         }
     }
+    freeList(C);
     return Tau;
 }
 
 
 ListP* FindIntersections(List* s, dataStruct *data){
-    Treenode *Q = NULL;
-    createQ(s->head, &Q);
-    data->Q = Q;
+    data->Q = NULL;
+    createQ(s->head, &(data->Q));
+    data->Tau = NULL;
+    data->Intersections = createVoidListP();
 
-    Treeseg *Tau = NULL;
-    data->Tau = Tau;
-
-    ListP* Intersections = createVoidListP();
-    data->Intersections = Intersections;
-
-    Point *p = NULL;
-
-    while(Q != NULL){
-        p = delPoint(&Q);
-        /*printf("\n\n");
-        printPoint(p);*/
-        Tau = HandleEventPoint(p, &Tau, &Intersections, &Q, data);
+    while((data->Q) != NULL){
+        data->p = delPoint(&(data->Q));
+        data->Tau = HandleEventPoint(data->p, &(data->Tau), &(data->Intersections), &(data->Q), data);
+        if (data->Q != NULL){
+            freePoint(data->p);
+            freeList(data->RLN);
+        }
     }
-
-    //freeTreeseg(Tau);
-    //freeTreenode(Q);
-    //freePoint(p);
-    return Intersections;
+    return data->Intersections;
 }
 
 ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
-    Treenode *Q = NULL;
-    createQ(s->head, &Q);
-    data->Q = Q;
-
-    Treeseg *Tau = NULL;
-    data->Tau = Tau;
-
-    //ListP* Intersections = createVoidListP();
+    data->Q = NULL;
+    createQ(s->head, &(data->Q));
+    data->Tau = NULL;
     data->Intersections = createVoidListP();
 
-    Point *p = NULL;
-
     bool avant_dernier = false;
-    while(Q != NULL){
-        p = delPoint(&Q);
-        data->p = p;
-        /*printf("\n\n\n\n");
-        printPoint(p);*/
-        Tau = HandleEventPoint(p, &Tau, &(data->Intersections), &Q, data);
+    while((data->Q) != NULL){
+        data->p = delPoint(&(data->Q));
+        data->Tau = HandleEventPoint(data->p, &(data->Tau), &(data->Intersections), &(data->Q), data);
 
         if(avant_dernier){
             break;
         }
-        if(red_point->y < p->y || (red_point->y == p->y && red_point-> x <= p->x)){
+        if(red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x)){
+            freePoint(data->p);
+            freeList(data->RLN);
             avant_dernier = true;
         }
     }
-    //freeTreeseg(Tau);
-    //freeTreenode(Q);
-    //freePoint(p);
     return data->Intersections;
 }
 
@@ -255,7 +219,9 @@ ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
 List* fromTab2List(GLfloat coord[][2], GLsizei nPoints){
     List* segmentList = createVoidList();
     for (GLsizei i=0; i<nPoints; i+=2) {
-        insertListHead(segmentList, createSegment(createPoint(coord[i][0], -coord[i][1]), createPoint(coord[i+1][0], -coord[i+1][1]), i/2));
+        Segment *s = createSegment(createPoint(coord[i][0], -coord[i][1], NULL), createPoint(coord[i+1][0], -coord[i+1][1], NULL), i/2);
+        insertListHead(segmentList, s);
+        freeSeg(s);
     }
     return segmentList;
 }
@@ -334,4 +300,19 @@ int TreenodeSize(Treenode* tree) {
     ListP* list = createVoidListP();
     fromTreenode2ListP(list, tree);
     return list->length;
+}
+
+
+void freeDatastruct(dataStruct *data){
+    if (data != NULL){
+        freeListP(data->Intersections);
+        freeTreenode(data->Q);
+        freeTreeseg(data->Tau);
+        freePoint(data->p);
+        freeSeg(data->LM);
+        freeSeg(data->RM);
+        freeSeg(data->RN);
+        freeSeg(data->LN);
+        freeList(data->RLN);
+    }
 }

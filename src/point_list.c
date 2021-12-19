@@ -13,7 +13,7 @@ Listpoint* createListpoint(Point* p){
     if (result != NULL) {
         result->prev = NULL;
         result->next = NULL;
-        result->value = p;
+        result->value = createPoint(p->x, p->y, p->U);
         result->luc = NULL;
     }
     return result;
@@ -58,14 +58,16 @@ bool insertListHeadP(ListP* list, Point* p, List* luc){
             if(list->length == 1){
                 list->queue = list->head;
                 list->head = createListpoint(p);
-                list->head->luc = luc;
+                list->head->luc = createVoidList();
+                insertList(list->head->luc, luc->head);
                 list->queue->next = list->head;
                 list->head->prev = list->queue;
                 list->length += 1;
             }
             else{
                 list->head->next = createListpoint(p);
-                list->head->next->luc = luc;
+                list->head->next->luc = createVoidList();
+                insertList(list->head->next->luc, luc->head);
                 list->head->next->prev = list->head;
                 list->head = list->head->next;
                 list->length+=1;
@@ -75,149 +77,41 @@ bool insertListHeadP(ListP* list, Point* p, List* luc){
         else{
             // printf("\nWarning: HEAD of List is NULL\n");
             list->head = createListpoint(p);
+            list->head->luc = createVoidList();
+            insertList(list->head->luc, luc->head);
             list->length = 1;
             return true;
         }
     }
     return false;
 }
-
-// pas de luc gestion !!!!
-bool insertListQueueP(ListP* list, Point* p){
-    if(p == NULL){
-        printf("\nWarning: point is NULL\n");
-        return false;
-    }
-    if(list != NULL){
-        if(list->queue != NULL){
-            if(list->length == 1){
-                list->queue = createListpoint(p);
-                list->head = createListpoint(list->head->value);
-                list->queue->next = list->head;
-                list->head->prev = list->queue;
-                list->length += 1;
-            }
-            else{
-                list->queue->prev = createListpoint(p);
-                list->queue->prev->next = list->queue;
-                list->queue = list->queue->prev;
-                list->length+=1;
-            }
-            return true;
-        }
-        else{
-            // printf("\nWarning: QUEUE of List is NULL\n");
-            list->queue = createListpoint(p);
-            list->head = list->queue;
-            list->head->prev = list->queue;
-            list->queue->next = list->head;
-            list->length = 1;
-            return true;
-        }
-    }
-    return false;
-}
-
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% DELETE A SEGMENT IN LIST
+%%% FREE LIST
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-
-bool delHeadP(ListP* list){
-    if(list->length == 0){
-        // printf("\nWarning: list is empty\n");
-        return false;
-    }
-    if(list->length == 1){
-        list->head = NULL;
-        list->queue = NULL;
-        list->length = 0;
-        return true;
-    }
-    else{
-        list->head = list->head->prev;
-        list->head->next = NULL;
-        list->length -=1;
-        return true;
-    }
-}
-
-bool delQueueP(ListP* list){
-    if(list->length == 0){
-        // printf("\nWarning: list is empty\n");
-        return false;
-    }
-    if(list->length == 1){
-        list->head = NULL;
-        list->queue = NULL;
-        list->length = 0;
-        return true;
-    }
-    else{
-        list->queue = list->queue->next;
-        list->queue->prev = NULL;
-        list->length -=1;
-        return true;
-    }
-}
-
-
-bool delListP(ListP* list, Point* p){
-    if(list->length == 1){
-        list->head = NULL;
-        list->queue = NULL;
-        list->length = 0;
-        return true;
-    }
-    return delListRecP(list, list->queue, p);
-}
-
-bool delListRecP(ListP* list, Listpoint* node, Point* p){
-    if(equalPoint(list->queue->value, p)){
-        list->queue->next->prev = NULL;
-        list->queue = list->queue->next;
-        list->length-=1;
-        return true;
-    }
-    else if(equalPoint(list->head->value, p)){
-        list->head->prev->next= NULL;
-        list->head = list->head->prev;
-        list->length-=1;
-        return true;
-    }
-    else if(equalPoint(node->value, p)){
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-        list->length-=1;
-        return true;
-    }
-    else if(node->next != NULL){
-        return delListRecP(list, node->next, p);
-    }
-    // printf("\nSegment is not in list\n");
-    return false;
-}
 
 void freeListpoint(Listpoint* LS){
     if (LS == NULL){
         return;
     }
-    if (LS->prev!=NULL){
-        freeListpoint(LS->prev);
-    }
-    if (LS->next != NULL){
-        freeListpoint(LS->next);
-    }
+    Listpoint *tmp = LS->prev;
     freePoint(LS->value);
     freeList(LS->luc);
     free(LS);
+    while (tmp != NULL){
+        Listpoint *tmp2 = tmp->prev;
+        freePoint(tmp->value);
+        freeList(tmp->luc);
+        free(tmp);
+        tmp = tmp2;
+    }
 }
 
 
 void freeListP(ListP* L){
     if (L != NULL) {
         freeListpoint(L->head);
-        freeListpoint(L->queue);
+        //freeListpoint(L->queue);
         free(L);
     }
 }

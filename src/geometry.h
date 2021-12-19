@@ -2,7 +2,8 @@
 #define GEOMETRY_H_
 
 #ifndef tol
-#define tol 0.00001
+//#define tol 0.00000001
+#define tol 0.0000000001
 #endif
 
 #include <stdio.h>
@@ -30,7 +31,7 @@ struct Point{
 	//Segment* segments;
 };
 
-Point *createPoint(double, double);
+Point *createPoint(double, double, List*);
 bool equalPoint(Point*, Point*);
 bool equalPointTOL(Point*, Point*);
 void freePoint(Point*);
@@ -85,7 +86,7 @@ List *createList(Segment*);
 
 bool insertListHead(List*, Segment*);
 bool insertListQueue(List*, Segment*);
-bool inserList(List*, Listseg*);
+bool insertList(List*, Listseg*);
 
 bool delHead(List*);
 //bool delQueue(List*);

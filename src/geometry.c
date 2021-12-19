@@ -19,12 +19,15 @@ bool flower(double x, double y){
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Points 2D
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-Point *createPoint(double x, double y) {
+Point *createPoint(double x, double y, List *U) {
 	Point *result = malloc(sizeof(Point));
 	if (result != NULL) {
 		result->x = x;
 		result->y = y;
-		result->U = createVoidList();
+        result->U = createVoidList();
+        if (U != NULL){
+            insertList(result->U, U->head);
+        }
 	}
 	return result;
 }
@@ -45,7 +48,7 @@ bool equalPointTOL(Point *p1, Point *p2){ // return true if the two points are e
 
 void freePoint(Point* p){
     if(p != NULL){
-        //freeList(p->U); #TODO: WTF pq ca marche pas
+        freeList(p->U);
         free(p);
     }
 }
@@ -67,12 +70,12 @@ Segment *createSegment(Point *p0, Point *p1, int value) { // Segments are such t
 	Segment *s = malloc(sizeof(Segment));
 	if (s != NULL) {
 		if (p0->y < p1->y || (p0->y == p1->y && p0->x < p1->x)) {
-			s->p0 = p0;
-			s->p1= p1;
+			s->p0 = createPoint(p0->x, p0->y, p0->U);
+			s->p1 = createPoint(p1->x, p1->y, p1->U);
 		}
 		else{
-			s->p0 = p1;
-			s->p1 = p0;
+			s->p0 = createPoint(p1->x, p1->y, p1->U);
+			s->p1 = createPoint(p0->x, p0->y, p0->U);
 		}
 		s->value = value;
 	}
@@ -119,13 +122,6 @@ void printSeg2(Segment *s) {
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-/*void printBOOL(bool b){ //TODO: delete this function
-    if (b){
-        printf("TRUE\n");
-    }else{
-        printf("FALSE\n");
-    }
-}*/
 bool contains(Point* p, Segment* s){ // return true if the segment s contains the point p ON ITS INTERIOR
 	double m; // slope of the segment
 	double oao; // (imaginary) crossing of the segment with the y-axis
@@ -158,7 +154,7 @@ Listseg *createListseg(Segment* s){
 	if (result != NULL) {
 		result->prev = NULL;
 		result->next = NULL;
-		result->value = s;
+		result->value = createSegment(s->p0, s->p1, s->value);
 	}
 	return result;
 }
@@ -280,80 +276,21 @@ bool delHead(List* list){
 		return false;
 	}
 	if(list->length == 1){
-        //freeListSeg(list->head);
-        //freeListSeg(list->queue);
-        list->head = NULL;
-        list->queue = NULL;
-        list->length = 0;
+        //list->head = NULL;
+        //list->queue = NULL;
+        //list->length = 0;
+        freeList(list);
 		return true; 
 	}
 	else{
-        //freeListSeg(list->head);
+        freeSeg(list->head->value);
+        free(list->head);
 		list->head = list->head->prev;
 		list->head->next = NULL;
 		list->length -=1;
 		return true;
 	}
 }
-
-/*
-bool delQueue(List* list){
-	if(list->length == 0){
-		// printf("\nWarning: list is empty\n");
-		return false;
-	}
-	if(list->length == 1){
-		list->head = NULL;
-		list->queue = NULL;
-		list->length = 0;
-		return true; 
-	}
-	else{
-		list->queue = list->queue->next;
-		list->queue->prev = NULL;
-		list->length -=1;
-		return true;
-	}
-}*/
-
-/*
-bool delList(List* list, Segment* s){
-	if(list->length == 1){
-		list->head = NULL;
-		list->queue = NULL;
-		list->length = 0;
-		return true; 
-	}
-	return delListRec(list, list->queue, s);
-}*/
-
-/*
-bool delListRec(List* list, Listseg* node, Segment* s){
-	if(equalSegment(list->queue->value, s)){
-		list->queue->next->prev = NULL;
-		list->queue = list->queue->next;
-		list->length-=1;
-		return true;
-	}
-	else if(equalSegment(list->head->value, s)){
-		list->head->prev->next= NULL;
-		list->head = list->head->prev;
-		list->length-=1;
-		return true; 
-	}
-	else if(equalSegment(node->value, s)){
-		node->prev->next = node->next; 
-		node->next->prev = node->prev;
-		list->length-=1;
-		return true; 
-	}
-	else if(node->next != NULL){
-		return delListRec(list, node->next, s);
-	}
-	// printf("\nSegment is not in list\n");
-	return false;
-}
-*/
 
 List* concatenate(List* l1, List* l2, List* l3){
 	return concatenate2(concatenate2(l1, l2), l3);
@@ -366,35 +303,15 @@ List* concatenate2(List* l1, List* l2){
 		if(l2 != NULL){
 
             if (l2->length == 1 && l2->queue != NULL){
-                tmp->queue = l2->queue;
+                insertListQueue(tmp, l2->queue->value);
             }else if(l2->length==1 && l2->head != NULL){
-                tmp->queue = l2->head;
+                insertListQueue(tmp, l2->head->value);
             }else{
                 insertList(tmp, l2->head);
             }
-            /*
-            if (l1->queue != NULL && l2->head != NULL){
-                l1->queue->next = l2->head;
-                l2->head->prev = l1->queue;
-            }else if(l1->queue == NULL && l2->head != NULL){
-                l1->head->next = l2->head;
-                l2->head->prev = l1->head;
-            }else if(l1->queue != NULL && l2->head == NULL){
-                l1->queue->next = l2->queue;
-                l2->queue->prev = l1->queue;
-            }else{
-                l1->head->next = l2->queue;
-                l2->queue->prev = l1->head;
-            }
-
-            tmp->length = l1->length+l2->length;
-			//freeList(l1);
-			//freeList(l2);
-			return tmp;*/
 		}
 	}
 	else{ // l1 == NULL
-		//freeList(l1);
         *tmp = *l2;
 	}
     return tmp;
@@ -402,22 +319,24 @@ List* concatenate2(List* l1, List* l2){
 
 
 void freeListSeg(Listseg* LS){
-    if (LS != NULL) {
-        if (LS->prev != NULL) {
-            freeListSeg(LS->prev);
-        }
-        if (LS->next != NULL) {
-            freeListSeg(LS->next);
-        }
-        freeSeg(LS->value);
-        free(LS);
+    if (LS == NULL){
+        return;
+    }
+    Listseg *tmp = LS->prev;
+    freeSeg(LS->value);
+    free(LS);
+    while (tmp != NULL){
+        Listseg *tmp2 = tmp->prev;
+        freeSeg(tmp->value);
+        free(tmp);
+        tmp = tmp2;
     }
 }
 
 void freeList(List* L){
     if (L != NULL) {
         freeListSeg(L->head);
-        freeListSeg(L->queue);
+        //freeListSeg(L->queue);
         free(L);
     }
 }

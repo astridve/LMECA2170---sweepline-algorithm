@@ -20,6 +20,9 @@ typedef struct dataStruct{
     struct Point *p;
     struct Segment *LM;
     struct Segment *RM;
+    struct Segment* LN;
+    struct Segment* RN;
+    struct List* RLN;
 } dataStruct;
 
 dataStruct* initDataStruct();
@@ -44,4 +47,6 @@ bool fromTreeseg2ListP(ListP*, Treeseg*);
 bool fromTreenode2ListP(ListP*, Treenode*);
 int TreenodeSize(Treenode*);
 int TreesegSize(Treeseg*);
+
+void freeDatastruct(dataStruct*);
 #endif

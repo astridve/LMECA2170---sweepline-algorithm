@@ -11,7 +11,7 @@ Treeseg *createSeg(Segment *s) {
 		result->parent = NULL;
 		result->left = NULL;
 		result->right = NULL;
-		result->value = s;
+		result->value = createSegment(s->p0, s->p1, s->value);
 	}
 	return result;
 }
@@ -77,19 +77,19 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
     if(*root != NULL){
         Treeseg* tree;  // find the segment in the tree
         tree = findSegBEFOREUPDATE(*root, seg, p);
-        /*if (tree==NULL){
-            return false;
-        }*/
+
         if(tree->left == NULL && tree->right == NULL){ // The seg node is a leaf: just remove the segment node from the tree
 			if(tree->parent != NULL){ // there are other nodes in the tree
 				// find if the segm is on the left or the right of the parent node
 				if(tree->parent->left != NULL && equalSegment(tree->parent->left->value, tree->value)){
 					tree->parent->left = NULL;
-					return true;
+                    freeTreeseg(tree);
+                    return true;
                 }
 				else if(tree->parent->right != NULL){ // if right exists and the segm is not on the left of its parent then it is on the right
 					tree->parent->right = NULL;
-					return true; 
+                    freeTreeseg(tree);
+                    return true;
 				}
 				else{
 					printf("error: my parents doesn't have children...\n");
@@ -98,11 +98,13 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 			}
 			else{ // The segment is the only node in the tree so deleting seg suppress the tree
 				*root = NULL;
-				return true;
+                freeTreeseg(tree);
+                return true;
 			}
 
 		}else if(tree->left != NULL && tree->right != NULL){ // the seg node has two children in the tree: we delete seg by replacing it by the leaf the most on the right of the left tree of the node of seg
 			Treeseg* child = findRSeg(tree->left); // find the replacement, delete that node in the tree and replace in the seg node the value by the replacement value
+            freeSeg(tree->value);//TODO: free tree->value?
             tree->value = createSegment(child->value->p0, child->value->p1, child->value->value);
             return delSeg(&(tree->left), child->value, p);
 
@@ -112,12 +114,14 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 					if(tree->parent->left != NULL && equalSegment(tree->parent->left->value, tree->value)){// the segm. node lies on the left of its parent
 						tree->parent->left = tree->right;
                         tree->right->parent = tree->parent;
-						return true;
+                        freeSeg(tree->value);
+                        return true;
 					}
 					else if(tree->parent->right != NULL){ // if right exists and the segm is not on the left of its parent then it is on the right
 						tree->parent->right = tree->right;
                         tree->right->parent = tree->parent;
-						return true; 
+                        freeSeg(tree->value);
+                        return true;
 					}
 					else{
 						printf("error: my parents doesn't have children...\n");
@@ -127,7 +131,8 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 				else{ // if the segm is in the top upper node then we just take its right tree as the tree with segm deleted
                     tree->right->parent = NULL;
                     (*root) = tree->right;
-					return true;
+                    freeSeg(tree->value);
+                    return true;
 				}
 			}
 			else if(tree->right == NULL){ // child on the left
@@ -135,11 +140,13 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 					if(tree->parent->left != NULL && equalSegment(tree->parent->left->value, tree->value)){// the segm. node lies on the left of its parent
 						tree->parent->left = tree->left;
                         tree->left->parent = tree->parent;
+                        freeSeg(tree->value);
                         return true;
 					}
 					else if(tree->parent->right != NULL){ // if right exists and the segm is not on the left of its parent then it is on the right
                         tree->parent->right = tree->left;
                         tree->left->parent = tree->parent;
+                        freeSeg(tree->value);
 						return true; 
 					}
 					else{
@@ -150,6 +157,7 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 				else{ // if the segm is in the top upper node then we just take its left tree as the tree with segm deleted
                     tree->left->parent = NULL;
                     (*root) = tree->left;
+                    freeSeg(tree->value);
 					return true;
 				}
 			}
@@ -428,7 +436,7 @@ bool findLandC(Treeseg* root, Treeseg* prev, Point* p, bool foundp, List* L, Lis
 				}else{
                     Treeseg* LN = findLeftNb(prev, prev->value, p, true) ;
                     if (LN != NULL) {
-                        insertListQueue(LR, root->value);
+                        insertListHead(LR, root->value);
                     }else{
                         printf("Warning: segment not found in tree   in segment_tree line 403");
                     }
@@ -538,7 +546,6 @@ void freeTreeseg(Treeseg* root){
     if (root == NULL){
         return;
     }
-    freeTreeseg(root->parent);
     freeTreeseg(root->left);
     freeTreeseg(root->right);
 

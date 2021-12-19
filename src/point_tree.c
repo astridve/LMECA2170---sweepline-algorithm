@@ -12,7 +12,7 @@ Treenode *createNode(Point *p) { // create a simple node
 		result->parent = NULL;
 		result->left = NULL;
 		result->right = NULL;
-		result->value = createPoint(p->x, p->y);
+		result->value = createPoint(p->x, p->y, p->U);
 	}
 	return result;
 }
