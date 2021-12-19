@@ -59,7 +59,9 @@ bool insertListHeadP(ListP* list, Point* p, List* luc){
                 list->queue = list->head;
                 list->head = createListpoint(p);
                 list->head->luc = createVoidList();
-                insertList(list->head->luc, luc->head);
+                if (luc != NULL){
+                    insertList(list->head->luc, luc->head);
+                }
                 list->queue->next = list->head;
                 list->head->prev = list->queue;
                 list->length += 1;
@@ -67,7 +69,9 @@ bool insertListHeadP(ListP* list, Point* p, List* luc){
             else{
                 list->head->next = createListpoint(p);
                 list->head->next->luc = createVoidList();
-                insertList(list->head->next->luc, luc->head);
+                if (luc != NULL){
+                    insertList(list->head->next->luc, luc->head);
+                }
                 list->head->next->prev = list->head;
                 list->head = list->head->next;
                 list->length+=1;
@@ -75,10 +79,11 @@ bool insertListHeadP(ListP* list, Point* p, List* luc){
             return true;
         }
         else{
-            // printf("\nWarning: HEAD of List is NULL\n");
             list->head = createListpoint(p);
             list->head->luc = createVoidList();
-            insertList(list->head->luc, luc->head);
+            if (luc != NULL){
+                insertList(list->head->luc, luc->head);
+            }
             list->length = 1;
             return true;
         }

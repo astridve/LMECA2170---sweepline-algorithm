@@ -48,11 +48,6 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 		}
 		// if the segment of root is vertical we know that m_root=0
 
-        /*printf("INSERT -- x:%f, %f -- slope: %f, %f\n", p->x, x_root, m_s, m_root);
-        if (p->x < x_root){
-            printf("equal intersection with sl\n");
-        }*/ //TODO: DELETE
-
         if ((p->x < x_root && !feq(p->x, x_root)) || (feq(p->x, x_root) && ((m_root > 0.0 && (m_s <= 0.0 || m_s > m_root))
                                             || (m_root <= 0.0 && ((m_s > m_root && m_s < 0) || s->p0->y == s->p1->y))
                                             || (m_root == m_s && s->p0->y != s->p1->y && s->p1->y < root->value->p1->y)))) {

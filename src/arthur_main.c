@@ -9,13 +9,13 @@
 int main(int argc, char* argv[])
 {
     bool image = false; // overrid other options
-    bool animation = false;
+    bool animation = true;
     bool on_click = true;
 
     // defining segments
-    const GLsizei nPoints = 9000; // --- has to be even !
+    const GLsizei nPoints = 16; // --- has to be even !
 
-    int seed = (int)time(NULL);
+    int seed = 1639935196;//(int)time(NULL);
 
     printf("[MAIN] seed : %d\n",seed);
     srand(seed);
@@ -189,24 +189,25 @@ int main(int argc, char* argv[])
         bool curr_click = false;
         Point* last_p = createPoint(-730957.0, -137532384.0, NULL);
 
+        // data container
+        dataStruct *data = initDataStruct();
+        if(data->p == NULL) { data->p = createPoint(0.0, -1000.0, NULL); }
         while (!bov_window_should_close(window)) {
             bov_lines_draw(window, segment, 0, nPoints);
             bov_points_draw(window, point, 0, nPoints);
 
-            // data container
-            dataStruct *data = initDataStruct();
-            data->p = createPoint(0.0, -1000.0, NULL); // initial sweepline position
-
             if (on_click) { // click event interception
-                if ((window->clickTime[0] < -window->wtime + 0.025f &&
-                     window->clickTime[0] > -window->wtime - 0.025f) && !prevent_first_click) {
+                if ((window->clickTime[0] < -window->wtime + 0.025f && window->clickTime[0] > -window->wtime - 0.025f) && !prevent_first_click) {
                     curr_click = true;
                     printf("\n >>> click <<<\n");
-                    if (!equalPoint(last_p, data->p)) {
-                        freePoint(last_p);
+
+                    if (! equalPoint(last_p, data->p)) {
+                        free(last_p);
                         last_p = createPoint(data->p->x, data->p->y, data->p->U);
                         FindIntersections2(segmentList, data, data->p);
                     }
+                    else { break; }
+
                     // aller chercher le prochain point dans Q ...
                     p_coord[0][0] = (float) data->p->x;
                     p_coord[0][1] = (float) -data->p->y;
@@ -217,17 +218,18 @@ int main(int argc, char* argv[])
                 }
             } else {
                 if (!equalPoint(last_p, data->p)) {
-                    freePoint(last_p);
+                    free(last_p);
                     last_p = createPoint(data->p->x, data->p->y, data->p->U);
                     FindIntersections2(segmentList, data, data->p);
                 }
+                else { break; }
                 // aller chercher le prochain point dans Q ...
                 p_coord[0][0] = (float) data->p->x;
                 p_coord[0][1] = (float) -data->p->y;
             }
 
             // update Tau
-            if (data->Tau != NULL) {
+            /*if (data->Tau != NULL) {
                 GLfloat(*tau_coord)[2] = malloc(sizeof(tau_coord[0]) * TreesegSize(data->Tau));
                 fromTreeseg2Tab(data->Tau, tau_coord);
                 bov_points_t *tau = bov_points_new(tau_coord, (int) sizeof(tau_coord) / 2, GL_STATIC_DRAW);
@@ -235,7 +237,7 @@ int main(int argc, char* argv[])
                 bov_lines_draw(window, tau, 0, data->Intersections->length);
                 bov_points_delete(tau);
                 free(tau_coord);
-            }
+            }*/
 
             // update LeftMost/LeftNeigh and RightMost/RightNeigh Segments
             if (data->RLN != NULL) {
@@ -301,8 +303,7 @@ int main(int argc, char* argv[])
             // update intersections
             GLfloat(*intersection_coord)[2] = malloc(sizeof(segment_coord[0]) * data->Intersections->length);
             fromListP2Tab(data->Intersections, intersection_coord);
-            bov_points_t *intersection = bov_points_new(intersection_coord, data->Intersections->length,
-                                                        GL_STATIC_DRAW);
+            bov_points_t *intersection = bov_points_new(intersection_coord, data->Intersections->length, GL_STATIC_DRAW);
             bov_points_set_param(intersection, intersectionParams);
             if (nPoints >= 100) {
                 bov_points_set_color(intersection, (GLfloat[4]) {0.839f, 0.176f, 0.125f, 1.0f});
@@ -331,7 +332,10 @@ int main(int argc, char* argv[])
             // others
             curr_click = false;
             bov_window_update(window);
-            freeDatastruct(data);
+
+            /*freePoint(last_p);
+            last_p = createPoint(data->p->x, data->p->y, data->p->U);
+            freeDatastruct(data);*/
         }
     }
 

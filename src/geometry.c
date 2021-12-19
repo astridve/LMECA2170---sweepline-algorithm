@@ -209,11 +209,7 @@ bool insertListHead(List* list, Segment* s){
             return true;
 		}
 		else{
-			// printf("\nWarning: HEAD of List is NULL\n");
 			list->head = createListseg(s);
-			//list->queue = list->head;
-			//list->head->prev = list->queue;
-			//list->queue->next = list->head;
 			list->length = 1;
 			return true;
 		}
@@ -244,11 +240,7 @@ bool insertListQueue(List* list, Segment* s){
             return true;
 		}
 		else{
-			// printf("\nWarning: QUEUE of List is NULL\n");
 			list->queue = createListseg(s);
-			//list->head = list->queue;
-			//list->head->prev = list->queue;
-			//list->queue->next = list->head;
 			list->length = 1;
 			return true;
 		}
@@ -272,7 +264,6 @@ bool insertList(List* l1, Listseg* l2){//length l2 must be >1
 
 bool delHead(List* list){
 	if(list->length == 0){
-		// printf("\nWarning: list is empty\n");
 		return false;
 	}
 	if(list->length == 1){
