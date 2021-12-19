@@ -32,6 +32,7 @@ struct Point{
 
 Point *createPoint(double, double);
 bool equalPoint(Point*, Point*);
+bool equalPointTOL(Point*, Point*);
 void freePoint(Point*);
 void printPoint(Point *p);
 

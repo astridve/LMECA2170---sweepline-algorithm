@@ -5,7 +5,7 @@ set(EXEC myexec) # put whatever name you want for the executable
 
 file(GLOB_RECURSE sources "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
 add_executable(${EXEC}
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/mine_main.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/arthur_main.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/inputs.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/geometry.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/src/point_list.c"

@@ -18,6 +18,8 @@ typedef struct dataStruct{
     struct Treenode *Q;
     struct Treeseg *Tau;
     struct Point *p;
+    struct Segment *LM;
+    struct Segment *RM;
 } dataStruct;
 
 dataStruct* initDataStruct();
@@ -26,7 +28,7 @@ void insertForC(Treeseg**, Listseg*, Point*);
 void insertForU(Treeseg**, Listseg*, Point*);
 void createQ(Listseg*, Treenode**);
 
-void findNewEvent(Segment*, Segment*, Point*, Treenode**,dataStruct*);
+void findNewEvent(Segment*, Segment*, Point*, Treenode**, dataStruct*);
 
 Treeseg* HandleEventPoint(Point*, Treeseg**, ListP**, Treenode**, dataStruct*);
 

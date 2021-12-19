@@ -12,7 +12,7 @@ Treenode *createNode(Point *p) { // create a simple node
 		result->parent = NULL;
 		result->left = NULL;
 		result->right = NULL;
-		result->value = p;
+		result->value = createPoint(p->x, p->y);
 	}
 	return result;
 }
@@ -32,7 +32,7 @@ bool insertPoint(Treenode **rootptr, Point* p, Treenode *parent, Segment* s, boo
 		}
 		return true;
 	}
-	if (p->x == root->value->x && p->y == root->value->y) { // if the point is already in the tree we do not add it again
+	if (equalPointTOL(root->value, p)) { // if the point is already in the tree we do not add it again
 		if(upper){ // if p is some upper point we need to add the segment to its U list
 			insertListHead((*rootptr)->value->U, s);
 		}

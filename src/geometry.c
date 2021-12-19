@@ -31,9 +31,16 @@ Point *createPoint(double x, double y) {
 
 bool equalPoint(Point *p1, Point *p2){ // return true if the two points are equal (do not look at the value, only the coordinates)
 	if(p1 != NULL && p2 != NULL){
-		return (feq(p1->x, p2->x) && feq(p1->y, p2->y));
+		return (p1->x == p2->x && p1->y == p2->y);
 	}
 	return false;
+}
+
+bool equalPointTOL(Point *p1, Point *p2){ // return true if the two points are equal (do not look at the value, only the coordinates)
+    if(p1 != NULL && p2 != NULL){
+        return (feq(p1->x, p2->x) && feq(p1->y, p2->y));
+    }
+    return false;
 }
 
 void freePoint(Point* p){
@@ -164,7 +171,7 @@ List *createList(Segment* s){
 	List* result = malloc(sizeof(List));
 	if (result != NULL) {
 		result->head = createListseg(s);
-		result->queue = createListseg(s);
+		//result->queue = createListseg(s);
 		result->length = 1;
 	}
 	return result;
