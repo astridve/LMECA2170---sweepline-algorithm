@@ -24,54 +24,24 @@ int main(int argc, char* argv[])
     // - display
     bool image = false;                     // image set on true overrides other displaying options
     bool animation = true;
-    bool on_click = true;
+    bool on_click = false;
 
     bool fullscreen = true;                 // fullscreen is forced for automated animation  (without click)
 
     // - max speed
-    float dt = 1.5;                      // [ms] for animation without click
+    float dt = 10.0;                      // [ms] for animation without click
 
-    // defining segments
-    const GLsizei nPoints = 18;             // --- has to be even and below 100 if you want to animate it !
-
-
-    //int seed = (int)time(NULL);
-
-    //printf("[MAIN] seed : %d\n",seed);
-    //srand(seed);
-    //GLfloat(*segment_coord)[2] = malloc(sizeof(segment_coord[0]) * nPoints);
-    //random_points(segment_coord, nPoints);
+    // - defining segments
+    const GLsizei nPoints = 100;             // --- has to be even and should be below 200 if you want to animate it !
 
 
-    // TODO - define a well-predefined segment list
-    // JUST FOR YOU -  a well-predefined segment list   ( Merry Christmas ! )
-    GLfloat segment_coord[18][2] = {
-            {0.087f,  0.364f}, //A
-            {0.284f,  0.322f}, //B
-            {0.421f,  0.279f}, //C
-            {0.300f,  0.150f}, //D
-            {0.770f,  0.100f}, //E
-            {0.250f,  0.350f}, //F
-            {0.477f,  0.261f}, //G
-            {0.359f,  0.213f}, //H
-            {0.359f,  0.080f}, //I
-            {0.470f,  0.123f}, //J
-            {0.044f,  0.307f}, //K
-            {0.071f,  0.253f}, //L
-            {0.569f,  0.308f}, //M
-            {0.624f,  0.239f}, //N
-            {0.569f,  0.308f}, //M
-            {0.550f,  0.220f}, //O
-            {0.550f,  0.220f}, //O
-            {0.624f,  0.239f}, //N
-    };
-    // -- don't forget to adapt the value of the "nPoints" variable above to : 18
+    // (1) randomly
 
-
-
-
-
-
+    int seed = 1639935196;                  // (int)time(NULL);
+    printf("[MAIN] seed : %d\n",seed);
+    srand(seed);
+    GLfloat(*segment_coord)[2] = malloc(sizeof(segment_coord[0]) * nPoints);
+    random_points(segment_coord, nPoints);
     List* segmentList = fromTab2List(segment_coord, nPoints);
 
 
@@ -411,8 +381,8 @@ int main(int argc, char* argv[])
                     free(last_p);
                     last_p = createPoint(data->p->x, data->p->y, data->p->U);
                     FindIntersections2(segmentList, data, data->p);
-                    if ((window->wtime - iter_start_time)/1000. < dt) {
-                        sleep(dt - (window->wtime + iter_start_time)/1000.);
+                    if ((window->wtime - iter_start_time) < dt) {
+                        sleep(dt - (window->wtime + iter_start_time));
                     }
                     bov_text_t* text_indication = bov_text_new(
                             (GLubyte[]) {
@@ -471,6 +441,7 @@ int main(int argc, char* argv[])
             // update LeftMost/LeftNeigh and RightMost/RightNeigh Segments
             if (data->RLN != NULL) {
                 ListP *SMS = createVoidListP();
+                //printList(data->RLN);
                 for (Listseg *curr = data->RLN->head; curr != NULL; curr = curr->prev) {
                     insertListHeadP(SMS, curr->value->p0, NULL);
                     insertListHeadP(SMS, curr->value->p1, NULL);

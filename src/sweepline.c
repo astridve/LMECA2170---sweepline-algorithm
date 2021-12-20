@@ -110,10 +110,9 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
 
     List* L = createVoidList();
     List* C = createVoidList();
-    List* RLNeigh = createVoidList();
+    data->RLN = createVoidList();
 
-    findLandC(Tau, NULL, p, false, L, C, RLNeigh);
-    data->RLN = RLNeigh;
+    findLandC(Tau, NULL, p, false, L, C, data->RLN);
 
     int lengthT = p->U->length + L->length + C->length;
     if (lengthT >= 2){// p is an intersection point
@@ -141,10 +140,13 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
         data->RM = NULL;
         data->LN = NULL;
         data->RN = NULL;
-        if (RLNeigh->length == 2){// sl and sr exists
-            findNewEvent(RLNeigh->head->value, RLNeigh->queue->value, p, Q, data);
+        if (data->RLN->length == 2){// sl and sr exists
+            findNewEvent(data->RLN->head->value, data->RLN->queue->value, p, Q, data);
         }
     }else{
+        freeList(data->RLN);
+        data->RLN = createVoidList();
+
         data->RLN = NULL;
         data->LM = NULL;
         data->RM = NULL;
@@ -211,9 +213,9 @@ ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
         data->p = delPoint(&(data->Q));
         data->Tau = HandleEventPoint(data->p, &(data->Tau), &(data->Intersections), &(data->Q), data);
         if(avant_dernier){
-            break;
+            return data->Intersections;
         }
-        if(red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x)){
+            if((red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x)) && data->Q != NULL){
             freePoint(data->p);
             freeList(data->RLN);
             freeSeg(data->LM);
