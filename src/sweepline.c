@@ -166,16 +166,10 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
         }
 
         if (LN != NULL){
-            printf("LEFT CHECK\n");
-            printSeg(LM);
-            printSeg(LN->value);
             data->LN = createSegment(LN->value->p0, LN->value->p1, LN->value->value);
             findNewEvent(data->LN, data->LM, p, Q, data);
         }
         if (RN != NULL){
-            printf("RIGHT CHECK\n");
-            printSeg(RM);
-            printSeg(RN->value);
             data->RN = createSegment(RN->value->p0, RN->value->p1, RN->value->value);
             findNewEvent(data->RN, data->RM, p, Q, data);
         }
@@ -215,10 +209,7 @@ ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
     bool avant_dernier = false;
     while((data->Q) != NULL){
         data->p = delPoint(&(data->Q));
-        printf("\n\n");
-        printPoint(data->p);
         data->Tau = HandleEventPoint(data->p, &(data->Tau), &(data->Intersections), &(data->Q), data);
-        printTreeseg(data->Tau);
         if(avant_dernier){
             break;
         }

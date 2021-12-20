@@ -3,7 +3,7 @@
 
 #ifndef tol
 //#define tol 0.00000001
-#define tol 0.00001
+#define tol 0.0000000001
 #endif
 
 #include <stdio.h>
