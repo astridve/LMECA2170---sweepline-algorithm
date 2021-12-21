@@ -29,53 +29,102 @@ int main(int argc, char* argv[])
         88           d8'          `8b  88      `8b  d8'          `8b  88     `8'     88  88888888888       88       88888888888  88      `8b   "Y88888P"
     */
 
-    // - display
-    bool image = true;                      // image set on true overrides other displaying options
-    bool animation = false;
-    bool on_click = true;
-
-    bool fullscreen = false;                 // fullscreen is forced for automated animation (without click)
-
-    // - min. duration per frame
-    float dt = 750.0;                         // [ms] for animation without click
 
     // - defining segments
-    const GLsizei nPoints = 20;            // --- has to be even (and should be below 100 if you want to animate it)
+    GLsizei nPoints = 7000;            // --- has to be even (and should be below 250 if you want to animate it)
 
-    // (1) randomly
-    int seed = 1639935196;                   // (int)time(NULL);
-    printf("[MAIN] seed : %d\n",seed);
+    // randomly define points
+    int seed = 1639935196;            // (int)time(NULL);
+    printf("[MAIN] seed : %d\n", seed);
     srand(seed);
     GLfloat(*segment_coord)[2] = malloc(sizeof(segment_coord[0]) * nPoints);
     random_points(segment_coord, nPoints);
 
-    // (2) predefined
-    // JUST FOR YOU -  a well-predefined segment list   ( Merry Christmas ! )
 
-    // NOTE : the tree segments defined by the points M-N-O are generating a (Mystic) bug on one laptop (WINDOWS) but not on the other (LINUX)
+    /*                                        _
+         _ __    _ __    ___    ___    ___   | |_   ___
+        | '_ \  | '__|  / _ \  / __|  / _ \  | __| / __|
+        | |_) | | |    |  __ / \__ \ |  __/  | |_  \__ \
+        | .__/  |_|     \___| |___ /  \___|   \__| |___/
+        |_ |
+    */
 
-    //    GLfloat segment_coord[18][2] = {
-    //    { 0.087f,  0.364f }, //A
-    //    { 0.284f,  0.322f }, //B
-    //    { 0.421f,  0.279f }, //C
-    //    { 0.300f,  0.150f }, //D
-    //    { 0.770f,  0.100f }, //E
-    //    { 0.250f,  0.350f }, //F
-    //    { 0.477f,  0.261f }, //G
-    //    { 0.359f,  0.213f }, //H
-    //    { 0.359f,  0.080f }, //I
-    //    { 0.470f,  0.123f }, //J
-    //    { 0.044f,  0.307f }, //K
-    //    { 0.071f,  0.253f }, //L
-    //    { 0.569f,  0.308f }, //M
-    //    { 0.624f,  0.239f }, //N
-    //    { 0.569f,  0.308f }, //M
-    //    { 0.550f,  0.220f }, //O
-    //    { 0.550f,  0.220f }, //O
-    //    { 0.624f,  0.239f }, //N
-    //};
+    int preset = 4;
 
-    // -- don't forget to adapt the value of the "nPoints" variable above to : 18
+    // 0 - execute the algorithm and print the results in the console
+    // 1 - simple image (fullscreen)
+    // 2 - slow little animation (20 seg. max, fullscreen)
+    // 3 - quick animation (100 seg. max, fullscreen)
+    // 4 - fastest animation (100 seg. max, fullscreen)
+    // 5 - on-click animation ! (fullscreen)
+    //-1 - let you use customized parameters (*)
+
+
+
+    /*                           _
+            ____   _   _   ___  | |_    ___    _ __ ___  (*)
+           / ___| | | | | / __| | __|  / _ \  | '_ ` _ \
+           | (__  | |_| | \__ \ | |_  | (_) | | | | | | |
+           \____|  \__,_| |___/ \__ |  \___/  |_| |_| |_|
+   */
+
+    // - display
+    bool image = true;                      // image set on true overrides other displaying options
+    bool animation = true;
+    bool on_click = false;
+
+    bool fullscreen = true;                 // fullscreen is forced for automated animation (without click)
+
+    // - min. duration per frame
+    float dt = 0.0;                         // [ms] for animation without click
+
+
+
+
+
+
+
+/*
+
+                                    .!,            .!,
+                                   ~ 6 ~          ~ 6 ~
+                              .    ' i `  .-^-.   ' i `
+                            _.|,_   | |  / .-. \   | |
+                             '|`   .|_|.| (-` ) | .|_|.
+                             / \ ___)_(_|__`-'__|__)_(______
+                            /`,o\)_______________________o_(
+                           /_* ~_\[___]___[___]___[___[_[\`-.
+                           / o .'\[_]___[___]___[___]_[___)`-)
+                          /_,~' *_\_]                 [_[(  (
+                          /`. *  *\_]                 [___\ _\
+                         /   `~. o \]      ;( ( ;     [_[_]`-'
+                        /_ *    `~,_\    (( )( ;(;    [___]
+                        /   o  *  ~'\   /\ /\ /\ /\   [_[_]
+                       / *    .~~'  o\  ||_||_||_||   [___]
+                      /_,.~~'`    *  _\_||_||_||_||___[_[_]_
+                      /`~..  o        \:::::::::::::::::::::\
+                     / *   `'~..   *   \:::::::::::::::::::::\
+                    /_     o    ``~~.,,_\=========\_/========='
+                    /  *      *     ..~'\         _|_ .-_--.
+                   /*    o   _..~~`'*   o\           ( (_)  )
+                   `-.__.~'`'   *   ___.-'            `----'
+                         ":-------:"
+                           \_____/
+ _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____   _____
+|_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____|
+|_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____| |_____|
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -86,17 +135,8 @@ int main(int argc, char* argv[])
 
 
 /*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*                                                                                                      __
+
+                                                                                                       __
                                                                                                     _  \ \
       _ __     ___    _ __             _   _   ___    ___   _ __     ____   ___    _ __     ___    (_)  | |
      | '_ \   / _ \  | '_ \   ______  | | | | / __|  / _ \ | '__|   |_  /  / _ \  | '_ \   / _ \        | |
@@ -128,15 +168,82 @@ int main(int argc, char* argv[])
 
 
 
+    if (preset == 0) { // purely execute the algorithm and print the results in the console
+        image = false;
+        animation = false;
+        on_click = false;
+        fullscreen = false;
+        dt = 0.0;
+    }
+    else if (preset == 1) { // image (fullscreen)
+        image = true;
+        animation = false;
+        on_click = false;
+        fullscreen = true;
+        dt = 0.0;
+    }
 
+    else if (preset == 2) { // slow little animation (20 seg. max, fullscreen)
+        image = false;
+        animation = true;
+        on_click = false;
+        fullscreen = true;
+        if (nPoints > 40) {
+            nPoints = 40;
+        }
+        float dt = 1500.0;
+    }
+
+    else if (preset == 3) { // quick animation (100 seg. max, fullscreen)
+        image = false;
+        animation = true;
+        on_click = false;
+        fullscreen = true;
+        if (nPoints > 200) {
+            nPoints = 200;
+        }
+        float dt = 500.0;
+    }
+
+    else if (preset == 4) { // fastest animation ! (100 seg. max, fullscreen)
+        image = false;
+        animation = true;
+        on_click = false;
+        fullscreen = true;
+        if (nPoints > 200) {
+            nPoints = 200;
+        }
+        float dt = 0.0;
+    }
+
+    else if (preset == 5) { // on-click animation ! (fullscreen)
+        image = false;
+        animation = true;
+        on_click = true;
+        fullscreen = true;
+        if (nPoints > 200) {
+            nPoints = 200;
+        }
+        float dt = 0.0;
+    }
 
     List* segmentList = fromTab2List(segment_coord, nPoints); // conversion of the point array into segment linked-list
 
-    fullscreen = (animation && !on_click && ! image) || fullscreen; // fullscreen is forced for automated display
+    //fullscreen = (animation && !on_click && ! image) || fullscreen; // fullscreen is forced for automated display
 
-    if (dt == 0.0) { // minimal dt
+    if (dt == 0.0) { // impose minimal dt
         dt = 0.00f;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -272,16 +379,14 @@ int main(int argc, char* argv[])
     };
     // %%% --- tau segments
     bov_points_param_t tauParams = {
-            .fillColor = {0.0f, 0.0f, 0.0f, 0.0f},
+            .fillColor = {0.6f, 0.6f, 0.6f, 1.0f},
             .outlineColor = {0.0f, 0.0f, 0.0f, 1.0f},
             .scale = {1.0, 1.0},
             .width = 0.005f,
             .outlineWidth = 0.00125f
     };
-    bov_points_param_t tauPointParams = {
-            .fillColor = {0.0f, 0.0f, 0.0f, 1.0f},
-            .outlineColor = {0.0f ,0.0f, 0.0f, 0.5f},
-            .fillColor = {0.0f, 0.0f, 0.0f, 0.5f},
+    bov_points_param_t ptauParams = {
+            .fillColor = {0.0f, 0.0f, 0.0f, 0.0f},
             .outlineColor = {0.0f ,0.0f, 0.0f, 0.0f},
             .scale = {1.0f, 1.0f},
             .width = 0.015f,
@@ -413,12 +518,11 @@ int main(int argc, char* argv[])
         printf("[MAIN] The Sweepline Algorithm took %f seconds to execute \n", time_taken);
 
         // smooth entrance
-        float zoom_from = 0.1;
-        float zoom_to = 1.2;
-
+        float zoom_from = 0.1f;
+        float zoom_to = 1.2f;
         while (!bov_window_should_close(window)) {
             if (zoom_from <= zoom_to) {
-                zoom_from *= 1.02;
+                zoom_from *= 1.02f;
                 window->param.zoom = zoom_from;
             }
 
@@ -504,6 +608,8 @@ int main(int argc, char* argv[])
     */
 
     if(animation && !image) {
+        bov_points_set_param(segment, segmentParams0);
+        bov_points_set_param(point, pointParams0);
         bool prevent_first_click = true;
         bool curr_click = false;
         bool finished = false;
@@ -512,9 +618,7 @@ int main(int argc, char* argv[])
 
         // data container
         dataStruct *data = initDataStruct();
-        if(data->p == NULL) {
-            data->p = createPoint(0.0, -1000.0, NULL);
-        }
+        if(data->p == NULL) { data->p = createPoint(0.0, -1000.0, NULL); }
         Point* copy_point = createPoint(data->p->x, data->p->y, data->p->U);
         while (!bov_window_should_close(window)) {
             bov_lines_draw(window, segment, 0, nPoints);
@@ -603,8 +707,8 @@ int main(int argc, char* argv[])
                     bov_text_draw(window, text_indication);
                     bov_text_delete(text_indication);
 
-                    p_coord[0][0] = (float)data->p->x;
-                    p_coord[0][1] = (float)-data->p->y;
+                    /*p_coord[0][0] = (float)data->p->x;
+                    p_coord[0][1] = (float)-data->p->y;*/
                 }
                 else {
                     bov_text_t* text_indication = bov_text_new(
@@ -616,8 +720,8 @@ int main(int argc, char* argv[])
                     bov_text_draw(window, text_indication);
                     bov_text_delete(text_indication);
                 }
-                /*p_coord[0][0] = (float) data->p->x;
-                p_coord[0][1] = (float) -data->p->y;*/
+                p_coord[0][0] = (float) data->p->x;
+                p_coord[0][1] = (float) -data->p->y;
             }
 
             /*
@@ -650,6 +754,19 @@ int main(int argc, char* argv[])
                 bov_text_delete(text_indication);
             }
 
+
+
+            // update Tau
+            if (TreesegSize(data->Tau) > 0) {
+                GLfloat(*tau_coord)[2] = malloc(sizeof(tau_coord[0]) * nPoints);
+                fromTreeseg2Tab(data->Tau, tau_coord);
+                bov_points_t* tau = bov_points_new(tau_coord, TreesegSize(data->Tau), GL_STATIC_DRAW);
+                bov_points_set_param(tau, tauParams);
+                bov_lines_draw(window, tau, 0, TreesegSize(data->Tau));
+                bov_points_delete(tau);
+                free(tau_coord);
+
+            }
             // update LeftMost/LeftNeigh and RightMost/RightNeigh Segments
             if (data->RLN != NULL) {
                 ListP *SMS = createVoidListP();
@@ -727,18 +844,6 @@ int main(int argc, char* argv[])
                 free(smsl_coord);
             }
 
-            // update Tau
-            if (TreesegSize(data->Tau) > 0) {
-                GLfloat(*tau_coord)[2] = malloc(sizeof(tau_coord[0]) * nPoints);
-                fromTreeseg2Tab(data->Tau, tau_coord);
-                bov_points_t* tau = bov_points_new(tau_coord, TreesegSize(data->Tau), GL_STATIC_DRAW);
-                bov_points_set_param(tau, tauParams);
-                bov_lines_draw(window, tau, 0, TreesegSize(data->Tau));
-                bov_points_delete(tau);
-                free(tau_coord);
-            }
-
-
             // update intersections
             GLfloat(*intersection_coord)[2] = malloc(sizeof(segment_coord[0]) * data->Intersections->length);
             fromListP2Tab(data->Intersections, intersection_coord);
@@ -788,3 +893,31 @@ int main(int argc, char* argv[])
     return EXIT_SUCCESS;
 }
 
+
+
+// JUST FOR YOU -  a well-predefined segment list   ( Merry Christmas ! )
+
+// NOTE : the tree segments defined by the points M-N-O are generating a (Mystic) bug on one laptop (WINDOWS) but not on the other (LINUX)
+
+//    GLfloat segment_coord[18][2] = {
+//    { 0.087f,  0.364f }, //A
+//    { 0.284f,  0.322f }, //B
+//    { 0.421f,  0.279f }, //C
+//    { 0.300f,  0.150f }, //D
+//    { 0.770f,  0.100f }, //E
+//    { 0.250f,  0.350f }, //F
+//    { 0.477f,  0.261f }, //G
+//    { 0.359f,  0.213f }, //H
+//    { 0.359f,  0.080f }, //I
+//    { 0.470f,  0.123f }, //J
+//    { 0.044f,  0.307f }, //K
+//    { 0.071f,  0.253f }, //L
+//    { 0.569f,  0.308f }, //M
+//    { 0.624f,  0.239f }, //N
+//    { 0.569f,  0.308f }, //M
+//    { 0.550f,  0.220f }, //O
+//    { 0.550f,  0.220f }, //O
+//    { 0.624f,  0.239f }, //N
+//};
+
+// -- don't forget to adapt the value of the "nPoints" variable above to : 18
