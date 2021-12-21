@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
     float dt = 10.0;                      // [ms] for animation without click
 
     // - defining segments
-    const GLsizei nPoints = 100;             // --- has to be even and should be below 200 if you want to animate it !
+    const GLsizei nPoints = 10;             // --- has to be even and should be below 200 if you want to animate it !
 
 
     // (1) randomly
@@ -320,7 +320,10 @@ int main(int argc, char* argv[])
 
         // data container
         dataStruct *data = initDataStruct();
-        if(data->p == NULL) { data->p = createPoint(0.0, -1000.0, NULL); }
+        if(data->p == NULL) {
+            data->p = createPoint(0.0, -1000.0, NULL);
+        }
+        Point* copy_point = createPoint(data->p->x, data->p->y, data->p->U);
         while (!bov_window_should_close(window)) {
             bov_lines_draw(window, segment, 0, nPoints);
             bov_points_draw(window, point, 0, nPoints);
@@ -348,11 +351,17 @@ int main(int argc, char* argv[])
                 if ((window->clickTime[0] < -window->wtime + 0.025f && window->clickTime[0] > -window->wtime - 0.025f) && !prevent_first_click) {
                     curr_click = true;
                     printf("\n >>> click <<<\n");
-                    if (! equalPoint(last_p, data->p)) {
-                        free(last_p);
-                        last_p = createPoint(data->p->x, data->p->y, data->p->U);
-                        FindIntersections2(segmentList, data, data->p);
+                    if (! equalPoint(last_p, copy_point)) {
+                        freeDatastruct(data);
+                        data = initDataStruct();
 
+                        freePoint(last_p);
+                        last_p = createPoint(copy_point->x, copy_point->y, copy_point->U);
+
+                        FindIntersections2(segmentList, data, copy_point);
+
+                        freePoint(copy_point);
+                        copy_point = createPoint(data->p->x, data->p->y, data->p->U);
                     }
                     else {
                         finished = true;
@@ -378,9 +387,17 @@ int main(int argc, char* argv[])
                 */
             } else {
                 if (!equalPoint(last_p, data->p)) {
-                    free(last_p);
-                    last_p = createPoint(data->p->x, data->p->y, data->p->U);
-                    FindIntersections2(segmentList, data, data->p);
+                    freeDatastruct(data);
+                    data = initDataStruct();
+
+                    freePoint(last_p);
+                    last_p = createPoint(copy_point->x, copy_point->y, copy_point->U);
+
+                    FindIntersections2(segmentList, data, copy_point);
+
+                    freePoint(copy_point);
+                    copy_point = createPoint(data->p->x, data->p->y, data->p->U);
+
                     if ((window->wtime - iter_start_time) < dt) {
                         sleep(dt - (window->wtime + iter_start_time));
                     }

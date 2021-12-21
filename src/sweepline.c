@@ -330,5 +330,6 @@ void freeDatastruct(dataStruct *data){
         freeSeg(data->RN);
         freeSeg(data->LN);
         freeList(data->RLN);
+        free(data);
     }
 }
