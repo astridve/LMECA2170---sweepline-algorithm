@@ -99,6 +99,7 @@ int main(int argc, char* argv[])
         printf("[MAIN] Number of intersection found : %d",data->Intersections->length);
         freeDatastruct(data);
         freeList(segmentList);
+        free(segment_coord);
         return EXIT_SUCCESS;
     }
 
@@ -147,7 +148,7 @@ int main(int argc, char* argv[])
     bov_points_t* point = bov_points_new(segment_coord, nPoints, GL_STATIC_DRAW);
     bov_points_set_param(point, pointParams);
     // %%% --- red point (point p of the algorythm)
-    GLfloat p_coord[1][2] = { {-1000.0f, -1000.0f} }; //TODO: when to free?
+    GLfloat p_coord[1][2] = { {-1000.0f, -1000.0f} };
     bov_points_param_t pParams = {
             .fillColor = {0.99f , 0.74f, 0.2f, 1.0f},
             .outlineColor = {0.839f, 0.411f, 0.388f, 0.0f},
@@ -558,6 +559,11 @@ int main(int argc, char* argv[])
             curr_click = false;
             bov_window_update(window);
         }
+        freeDatastruct(data);
+        freePoint(last_p);
+        freePoint(copy_point);
+        freeList(segmentList);
+        free(segment_coord);
     }
 
 
