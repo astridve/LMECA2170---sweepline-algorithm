@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 
 
     // - defining segments
-    GLsizei nPoints = 10;            // --- has to be even (and should be below 250 if you want to animate it)
+    GLsizei nPoints = 30;            // --- has to be even (and should be below 250 if you want to animate it)
 
     // randomly define points
     int seed = 1639935196;            // (int)time(NULL);
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
         |_ |
     */
 
-    int preset = 5;
+    int preset = 2;
 
     // 0 - execute the algorithm and print the results in the console
     // 1 - simple image (fullscreen)
@@ -76,7 +76,7 @@ int main(int argc, char* argv[])
     bool fullscreen = true;                 // fullscreen is forced for automated animation (without click)
 
     // - min. duration per frame
-    float dt = 0.0;                         // [ms] for animation without click
+    float dt = 1.5;                         // [ms] for animation without click
 
 
 
@@ -693,8 +693,8 @@ int main(int argc, char* argv[])
                     freePoint(copy_point);
                     copy_point = createPoint(data->p->x, data->p->y, data->p->U);
 
-                    if ((window->wtime - iter_start_time) < dt) {
-                         sleep(dt - (window->wtime + iter_start_time)); // (LINUX)
+                    if ((window->wtime - iter_start_time)/1000. < dt) {
+                         sleep(dt - (window->wtime + iter_start_time)/1000.); // (LINUX)
                         // Sleep(dt - (window->wtime + iter_start_time)); // (WINDOWS)
                     }
                     bov_text_t* text_indication = bov_text_new(
