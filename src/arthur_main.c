@@ -4,6 +4,7 @@
 ** @@ LMECA2170 course - Numerical Geometry
 * */
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -97,9 +98,9 @@ int main(int argc, char* argv[])
 *
 *                                                                                                      __
                                                                                                     _  \ \
-      _ __     ___    _ __    ______   _   _   ___    ___   _ __     ____   ___    _ __     ___    (_)  | |
-     | '_ \   / _ \  | '_ \  |______| | | | | / __|  / _ \ | '__|   |_  /  / _ \  | '_ \   / _ \        | |
-     | | | | | (_) | | | | |          | |_| | \__ \ |  __/ | |       / /  | (_) | | | | | |  __/    _   | |
+      _ __     ___    _ __             _   _   ___    ___   _ __     ____   ___    _ __     ___    (_)  | |
+     | '_ \   / _ \  | '_ \   ______  | | | | / __|  / _ \ | '__|   |_  /  / _ \  | '_ \   / _ \        | |
+     | | | | | (_) | | | | | |______| | |_| | \__ \ |  __/ | |       / /  | (_) | | | | | |  __/    _   | |
      |_| |_|  \___/  |_| |_|           \__,_| |___/  \___| |_|      /___|  \___/  |_| |_|  \___|   (_)  | |
                                                                                                        /_/
 */
@@ -200,6 +201,20 @@ int main(int argc, char* argv[])
     }
     bov_window_set_color(window, (GLfloat[4]) { 1.0f, 1.0f, 1.0f, 1.0f});
     // %%% --- basic segments
+    bov_points_param_t segmentParams0 = {
+            .fillColor = {0.0f, 0.0f, 0.0f, 1.0f},
+            .outlineColor = {0.0f ,0.0f, 0.0f, 0.5f},
+            .scale = {1.0, 1.0},
+            .width = 0.005f,
+            .outlineWidth = 0.00125f
+    };
+    bov_points_param_t pointParams0 = {
+            .fillColor = {0.0f, 0.0f, 0.0f, 1.0f},
+            .outlineColor = {0.0f ,0.0f, 0.0f, 0.5f},
+            .scale = {1.0f, 1.0f},
+            .width = 0.015f,
+            .outlineWidth = 0.005f
+    };
     bov_points_param_t segmentParams = {
             //.fillColor = {0.0f, 0.0f, 0.0f, 1.0f},
             //.outlineColor = {0.0f ,0.0f, 0.0f, 0.5f},
@@ -222,13 +237,13 @@ int main(int argc, char* argv[])
     bov_points_set_param(segment, segmentParams);
     bov_points_t* point = bov_points_new(segment_coord, nPoints, GL_STATIC_DRAW);
     bov_points_set_param(point, pointParams);
-    // %%% --- red point (point p of the algorythm)
+    // %%% --- red point (point p of the algorythm) - yellow now x)
     GLfloat p_coord[1][2] = { {-1000.0f, -1000.0f} };
     bov_points_param_t pParams = {
             .fillColor = {0.99f , 0.74f, 0.2f, 1.0f},
             .outlineColor = {0.839f, 0.411f, 0.388f, 0.0f},
             .scale = {1.0f, 1.0f},
-            .width = 0.025f,
+            .width = 0.02f,
             .outlineWidth = 0.005f
     };
     bov_points_t* p = bov_points_new(p_coord, 1, GL_STATIC_DRAW);
@@ -242,8 +257,8 @@ int main(int argc, char* argv[])
             .fillColor = {0.0f, 0.34f, 0.905f, 1.0f},
             .outlineColor = {0.0f, 0.34f, 0.905f, 0.166f},
             .scale = {1.0f, 1.0f},
-            .width = 0.012f,
-            .outlineWidth = 0.005f
+            .width = 0.009f,
+            .outlineWidth = 0.003f
     };
     bov_points_t* sweepline = bov_points_new(sweepline_coord, 2, GL_STATIC_DRAW);
     bov_points_set_param(sweepline, sweeplineParams);
@@ -259,8 +274,6 @@ int main(int argc, char* argv[])
     bov_points_param_t tauParams = {
             .fillColor = {0.0f, 0.0f, 0.0f, 0.0f},
             .outlineColor = {0.0f, 0.0f, 0.0f, 1.0f},
-            .fillColor = {0.0f, 0.0f, 0.0f, 0.5f},
-            .outlineColor = {0.0f ,0.0f, 0.0f, 0.0f},
             .scale = {1.0, 1.0},
             .width = 0.005f,
             .outlineWidth = 0.00125f
@@ -381,8 +394,8 @@ int main(int argc, char* argv[])
 
     if (image) {
         // no need to show Tau --> segment are reset to balck
-        bov_points_set_param(segment, tauParams);
-        bov_points_set_param(point, tauPointParams);
+        bov_points_set_param(segment, segmentParams0);
+        bov_points_set_param(point, pointParams0);
 
         // data container
         dataStruct* data = initDataStruct();
@@ -651,10 +664,10 @@ int main(int argc, char* argv[])
                 bov_lines_draw(window, sms, 0, SMS->length);
                 bov_points_delete(sms);
 
-                bov_points_t* psms = bov_points_new(sms_coord, sizeof(sms_coord), GL_DYNAMIC_DRAW);
+                /*bov_points_t* psms = bov_points_new(sms_coord, sizeof(sms_coord), GL_DYNAMIC_DRAW);
                 bov_points_set_param(psms, psmsParams);
                 bov_points_draw(window, psms, 0, SMS->length);
-                bov_points_delete(psms);
+                bov_points_delete(psms);*/
 
                 freeListP(SMS);
                 free(sms_coord);
@@ -677,10 +690,10 @@ int main(int argc, char* argv[])
                 bov_lines_draw(window, smsr, 0, SMSR->length);
                 bov_points_delete(smsr);
 
-                bov_points_t *psmsr = bov_points_new(smsr_coord, sizeof(smsr_coord), GL_DYNAMIC_DRAW);
+                /*bov_points_t *psmsr = bov_points_new(smsr_coord, sizeof(smsr_coord), GL_DYNAMIC_DRAW);
                 bov_points_set_param(psmsr, psmsrParams);
                 bov_points_draw(window, psmsr, 0, SMSR->length);
-                bov_points_delete(psmsr);
+                bov_points_delete(psmsr);*/
 
                 freeListP(SMSR);
                 free(smsr_coord);
@@ -703,10 +716,10 @@ int main(int argc, char* argv[])
                 bov_lines_draw(window, smsl, 0, SMSL->length);
                 bov_points_delete(smsl);
 
-                bov_points_t* psmsl = bov_points_new(smsl_coord, sizeof(smsl_coord), GL_DYNAMIC_DRAW);
+                /*bov_points_t* psmsl = bov_points_new(smsl_coord, sizeof(smsl_coord), GL_DYNAMIC_DRAW);
                 bov_points_set_param(psmsl, psmslParams);
                 bov_points_draw(window, psmsl, 0, SMSL->length);
-                bov_points_delete(psmsl);
+                bov_points_delete(psmsl);*/
 
                 freeListP(SMSL);
                 free(smsl_coord);
