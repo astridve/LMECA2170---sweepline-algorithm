@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 
 
     // - defining segments
-    GLsizei nPoints = 7000;            // --- has to be even (and should be below 250 if you want to animate it)
+    GLsizei nPoints = 10;            // --- has to be even (and should be below 250 if you want to animate it)
 
     // randomly define points
     int seed = 1639935196;            // (int)time(NULL);
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
         |_ |
     */
 
-    int preset = 4;
+    int preset = 5;
 
     // 0 - execute the algorithm and print the results in the console
     // 1 - simple image (fullscreen)
@@ -732,6 +732,9 @@ int main(int argc, char* argv[])
                   .88.   88  V888   88   88 88  V888    88      Y8b  d8 88   88 db   8D 88.
                 Y888888P VP   V8P   YP   YP VP   V8P    YP       `Y88P' YP   YP `8888Y' Y88888P
             */
+            if (data->Intersections == NULL){
+                data->Intersections = createVoidListP();
+            }
 
             // draw text !
             bov_text_t* text_obj = bov_text_new(
