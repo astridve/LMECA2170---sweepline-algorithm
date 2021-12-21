@@ -284,7 +284,10 @@ bool delHead(List* list){
 }
 
 List* concatenate(List* l1, List* l2, List* l3){
-	return concatenate2(concatenate2(l1, l2), l3);
+    List* tmp = concatenate2(l1, l2);
+    List* final = concatenate2(tmp, l3);
+    freeList(tmp);
+	return final;
 }
 
 List* concatenate2(List* l1, List* l2){

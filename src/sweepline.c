@@ -25,6 +25,13 @@ dataStruct* initDataStruct(){
     return result;
 }
 
+void delForL(Treeseg** Tau, Listseg* Li, Point* p){
+    if (Li != NULL){
+        delSeg(Tau, Li->value, p);
+        delForC(Tau, Li->prev, p);
+    }
+}
+
 void delForC(Treeseg** Tau, Listseg* Ci, Point* p){
     if (Ci != NULL){
         delSeg(Tau, Ci->value, p);
@@ -80,6 +87,7 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
                 if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){;
                     insertPoint(Q, inter, *Q, NULL, false);
                 }
+                freePoint(inter);
             }
         }
     }else if (sL->p0->x != sL->p1->x){// right is vertical
@@ -91,6 +99,7 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
                 insertPoint(Q, inter, *Q, NULL, false);
 
             }
+            freePoint(inter);
         }
     }else if (sR->p0->x != sR->p1->x){// left is vertical
         x_inter = sL->p0->x;
@@ -100,6 +109,7 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
             if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
                 insertPoint(Q, inter, *Q, NULL, false);
             }
+            freePoint(inter);
         }
     }
 }
@@ -116,14 +126,14 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
 
     int lengthT = p->U->length + L->length + C->length;
     if (lengthT >= 2){// p is an intersection point
-        insertListHeadP(*Inter, p, concatenate(p->U, L, C));
+        List* concat = concatenate(p->U, L, C);
+        insertListHeadP(*Inter, p, concat);
+        freeList(concat);
     }
 
     //Delete segment with p as lower point from the tree
-    for (int i = 0; i < (L->length); i++) {
-        delSeg(&Tau, L->head->value, p);
-        delHead(L);
-    }
+    delForL(&Tau, L->head, p);
+    freeList(L);
 
     //Delete and reinsert segment containing p from the tree (so they switch positions)
     delForC(&Tau, C->head, p);
@@ -144,9 +154,6 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
             findNewEvent(data->RLN->head->value, data->RLN->queue->value, p, Q, data);
         }
     }else{
-        freeList(data->RLN);
-        data->RLN = createVoidList();
-
         data->RLN = NULL;
         data->LM = NULL;
         data->RM = NULL;
@@ -235,8 +242,12 @@ ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
 List* fromTab2List(GLfloat coord[][2], GLsizei nPoints){
     List* segmentList = createVoidList();
     for (GLsizei i=0; i<nPoints; i+=2) {
-        Segment *s = createSegment(createPoint(coord[i][0], -coord[i][1], NULL), createPoint(coord[i+1][0], -coord[i+1][1], NULL), i/2);
+        Point* p0 = createPoint(coord[i][0], -coord[i][1], NULL);
+        Point* p1 = createPoint(coord[i+1][0], -coord[i+1][1], NULL);
+        Segment *s = createSegment(p0, p1, i/2);
         insertListHead(segmentList, s);
+        freePoint(p0);
+        freePoint(p1);
         freeSeg(s);
     }
     return segmentList;
@@ -295,6 +306,7 @@ bool fromTreenode2Tab(Treenode* tree, GLfloat tab[][2]){
     ListP* list = createVoidListP();
     fromTreenode2ListP(list, tree);
     fromListP2Tab(list, tab);
+    freeListP(list);
     return true;
 }
 
@@ -302,20 +314,25 @@ bool fromTreeseg2Tab(Treeseg* tree, GLfloat tab[][2]){
     ListP* list = createVoidListP();
     fromTreeseg2ListP(list, tree);
     fromListP2Tab(list, tab);
+    freeListP(list);
     return true;
 }
 
 int TreesegSize(Treeseg* tree) {
     ListP* list = createVoidListP();
     fromTreeseg2ListP(list, tree);
-    return list->length;
+    int ans = list->length;
+    freeListP(list);
+    return ans;
 }
 
 
 int TreenodeSize(Treenode* tree) {
     ListP* list = createVoidListP();
     fromTreenode2ListP(list, tree);
-    return list->length;
+    int ans = list->length;
+    freeListP(list);
+    return ans;
 }
 
 
