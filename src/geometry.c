@@ -56,7 +56,7 @@ void freePoint(Point* p){
 void printPoint(Point *p) {
 	if (p != NULL){
 		printf("Point = (%.2f, %.2f)  ", p->x, p->y);
-		printList(p->U);
+        printList(p->U);
 	}else{
 		printf("Point = NULL\n");
 	}
@@ -188,7 +188,7 @@ List *createVoidList(){
 
 bool insertListHead(List* list, Segment* s){
 	if(s == NULL){
-		printf("\nWarning: segment is NULL\n");
+		//printf("\nWarning: segment is NULL\n");
 		return false;
 	}
 	if(list != NULL){
@@ -209,7 +209,7 @@ bool insertListHead(List* list, Segment* s){
             return true;
 		}
 		else{
-			list->head = createListseg(s);
+            list->head = createListseg(s);
 			list->length = 1;
 			return true;
 		}

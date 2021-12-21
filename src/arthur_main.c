@@ -30,11 +30,11 @@ int main(int argc, char* argv[])
     */
 
     // - display
-    bool image = false;                      // image set on true overrides other displaying options
-    bool animation = true;
+    bool image = true;                      // image set on true overrides other displaying options
+    bool animation = false;
     bool on_click = true;
 
-    bool fullscreen = true;                 // fullscreen is forced for automated animation (without click)
+    bool fullscreen = false;                 // fullscreen is forced for automated animation (without click)
 
     // - min. duration per frame
     float dt = 750.0;                         // [ms] for animation without click
@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
         clock_t t;
         t = clock();
 
-        data->Intersections = FindIntersections(segmentList, data);
+        FindIntersections(segmentList, data);
 
         t = clock() - t;
         printf("[MAIN] Number of intersection found : %d \n", data->Intersections->length);
@@ -404,7 +404,7 @@ int main(int argc, char* argv[])
         printf("[MAIN] Launching Algorithm for %d segments (aka %d points) \n", (int)(nPoints / 2), nPoints);
         clock_t t;
         t = clock();
-        data->Intersections = FindIntersections(segmentList, data);
+        FindIntersections(segmentList, data);
         t = clock() - t;
 
         printf("[MAIN] Number of intersection found : %d \n", data->Intersections->length);
@@ -551,7 +551,6 @@ int main(int argc, char* argv[])
                         last_p = createPoint(copy_point->x, copy_point->y, copy_point->U);
 
                         FindIntersections2(segmentList, data, copy_point);
-
                         freePoint(copy_point);
                         copy_point = createPoint(data->p->x, data->p->y, data->p->U);
                     }
@@ -603,6 +602,9 @@ int main(int argc, char* argv[])
                     bov_text_set_param(text_indication, textParams2);
                     bov_text_draw(window, text_indication);
                     bov_text_delete(text_indication);
+
+                    p_coord[0][0] = (float)data->p->x;
+                    p_coord[0][1] = (float)-data->p->y;
                 }
                 else {
                     bov_text_t* text_indication = bov_text_new(
@@ -614,8 +616,8 @@ int main(int argc, char* argv[])
                     bov_text_draw(window, text_indication);
                     bov_text_delete(text_indication);
                 }
-                p_coord[0][0] = (float) data->p->x;
-                p_coord[0][1] = (float) -data->p->y;
+                /*p_coord[0][0] = (float) data->p->x;
+                p_coord[0][1] = (float) -data->p->y;*/
             }
 
             /*
@@ -727,11 +729,11 @@ int main(int argc, char* argv[])
 
             // update Tau
             if (TreesegSize(data->Tau) > 0) {
-                GLfloat(*tau_coord)[2] = malloc(sizeof(tau_coord[0]) * TreesegSize(data->Tau)+1);
+                GLfloat(*tau_coord)[2] = malloc(sizeof(tau_coord[0]) * nPoints);
                 fromTreeseg2Tab(data->Tau, tau_coord);
-                bov_points_t* tau = bov_points_new(tau_coord, (int)sizeof(tau_coord), GL_STATIC_DRAW);
+                bov_points_t* tau = bov_points_new(tau_coord, TreesegSize(data->Tau), GL_STATIC_DRAW);
                 bov_points_set_param(tau, tauParams);
-                bov_lines_draw(window, tau, 0, (int)sizeof(tau_coord));
+                bov_lines_draw(window, tau, 0, TreesegSize(data->Tau));
                 bov_points_delete(tau);
                 free(tau_coord);
             }

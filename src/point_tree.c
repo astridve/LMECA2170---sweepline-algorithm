@@ -72,25 +72,39 @@ Point* delPoint(Treenode **root){ // Delete the point the most on the left of th
 	}
 	else{// we have reach the point
 		if((*root)->parent != NULL && (*root)->right != NULL){ // link the parent of the node with its right child
-            Point* p = (*root)->value;
-			(*root)->right->parent = (*root)->parent;
-			(*root)->parent->left = (*root)->right;
+            Point* p = createPoint((*root)->value->x, (*root)->value->y, (*root)->value->U);
+
+            Treenode *par = (*root)->parent;
+            Treenode *r = (*root)->right;
+
+            freePoint((*root)->value);
+            free(*root);
+
+            r->parent = par;
+			par->left = r;
 			return p;
 		}
 		if((*root)->parent != NULL && (*root)->right == NULL){ // the parent of the node is now a leaf
-            Point* p = (*root)->value;
-			(*root)->parent->left = NULL;
+            Point* p = createPoint((*root)->value->x, (*root)->value->y, (*root)->value->U);
+            (*root)->parent->left = NULL;
+            freeTreenode(*root);
 			return p;
 		}
 		else if((*root)->parent== NULL && (*root)->right != NULL){ // the right child becomes the upper parent of the tree
-            Point *p = (*root)->value;
-			(*root) = (*root)->right;
+            Point *p = createPoint((*root)->value->x, (*root)->value->y, (*root)->value->U);
+
+            Treenode *r = (*root)->right;
+
+            freePoint((*root)->value);
+            free(*root);
+
+            (*root) = r;
 			(*root)->parent = NULL;
 			return p;
 		}
 		else { // the point is the only node remaining in the tree
-            printf("Last point in the tree\n");
-            Point *p = (*root)->value;
+            Point *p = createPoint((*root)->value->x, (*root)->value->y, (*root)->value->U);
+            freeTreenode(*root);
             (*root) = NULL;
             return p;
 		}

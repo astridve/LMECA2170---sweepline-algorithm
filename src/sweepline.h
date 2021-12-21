@@ -33,10 +33,10 @@ void createQ(Listseg*, Treenode**);
 
 void findNewEvent(Segment*, Segment*, Point*, Treenode**, dataStruct*);
 
-Treeseg* HandleEventPoint(Point*, Treeseg**, ListP**, Treenode**, dataStruct*);
+void HandleEventPoint(dataStruct*);
 
-ListP* FindIntersections(List*, dataStruct*);
-ListP* FindIntersections2(List*, dataStruct*, Point*);
+bool FindIntersections(List*, dataStruct*);
+bool FindIntersections2(List*, dataStruct*, Point*);
 
 
 List* fromTab2List(GLfloat[][2], GLsizei);

@@ -12,7 +12,8 @@
 dataStruct* initDataStruct(){
     dataStruct *result = malloc(sizeof(dataStruct));
     if (result != NULL) {
-        result->Intersections = createVoidListP();
+        //result->Intersections = createVoidListP();
+        result->Intersections = NULL;
         result->Q = NULL;
         result->Tau = NULL;
         result->p = NULL;
@@ -115,43 +116,41 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
 }
 
 
-Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, dataStruct *data){
-    Treeseg *Tau = *T;
-
+void HandleEventPoint(dataStruct *data){
     List* L = createVoidList();
     List* C = createVoidList();
     data->RLN = createVoidList();
 
-    findLandC(Tau, NULL, p, false, L, C, data->RLN);
+    findLandC(data->Tau, NULL, data->p, false, L, C, data->RLN);
 
-    int lengthT = p->U->length + L->length + C->length;
+    int lengthT = data->p->U->length + L->length + C->length;
     if (lengthT >= 2){// p is an intersection point
-        List* concat = concatenate(p->U, L, C);
-        insertListHeadP(*Inter, p, concat);
+        List* concat = concatenate(data->p->U, L, C);
+        insertListHeadP(data->Intersections, data->p, concat);
         freeList(concat);
     }
 
     //Delete segment with p as lower point from the tree
-    delForL(&Tau, L->head, p);
+    delForL(&(data->Tau), L->head, data->p);
     freeList(L);
 
     //Delete and reinsert segment containing p from the tree (so they switch positions)
-    delForC(&Tau, C->head, p);
-    insertForC(&Tau, C->head, p);
+    delForC(&(data->Tau), C->head, data->p);
+    insertForC(&(data->Tau), C->head, data->p);
 
     //Insert segment with p as upper point
-    if (p->U != NULL) {
-        insertForU(&Tau, p->U->head, p);
+    if (data->p->U != NULL) {
+        insertForU(&(data->Tau), data->p->U->head, data->p);
     }
 
     // Check for new intersections
-    if (p->U->length + C->length == 0){// p is only a lower point
+    if (data->p->U->length + C->length == 0){// p is only a lower point
         data->LM = NULL;
         data->RM = NULL;
         data->LN = NULL;
         data->RN = NULL;
         if (data->RLN->length == 2){// sl and sr exists
-            findNewEvent(data->RLN->head->value, data->RLN->queue->value, p, Q, data);
+            findNewEvent(data->RLN->head->value, data->RLN->queue->value, data->p, &(data->Q), data);
         }
     }else{
         data->RLN = NULL;
@@ -160,35 +159,35 @@ Treeseg* HandleEventPoint(Point *p, Treeseg** T, ListP** Inter, Treenode **Q, da
         data->LN = NULL;
         data->RN = NULL;
 
-        Segment *LM = findLeftMost(Tau, NULL, p, false);
-        Segment *RM = findRightMost(Tau, NULL, p, false);
+        Segment *LM = findLeftMost(data->Tau, NULL, data->p, false);
+        Segment *RM = findRightMost(data->Tau, NULL, data->p, false);
         Treeseg *LN = NULL;
         Treeseg *RN = NULL;
 
         if (LM != NULL) {
             data->LM  = createSegment(LM->p0, LM->p1, LM->value);
-            LN = findLeftNb(Tau, LM, p, false);
+            LN = findLeftNb(data->Tau, LM, data->p, false);
         }
         if (RM != NULL){
             data->RM  = createSegment(RM->p0, RM->p1, RM->value);
-            RN = findRightNb(Tau, RM, p, false);
+            RN = findRightNb(data->Tau, RM, data->p, false);
         }
 
         if (LN != NULL){
             data->LN = createSegment(LN->value->p0, LN->value->p1, LN->value->value);
-            findNewEvent(data->LN, data->LM, p, Q, data);
+            findNewEvent(data->LN, data->LM, data->p, &(data->Q), data);
         }
         if (RN != NULL){
             data->RN = createSegment(RN->value->p0, RN->value->p1, RN->value->value);
-            findNewEvent(data->RN, data->RM, p, Q, data);
+            findNewEvent(data->RN, data->RM, data->p, &(data->Q), data);
         }
     }
     freeList(C);
-    return Tau;
+    //return data->Tau;
 }
 
 
-ListP* FindIntersections(List* s, dataStruct *data){
+bool FindIntersections(List* s, dataStruct *data){
     data->Q = NULL;
     createQ(s->head, &(data->Q));
     data->Tau = NULL;
@@ -196,7 +195,8 @@ ListP* FindIntersections(List* s, dataStruct *data){
 
     while((data->Q) != NULL){
         data->p = delPoint(&(data->Q));
-        data->Tau = HandleEventPoint(data->p, &(data->Tau), &(data->Intersections), &(data->Q), data);
+        printPoint(data->p);
+        HandleEventPoint(data);
         if (data->Q != NULL){
             freePoint(data->p);
             freeList(data->RLN);
@@ -206,10 +206,10 @@ ListP* FindIntersections(List* s, dataStruct *data){
             freeSeg(data->RN);
         }
     }
-    return data->Intersections;
+    return true;
 }
 
-ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
+bool FindIntersections2(List* s, dataStruct *data, Point* red_point){
     data->Q = NULL;
     createQ(s->head, &(data->Q));
     data->Tau = NULL;
@@ -218,11 +218,11 @@ ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
     bool avant_dernier = false;
     while((data->Q) != NULL){
         data->p = delPoint(&(data->Q));
-        data->Tau = HandleEventPoint(data->p, &(data->Tau), &(data->Intersections), &(data->Q), data);
+        HandleEventPoint(data);
         if(avant_dernier){
-            return data->Intersections;
+            return true;
         }
-            if((red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x)) && data->Q != NULL){
+        if((red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x)) && data->Q != NULL){
             freePoint(data->p);
             freeList(data->RLN);
             freeSeg(data->LM);
@@ -232,7 +232,7 @@ ListP* FindIntersections2(List* s, dataStruct *data, Point* red_point){
             avant_dernier = true;
         }
     }
-    return data->Intersections;
+    return true;
 }
 
 
@@ -245,6 +245,7 @@ List* fromTab2List(GLfloat coord[][2], GLsizei nPoints){
         Point* p0 = createPoint(coord[i][0], -coord[i][1], NULL);
         Point* p1 = createPoint(coord[i+1][0], -coord[i+1][1], NULL);
         Segment *s = createSegment(p0, p1, i/2);
+
         insertListHead(segmentList, s);
         freePoint(p0);
         freePoint(p1);

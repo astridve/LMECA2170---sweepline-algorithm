@@ -70,8 +70,7 @@ bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // in
 
 bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg from the tree where the point p gives information about the position of the sweep line
     if(*root != NULL){
-        Treeseg* tree;  // find the segment in the tree
-        tree = findSegBEFOREUPDATE(*root, seg, p);
+        Treeseg* tree = findSegBEFOREUPDATE(*root, seg, p);
 
         if(tree->left == NULL && tree->right == NULL){ // The seg node is a leaf: just remove the segment node from the tree
 			if(tree->parent != NULL){ // there are other nodes in the tree
@@ -92,14 +91,14 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 				}
 			}
 			else{ // The segment is the only node in the tree so deleting seg suppress the tree
-				*root = NULL;
-                freeTreeseg(tree);
+				freeTreeseg(tree);
+                *root = NULL;
                 return true;
 			}
 
 		}else if(tree->left != NULL && tree->right != NULL){ // the seg node has two children in the tree: we delete seg by replacing it by the leaf the most on the right of the left tree of the node of seg
 			Treeseg* child = findRSeg(tree->left); // find the replacement, delete that node in the tree and replace in the seg node the value by the replacement value
-            freeSeg(tree->value);//TODO: free tree->value?
+            freeSeg(tree->value);
             tree->value = createSegment(child->value->p0, child->value->p1, child->value->value);
             return delSeg(&(tree->left), child->value, p);
 
@@ -107,15 +106,25 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 			if(tree->left == NULL){ // child on the right
 				if(tree->parent != NULL){ // the segment is not in the top upper node: we need to rely the parent of the node of segm with the child tree of the node of segm
 					if(tree->parent->left != NULL && equalSegment(tree->parent->left->value, tree->value)){// the segm. node lies on the left of its parent
-						tree->parent->left = tree->right;
-                        tree->right->parent = tree->parent;
+						Treeseg *par = tree->parent;
+                        Treeseg *r = tree->right;
+
                         freeSeg(tree->value);
+                        free(tree);
+
+                        par->left = r;
+                        r->parent = par;
                         return true;
 					}
 					else if(tree->parent->right != NULL){ // if right exists and the segm is not on the left of its parent then it is on the right
-						tree->parent->right = tree->right;
-                        tree->right->parent = tree->parent;
+                        Treeseg *par = tree->parent;
+                        Treeseg *r = tree->right;
+
                         freeSeg(tree->value);
+                        free(tree);
+
+                        par->right = r;
+                        r->parent = par;
                         return true;
 					}
 					else{
@@ -124,24 +133,38 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 					}
 				}
 				else{ // if the segm is in the top upper node then we just take its right tree as the tree with segm deleted
-                    tree->right->parent = NULL;
-                    (*root) = tree->right;
+                    Treeseg *r = tree->right;
+
                     freeSeg(tree->value);
+                    free(tree);
+
+                    r->parent = NULL;
+                    (*root) = r;
                     return true;
 				}
 			}
 			else if(tree->right == NULL){ // child on the left
 				if(tree->parent != NULL){ // the segment is not in the top upper node: we need to rely the parent of the node of segm with the child tree of the node of segm
 					if(tree->parent->left != NULL && equalSegment(tree->parent->left->value, tree->value)){// the segm. node lies on the left of its parent
-						tree->parent->left = tree->left;
-                        tree->left->parent = tree->parent;
+                        Treeseg *par = tree->parent;
+                        Treeseg *l = tree->left;
+
                         freeSeg(tree->value);
+                        free(tree);
+
+                        par->left = l;
+                        l->parent = par;
                         return true;
 					}
 					else if(tree->parent->right != NULL){ // if right exists and the segm is not on the left of its parent then it is on the right
-                        tree->parent->right = tree->left;
-                        tree->left->parent = tree->parent;
+                        Treeseg *par = tree->parent;
+                        Treeseg *l = tree->left;
+
                         freeSeg(tree->value);
+                        free(tree);
+
+                        par->right = l;
+                        l->parent = par;
 						return true; 
 					}
 					else{
@@ -150,10 +173,14 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 					}
 				}
 				else{ // if the segm is in the top upper node then we just take its left tree as the tree with segm deleted
-                    tree->left->parent = NULL;
-                    (*root) = tree->left;
+                    Treeseg *l = tree->left;
+
                     freeSeg(tree->value);
-					return true;
+                    free(tree);
+
+                    l->parent = NULL;
+                    (*root) = l;
+                    return true;
 				}
 			}
 		}
