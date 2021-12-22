@@ -158,7 +158,7 @@ void HandleEventPoint(dataStruct *data){
             findNewEvent(data->RLN->head->value, data->RLN->queue->value, data->p, &(data->Q), data);
         }
     }else{
-        free(data->RLN);
+        freeList(data->RLN);
         data->RLN = NULL;
         data->LM = NULL;
         data->RM = NULL;
@@ -222,18 +222,19 @@ bool FindIntersections2(List* s, dataStruct *data, Point* red_point){
     bool avant_dernier = false;
     while((data->Q) != NULL){
         data->p = delPoint(&(data->Q));
-        data->RLN = createVoidList();
         HandleEventPoint(data);
         if(avant_dernier){
             return true;
         }
-        if((red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x)) && data->Q != NULL){
+        if (data->Q != NULL){
             freePoint(data->p);
             freeList(data->RLN);
             freeSeg(data->LM);
             freeSeg(data->LN);
             freeSeg(data->RM);
             freeSeg(data->RN);
+        }
+        if((red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x))){
             avant_dernier = true;
         }
     }

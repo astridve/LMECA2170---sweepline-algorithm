@@ -256,14 +256,7 @@ List* concatenate2(List* l1, List* l2){
     if(l1 != NULL){
         insertList(tmp, l1->head);
         if(l2 != NULL){
-
-            if (l2->length == 1 && l2->queue != NULL){
-                insertListQueue(tmp, l2->queue->value);
-            }else if(l2->length==1 && l2->head != NULL){
-                insertListQueue(tmp, l2->head->value);
-            }else{
-                insertList(tmp, l2->head);
-            }
+            insertList(tmp, l2->head);
         }
     }
     else{ // l1 == NULL
@@ -294,7 +287,6 @@ void freeListSeg(Listseg* LS){
 void freeList(List* L){
     if (L != NULL) {
         freeListSeg(L->head);
-        //freeListSeg(L->queue);
         free(L);
         L = NULL;
     }
