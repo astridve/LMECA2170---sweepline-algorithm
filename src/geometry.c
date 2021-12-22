@@ -189,7 +189,6 @@ List *createVoidList(){
 
 bool insertListHead(List* list, Segment* s){
     if(s == NULL){
-        //printf("\nWarning: segment is NULL\n");
         return false;
     }
     if(list != NULL){
@@ -268,9 +267,6 @@ bool delHead(List* list){
         return false;
     }
     if(list->length == 1){
-        //list->head = NULL;
-        //list->queue = NULL;
-        //list->length = 0;
         freeList(list);
         return true;
     }
@@ -374,36 +370,3 @@ void printListRec(Listseg* node){
         printf("]: <HEAD>\n\n");
     }
 }
-/*
-void printListLight(List* list){
-	if(list == NULL){
-		printf("\nObject List is NULL\n");
-		return;
-	}
-	else if(list->length == 0){
-		printf("\n[0] <Q><H> (empty)\n");
-	}
-	else if(list->length == 1){
-		printf("\n[1] <Q> ");
-		printf("%d", list->queue->value->value);
-		printf(" <H>\n");
-	}
-	else {
-		printf("\n[%d] <Q> ", list->length);
-		printListLightRec(list->queue);
-	}
-}
-
-void printListLightRec(Listseg* node){
-	if(node != NULL){
-		printf("%d", node->value->value);
-		printf(" - ");
-		printListLightRec(node->next);
-	}
-	else{
-		printf("<H>\n");
-	}
-}*/
-
-
-
