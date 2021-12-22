@@ -163,15 +163,6 @@ Listseg *createListseg(Segment* s){
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CREATE A LIST STRUCTURE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-
-List *createList(Segment* s){
-    List* result = malloc(sizeof(List));
-    if (result != NULL) {
-        result->head = createListseg(s);
-        result->length = 1;
-    }
-    return result;
-}
 List *createVoidList(){
     List* result = malloc(sizeof(List));
     if (result != NULL) {
@@ -258,27 +249,8 @@ bool insertList(List* l1, Listseg* l2){//length l2 must be >1
 
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% DELETE A SEGMENT IN LIST
+%%% LIST CONCATENATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-
-bool delHead(List* list){
-    if(list->length == 0){
-        return false;
-    }
-    if(list->length == 1){
-        freeList(list);
-        return true;
-    }
-    else{
-        freeSeg(list->head->value);
-        free(list->head);
-        list->head = list->head->prev;
-        list->head->next = NULL;
-        list->length -=1;
-        return true;
-    }
-}
-
 List* concatenate(List* l1, List* l2, List* l3){
     List* tmp = concatenate2(l1, l2);
     List* final = concatenate2(tmp, l3);
@@ -307,7 +279,9 @@ List* concatenate2(List* l1, List* l2){
     return tmp;
 }
 
-
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% FREE LIST
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 void freeListSeg(Listseg* LS){
     if (LS == NULL){
         return;
