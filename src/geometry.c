@@ -8,13 +8,6 @@ bool feq(double x, double y){
     return (y<x+tol && y>x-tol);
 }
 
-bool fgreater(double x, double y){
-    return (x > y-tol);
-}
-bool flower(double x, double y){
-    return (x < y-tol);
-}
-
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Points 2D
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/

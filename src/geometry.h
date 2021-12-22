@@ -17,8 +17,6 @@ typedef struct Listseg Listseg;
 
 
 bool feq(double, double);
-bool fgreater(double, double);
-bool flower(double, double);
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Points
