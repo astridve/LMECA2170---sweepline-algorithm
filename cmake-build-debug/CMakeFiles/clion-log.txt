@@ -1,5 +1,0 @@
-/home/avekemans/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5284.51/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" "/home/avekemans/Documents/Numerical Geometry/NGP-master"
--- Using X11 for window creation
--- Configuring done
--- Generating done
--- Build files have been written to: /home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug
