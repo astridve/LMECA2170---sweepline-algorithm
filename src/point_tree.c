@@ -144,7 +144,6 @@ void printTreeRec(Treenode* root, int level) {
     }
     printtabs(level);
     printPoint(root->value);
-    //printf("value = (%f, %f) : %d\n", root->value->x, root->value->y, root->value->value);
     printtabs(level);
     printf("left\n");
 

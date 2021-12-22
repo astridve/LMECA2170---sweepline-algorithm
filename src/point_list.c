@@ -50,7 +50,6 @@ ListP* createVoidListP(){
 
 bool insertListHeadP(ListP* list, Point* p, List* luc){
     if(p == NULL){
-        printf("\nWarning: point is NULL\n");
         return false;
     }
     if(list != NULL){
