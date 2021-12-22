@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
         |_ |
     */
 
-    int preset = 0;
+    int preset = 2;
 
     // 0 - execute the algorithm and print the results in the console
     // 1 - simple image (fullscreen)
@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
 
 
 
-    /*                           _
+    /*                       _
         ____   _   _   ___  | |_    ___    _ __ ___  (*)
        / ___| | | | | / __| | __|  / _ \  | '_ ` _ \
        | (__  | |_| | \__ \ | |_  | (_) | | | | | | |
@@ -729,6 +729,11 @@ int main(int argc, char* argv[])
                     bov_text_delete(text_indication);
                 }
                 else {
+                    finished = true; 
+                    if ((window->wtime - iter_start_time) / 1000. < dt) {
+                        //sleep(dt - (window->wtime + iter_start_time)/1000.); // (FOR LINUX)
+                        Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
+                    }
                     bov_text_t* text_indication = bov_text_new(
                             (GLubyte[]) {
                                     "\x93 You reached the end of the set of segments !",
@@ -878,6 +883,11 @@ int main(int argc, char* argv[])
             // others
             curr_click = false;
             bov_window_update(window);
+            //if (finished) {
+            //    //sleep(3.0); // (FOR LINUX)
+            //    Sleep(3000.0); // (FOR WINDOWS)
+            //    break;
+            //}
         }
         freeDatastruct(data);
         freePoint(last_p);
