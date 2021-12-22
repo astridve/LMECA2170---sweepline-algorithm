@@ -25,4 +25,3 @@ target_link_libraries(${EXEC} bov)
 
 # set ${EXEC} as the startup project in visual studio
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${EXEC})
-set(CMAKE_BUILD_TYPE Debug)

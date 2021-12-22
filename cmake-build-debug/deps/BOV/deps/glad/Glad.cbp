@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Glad"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\deps\;CMake Files\deps\BOV\;CMake Files\deps\BOV\deps\;CMake Files\deps\BOV\deps\glfw\;CMake Files\deps\BOV\deps\glfw\CMake\;CMake Files\deps\BOV\deps\glfw\src\;CMake Files\deps\BOV\deps\glad\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 glad"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="glad/fast">
+				<Option output="/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/avekemans/Documents/Numerical\ Geometry/NGP-master/cmake-build-debug/deps/BOV/deps/glad/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/src/glad.c">
+			<Option target="glad"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\deps\BOV\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/CMake/glfw3.pc.in">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\CMake\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/CMake/glfw3Config.cmake.in">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\CMake\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\src\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glfw/src/glfw_config.h.in">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glfw\src\"/>
+		</Unit>
+		<Unit filename="/home/avekemans/Documents/Numerical Geometry/NGP-master/deps/BOV/deps/glad/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\deps\BOV\deps\glad\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

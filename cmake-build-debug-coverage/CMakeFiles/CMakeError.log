@@ -1,0 +1,64 @@
+The C compiler identification could not be found in "/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/3.20.2/CompilerIdC/CMakeCCompilerId.gcno"
+
+Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_5bcf7/fast && /usr/bin/make  -f CMakeFiles/cmTC_5bcf7.dir/build.make CMakeFiles/cmTC_5bcf7.dir/build
+make[1]: Entering directory '/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5bcf7.dir/src.c.o
+/usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  --coverage  -o CMakeFiles/cmTC_5bcf7.dir/src.c.o -c "/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/CMakeTmp/src.c"
+Linking C executable cmTC_5bcf7
+/home/avekemans/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5284.51/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5bcf7.dir/link.txt --verbose=1
+/usr/bin/cc --coverage  CMakeFiles/cmTC_5bcf7.dir/src.c.o -o cmTC_5bcf7 
+/usr/bin/ld: CMakeFiles/cmTC_5bcf7.dir/src.c.o: in function `main':
+src.c:(.text+0x6a): undefined reference to `pthread_create'
+/usr/bin/ld: src.c:(.text+0x88): undefined reference to `pthread_detach'
+/usr/bin/ld: src.c:(.text+0xa6): undefined reference to `pthread_cancel'
+/usr/bin/ld: src.c:(.text+0xc9): undefined reference to `pthread_join'
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_5bcf7.dir/build.make:99: cmTC_5bcf7] Error 1
+make[1]: Leaving directory '/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/CMakeTmp'
+make: *** [Makefile:127: cmTC_5bcf7/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+static void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_4e053/fast && /usr/bin/make  -f CMakeFiles/cmTC_4e053.dir/build.make CMakeFiles/cmTC_4e053.dir/build
+make[1]: Entering directory '/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_4e053.dir/CheckFunctionExists.c.o
+/usr/bin/cc   --coverage -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_4e053.dir/CheckFunctionExists.c.o -c /home/avekemans/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5284.51/bin/cmake/linux/share/cmake-3.20/Modules/CheckFunctionExists.c
+Linking C executable cmTC_4e053
+/home/avekemans/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5284.51/bin/cmake/linux/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4e053.dir/link.txt --verbose=1
+/usr/bin/cc --coverage -DCHECK_FUNCTION_EXISTS=pthread_create CMakeFiles/cmTC_4e053.dir/CheckFunctionExists.c.o -o cmTC_4e053  -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+make[1]: *** [CMakeFiles/cmTC_4e053.dir/build.make:99: cmTC_4e053] Error 1
+make[1]: Leaving directory '/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/CMakeTmp'
+make: *** [Makefile:127: cmTC_4e053/fast] Error 2
+
+
+
+The CXX compiler identification could not be found in "/home/avekemans/Documents/Numerical Geometry/NGP-master/cmake-build-debug-coverage/CMakeFiles/3.20.2/CompilerIdCXX/CMakeCXXCompilerId.gcno"
+
