@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
         |_ |
     */
 
-    int preset = 1;
+    int preset = 0;
 
     // 0 - execute the algorithm and print the results in the console
     // 1 - simple image (fullscreen)
