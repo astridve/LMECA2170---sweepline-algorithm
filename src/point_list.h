@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <time.h>
 #include "geometry.h"
 
 
@@ -22,23 +21,30 @@ typedef struct Listpoint {
 	struct List *luc;
 }Listpoint;
 
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% CREATE A LIST NODE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 Listpoint* createListpoint(Point*);
 
-
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% CREATE A LIST STRUCTURE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 ListP* createVoidListP();
-ListP* createListP(Point*);
 
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ADD A SEGMENT IN LIST
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 bool insertListHeadP(ListP*, Point*, List*);
-bool insertListQueueP(ListP*, Point*);
 
-bool delHeadP(ListP*);
-bool delQueueP(ListP*);
-bool delListP(ListP*, Point*);
-bool delListRecP(ListP*, Listpoint*, Point*);
-
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% FREE LIST
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 void freeListP(ListP*);
 void freeListpoint(Listpoint*);
 
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PRINT LIST FUNCTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 void printListP(ListP*);
 void printListRecP(Listpoint*);
 

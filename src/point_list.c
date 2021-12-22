@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <time.h>
 #include "geometry.h"
 #include "point_list.h"
 
@@ -22,18 +21,6 @@ Listpoint* createListpoint(Point* p){
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% CREATE A LIST STRUCTURE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
-
-ListP* createListP(Point* p){
-    ListP* result = malloc(sizeof(ListP));
-    if (result != NULL) {
-        result->head = createListpoint(p);
-        result->queue = createListpoint(p);
-        result->length = 0;
-    }
-    return result;
-}
-
-
 ListP* createVoidListP(){
     ListP* result = malloc(sizeof(ListP));
     if (result != NULL) {
