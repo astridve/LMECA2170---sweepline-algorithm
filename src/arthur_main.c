@@ -31,14 +31,34 @@ int main(int argc, char* argv[])
 
 
     // - defining segments
-    GLsizei nPoints = 30;            // --- has to be even (and should be below 250 if you want to animate it)
+    GLsizei nPoints = 18;            // --- has to be even (and should be below 250 if you want to animate it)
 
     // randomly define points
-    int seed = 1639935196;            // (int)time(NULL);
+    /*int seed = (int)time(NULL);
     printf("[MAIN] seed : %d\n", seed);
     srand(seed);
     GLfloat(*segment_coord)[2] = malloc(sizeof(segment_coord[0]) * nPoints);
-    random_points(segment_coord, nPoints);
+    random_points(segment_coord, nPoints);*/
+    GLfloat segment_coord[18][2] = {
+        { 0.087f,  0.364f }, //A
+        { 0.284f,  0.322f }, //B
+        { 0.421f,  0.279f }, //C
+        { 0.300f,  0.150f }, //D
+        { 0.770f,  0.100f }, //E
+        { 0.250f,  0.350f }, //F
+        { 0.477f,  0.261f }, //G
+        { 0.359f,  0.213f }, //H
+        { 0.359f,  0.080f }, //I
+        { 0.470f,  0.123f }, //J
+        { 0.044f,  0.307f }, //K
+        { 0.071f,  0.253f }, //L
+        { 0.569f,  0.308f }, //M
+        { 0.624f,  0.239f }, //N
+        { 0.569f,  0.308f }, //M
+        { 0.550f,  0.220f }, //O
+        { 0.550f,  0.220f }, //O
+        { 0.624f,  0.239f }, //N
+    };
 
 
     /*                                        _
@@ -49,7 +69,7 @@ int main(int argc, char* argv[])
         |_ |
     */
 
-    int preset = 2;
+    int preset = 1;
 
     // 0 - execute the algorithm and print the results in the console
     // 1 - simple image (fullscreen)

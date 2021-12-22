@@ -25,7 +25,7 @@ Point *createPoint(double x, double y, List *U) {
 		result->x = x;
 		result->y = y;
         result->U = createVoidList();
-        if (U != NULL){
+        if (U != NULL && U->length > 0){
             insertList(result->U, U->head);
         }
 	}
@@ -293,7 +293,7 @@ List* concatenate(List* l1, List* l2, List* l3){
 List* concatenate2(List* l1, List* l2){
     List* tmp = createVoidList();
 	if(l1 != NULL){
-        *tmp = *l1;
+        insertList(tmp, l1->head);
 		if(l2 != NULL){
 
             if (l2->length == 1 && l2->queue != NULL){
@@ -306,7 +306,7 @@ List* concatenate2(List* l1, List* l2){
 		}
 	}
 	else{ // l1 == NULL
-        *tmp = *l2;
+        insertList(tmp, l2->head);
 	}
     return tmp;
 }

@@ -126,6 +126,7 @@ void HandleEventPoint(dataStruct *data){
     int lengthT = data->p->U->length + L->length + C->length;
     if (lengthT >= 2){// p is an intersection point
         List* concat = concatenate(data->p->U, L, C);
+        printPoint(data->p);
         insertListHeadP(data->Intersections, data->p, concat);
         freeList(concat);
     }
