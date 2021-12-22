@@ -85,7 +85,7 @@ void findNewEvent(Segment *sL, Segment *sR, Point *p, Treenode **Q, dataStruct *
             y_inter = pL + mL * x_inter;
             if (y_inter > p->y || (y_inter == p->y && x_inter > p->x)){ // intersection happens bellow the sweep line
                 Point *inter = createPoint(x_inter, y_inter, NULL);
-                if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){;
+                if ((contains(inter,sL) || equalPoint(inter, sL->p0) || equalPoint(inter, sL->p1)) && (contains(inter,sR) || equalPoint(inter, sR->p0) || equalPoint(inter, sR->p1))){
                     insertPoint(Q, inter, *Q, NULL, false);
                 }
                 freePoint(inter);
@@ -126,7 +126,6 @@ void HandleEventPoint(dataStruct *data){
     int lengthT = data->p->U->length + L->length + C->length;
     if (lengthT >= 2){// p is an intersection point
         List* concat = concatenate(data->p->U, L, C);
-        printPoint(data->p);
         insertListHeadP(data->Intersections, data->p, concat);
         freeList(concat);
     }
@@ -351,5 +350,6 @@ void freeDatastruct(dataStruct *data){
         freeSeg(data->LN);
         freeList(data->RLN);
         free(data);
+        data = NULL;
     }
 }

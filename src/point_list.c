@@ -103,6 +103,7 @@ void freeListpoint(Listpoint* LS){
     freePoint(LS->value);
     freeList(LS->luc);
     free(LS);
+    LS = NULL;
     while (tmp != NULL){
         Listpoint *tmp2 = tmp->prev;
         freePoint(tmp->value);
@@ -118,6 +119,7 @@ void freeListP(ListP* L){
         freeListpoint(L->head);
         //freeListpoint(L->queue);
         free(L);
+        L = NULL;
     }
 }
 
