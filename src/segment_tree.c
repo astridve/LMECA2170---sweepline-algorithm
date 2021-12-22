@@ -5,6 +5,10 @@
 #include "geometry.h"
 #include "segment_tree.h"
 
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Create Segment Tree Node
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+
 Treeseg *createSeg(Segment *s) {
     Treeseg* result = malloc(sizeof(Treeseg));
     if (result != NULL) {
@@ -17,7 +21,9 @@ Treeseg *createSeg(Segment *s) {
 }
 
 
-
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Insert / Delete
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 bool insertSeg(Treeseg **rootptr, Point* p, Segment* s, Treeseg *parent) { // insert the segment s in the tree; p is the node being analyzed on the sweep line (needed to know where the segments cross the horizontal sweep line)
     Treeseg *root = *rootptr;
     if(root == NULL){ // the tree is empty
@@ -195,7 +201,9 @@ bool delSeg(Treeseg** root, Segment* seg, Point *p){ // delete the segment seg f
 }
 
 
-
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Segment Node Finders
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 Treeseg* findSegAFTERUPDATE(Treeseg *root, Segment *s, Point *p) { // find and return the tree with s as upper node (if it is in the tree, NULL otherwise), p is again there to inform about the position of the sweep line; Careful root is update with the point p!
     if (root == NULL) { // s in not in the tree root
         return NULL;
@@ -570,6 +578,9 @@ Segment* findRightMost(Treeseg* root, Treeseg* prev, Point* p, bool foundp){
 }
 
 
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Segment Tree Freeing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 void freeTreeseg(Treeseg* root){
     if (root == NULL){
         return;
