@@ -211,7 +211,7 @@ int main(int argc, char* argv[])
         if (nPoints > 40) {
             nPoints = 40;
         }
-        float dt = 1500.0;
+        dt = 1500.0;
     }
 
     else if (preset == 3) { // quick animation (100 seg. max, fullscreen)
@@ -222,7 +222,7 @@ int main(int argc, char* argv[])
         if (nPoints > 200) {
             nPoints = 200;
         }
-        float dt = 500.0;
+        dt = 500.0;
     }
 
     else if (preset == 4) { // fastest animation ! (100 seg. max, fullscreen)
@@ -233,7 +233,7 @@ int main(int argc, char* argv[])
         if (nPoints > 200) {
             nPoints = 200;
         }
-        float dt = 0.0;
+        dt = 0.0;
     }
 
     else if (preset == 5) { // on-click animation ! (fullscreen)
@@ -244,7 +244,7 @@ int main(int argc, char* argv[])
         if (nPoints > 200) {
             nPoints = 200;
         }
-        float dt = 0.0;
+        dt = 0.0;
     }
 
     List* segmentList = fromTab2List(segment_coord, nPoints); // conversion of the point array into segment linked-list
