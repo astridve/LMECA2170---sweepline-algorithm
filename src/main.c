@@ -299,7 +299,6 @@ int main(int argc, char* argv[])
 
         freeDatastruct(data);
         freeList(segmentList);
-        free(segment_coord);
         return EXIT_SUCCESS;
     }
 
