@@ -706,8 +706,8 @@ int main(int argc, char* argv[])
                     copy_point = createPoint(data->p->x, data->p->y, data->p->U);
 
                     if ((window->wtime - iter_start_time)/1000. < dt) {
-                         sleep(dt - (window->wtime + iter_start_time)/1000.); // (FOR LINUX)
-                        // Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
+                        //sleep(dt - (window->wtime + iter_start_time)/1000.); // (FOR LINUX)
+                        Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
                     }
                     bov_text_t* text_indication = bov_text_new(
                             (GLubyte[]) {
