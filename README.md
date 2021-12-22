@@ -12,11 +12,8 @@ All command lines to be modified (2) are tagged with "// (FOR WINDOWS)" and "// 
 
 
 
-  _____   _   _                                                        _                   
- |  ___| (_) | |   ___   ___      ___   __   __   ___   _ __  __   __ (_)   ___  __      __
- | |_    | | | |  / _ \ / __|    / _ \  \ \ / /  / _ \ | '__| \ \ / / | |  / _ \ \ \ /\ / /
- |  _|   | | | | |  __/ \__ \   | (_) |  \ V /  |  __/ | |     \ V /  | | |  __/  \ V  V / 
- |_|     |_| |_|  \___| |___/    \___/    \_/    \___| |_|      \_/   |_|  \___|   \_/\_/  
+Files overview
+==========================
                                                                                            
 - geometry.c/.h : contains the structure of Points/Segments/Segment-linked-list as needed for the algorithm + associated functions
 
@@ -34,11 +31,9 @@ All command lines to be modified (2) are tagged with "// (FOR WINDOWS)" and "// 
 
 
 
-  _   _                        _                                          
- | | | |   ___   __      __   | |_    ___      _   _   ___    ___     _   
- | |_| |  / _ \  \ \ /\ / /   | __|  / _ \    | | | | / __|  / _ \   (_)  
- |  _  | | (_) |  \ V  V /    | |_  | (_) |   | |_| | \__ \ |  __/    _   
- |_| |_|  \___/    \_/\_/      \__|  \___/     \__,_| |___/  \___|   (_) (every parameter is correctly commented in main.c)
+How to use
+==========================
+(every parameter is correctly commented in main.c)
 
 
 Before executing the main program (in main.c), have a look to the different parameters : 
@@ -56,7 +51,7 @@ Before executing the main program (in main.c), have a look to the different para
 	* display the progressive 2D configuration (segments and their intersection points) point by point
 	* Highlight the segments that are considered by the algorithm at instant t
 
-  [IF image AND animation ARE NOT SET TO TRUE, THE PROGRAM RUN ITS FASTEST VERSION AND SIMPLY PRINT THE RESULTS IN THE CONSOLE]
+  [IF image AND animation ARE NOT SET TO TRUE, THE PROGRAM RUN ITS FASTEST VERSION AND SIMPLY PRINT THE RESULTS (NUMBER OF INTERSECTION) IN THE CONSOLE]
 
 - (bool) on_click : 
 	* disable the automatic animation, you decide when to go to the next point by left-clicking
@@ -74,14 +69,12 @@ Before executing the main program (in main.c), have a look to the different para
 	* array of points coordinates that define segments 2 by 2.
 
 
-                 _                      
-   ___    ___   | |   ___    _ __   ___ 
-  / __|  / _ \  | |  / _ \  | '__| / __|
- | (__  | (_) | | | | (_) | | |    \__ \
-  \___|  \___/  |_|  \___/  |_|    |___/  (useful to now during animation)
+Colors explanation
+==========================
+(useful to know during animation)
                                                 
 
-- YELLOW : considered point on the sweepline and intersections already found 
+- YELLOW : considered point on the sweepline and intersections already found
 - BLUE   : sweepline representation
 
 - GREY & CONTOURED : Segments that are considered by the algorithm at time t.
@@ -90,4 +83,4 @@ Before executing the main program (in main.c), have a look to the different para
 - GREEN : Right Most Segment and Right Neighbour of the considered point 
   (colors overlap with transparency in case of identicity, resulting in a light brown)
 
-- VIOLET: 
+- VIOLET: Left and Right Neighbour of the considered point which is only lower point of some segments
