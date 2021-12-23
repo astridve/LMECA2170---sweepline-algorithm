@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
-#include <unistd.h> // (FOR LINUX - uncomment for WINDOWS)
+//#include <unistd.h> // (FOR LINUX - uncomment for WINDOWS)
 #include "inputs.h"
 #include "geometry.h"
 #include "sweepline.h"
@@ -80,14 +80,14 @@ int main(int argc, char* argv[])
         |_ |
     */
 
-    int preset = 5;
+    int preset = 2;
 
     // 0 - execute the algorithm and print the results in the console
     // 1 - simple image (fullscreen)
-    // 2 - slow little animation (20 seg. max, fullscreen)
-    // 3 - quick animation (100 seg. max, fullscreen)
-    // 4 - fastest animation (100 seg. max, fullscreen)
-    // 5 - on-click animation ! (fullscreen)
+    // 2 - slow little animation (20 first seg. only, fullscreen)
+    // 3 - quick animation (500 first seg. only, fullscreen)
+    // 4 - fastest animation (500 first seg. only, fullscreen)
+    // 5 - on-click animation ! (500 first seg. only, fullscreen)
     //-1 - let you use customized parameters (*)
 
 
@@ -107,7 +107,7 @@ int main(int argc, char* argv[])
     bool fullscreen = true;                 // fullscreen is forced for automated animation (without click)
 
     // - min. duration per frame
-    float dt = 1500;                         // [ms] for animation without click
+    float dt = 1500.0;                         // [ms] for animation without click
 
 
 
@@ -230,8 +230,8 @@ int main(int argc, char* argv[])
         animation = true;
         on_click = false;
         fullscreen = true;
-        if (nPoints > 200) {
-            nPoints = 200;
+        if (nPoints > 1000) {
+            nPoints = 1000;
         }
         dt = 500.0;
     }
@@ -241,8 +241,8 @@ int main(int argc, char* argv[])
         animation = true;
         on_click = false;
         fullscreen = true;
-        if (nPoints > 200) {
-            nPoints = 200;
+        if (nPoints > 1000) {
+            nPoints = 1000;
         }
         dt = 0.0;
     }
@@ -252,17 +252,13 @@ int main(int argc, char* argv[])
         animation = true;
         on_click = true;
         fullscreen = true;
-        if (nPoints > 200) {
-            nPoints = 200;
+        if (nPoints > 1000) {
+            nPoints = 1000;
         }
         dt = 0.0;
     }
 
     List* segmentList = fromTab2List(segment_coord, nPoints); // conversion of the point array into segment linked-list
-
-    if (dt == 0.0) { // impose minimal dt
-        dt = 0.00f;
-    }
 
 
 
@@ -716,7 +712,7 @@ int main(int argc, char* argv[])
 
                     if ((window->wtime - iter_start_time)/1000. < dt) {
                         //sleep(dt - (window->wtime + iter_start_time)/1000.); // (FOR LINUX)
-                        //Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
+                        Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
                     }
                     bov_text_t* text_indication = bov_text_new(
                             (GLubyte[]) {
@@ -731,8 +727,8 @@ int main(int argc, char* argv[])
                 else {
                     finished = true; 
                     if ((window->wtime - iter_start_time) / 1000. < dt) {
-                        sleep(dt - (window->wtime + iter_start_time)/1000.); // (FOR LINUX)
-                        //Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
+                        //sleep(dt - (window->wtime + iter_start_time)/1000.); // (FOR LINUX)
+                        Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
                     }
                     bov_text_t* text_indication = bov_text_new(
                             (GLubyte[]) {
@@ -883,11 +879,11 @@ int main(int argc, char* argv[])
             // others
             curr_click = false;
             bov_window_update(window);
-            //if (finished) {
-            //    //sleep(3.0); // (FOR LINUX)
-            //    Sleep(3000.0); // (FOR WINDOWS)
-            //    break;
-            //}
+            if (finished) {
+                //sleep(3.0); // (FOR LINUX)
+                Sleep(3000.0); // (FOR WINDOWS)
+                break;
+            }
         }
         freeDatastruct(data);
         freePoint(last_p);
