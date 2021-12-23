@@ -226,6 +226,9 @@ bool FindIntersections2(List* s, dataStruct *data, Point* red_point){
         if(avant_dernier){
             return true;
         }
+        if((red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x))){
+            avant_dernier = true;
+        }
         if (data->Q != NULL){
             freePoint(data->p);
             freeList(data->RLN);
@@ -233,9 +236,6 @@ bool FindIntersections2(List* s, dataStruct *data, Point* red_point){
             freeSeg(data->LN);
             freeSeg(data->RM);
             freeSeg(data->RN);
-        }
-        if((red_point->y < data->p->y || (red_point->y == data->p->y && red_point-> x <= data->p->x))){
-            avant_dernier = true;
         }
     }
     return true;

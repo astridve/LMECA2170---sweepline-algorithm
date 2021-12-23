@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
         |_ |
     */
 
-    int preset = 1;
+    int preset = 5;
 
     // 0 - execute the algorithm and print the results in the console
     // 1 - simple image (fullscreen)
@@ -716,7 +716,7 @@ int main(int argc, char* argv[])
 
                     if ((window->wtime - iter_start_time)/1000. < dt) {
                         //sleep(dt - (window->wtime + iter_start_time)/1000.); // (FOR LINUX)
-                        Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
+                        //Sleep(dt - (window->wtime + iter_start_time)); // (FOR WINDOWS)
                     }
                     bov_text_t* text_indication = bov_text_new(
                             (GLubyte[]) {
